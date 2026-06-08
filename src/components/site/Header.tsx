@@ -132,44 +132,85 @@ export function Header({ solid = false }: { solid?: boolean }) {
 
       <AnimatePresence>
         {mobile && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-background lg:hidden"
-          >
-            <div className="flex items-center justify-between border-b border-border px-5 py-4">
-              <img
-                src="/logo FYE Piscinas.png"
-                alt="FYE Piscinas"
-                className="h-10 w-auto"
-                width={186}
-                height={125}
-              />
-              <button onClick={() => setMobile(false)} aria-label="Cerrar menú">
-                <X className="h-6 w-6" />
-              </button>
-            </div>
-            <div className="space-y-1 p-5">
-              {nav.map((n) => (
-                <a
-                  key={n.label}
-                  href={n.href ?? "/#servicios"}
-                  className="block border-b border-border py-4 text-lg font-medium"
+          <>
+            <motion.button
+              type="button"
+              aria-label="Cerrar menú"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              className="fixed inset-0 z-40 bg-primary/28 backdrop-blur-[2px] lg:hidden"
+              onClick={() => setMobile(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -10, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed inset-x-4 top-20 z-50 max-h-[calc(100svh-6rem)] overflow-y-auto rounded-3xl border border-border bg-background p-4 shadow-[var(--shadow-lift)] lg:hidden"
+            >
+              <div className="flex items-center justify-between border-b border-border/70 pb-3">
+                <img
+                  src="/logo FYE Piscinas.png"
+                  alt="FYE Piscinas"
+                  className="h-10 w-auto"
+                  width={186}
+                  height={125}
+                />
+                <button
+                  className="grid h-10 w-10 place-items-center rounded-full bg-secondary text-foreground"
+                  onClick={() => setMobile(false)}
+                  aria-label="Cerrar menú"
                 >
-                  {n.label}
-                </a>
-              ))}
-              <div className="flex flex-col gap-3 pt-6">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="mt-3 space-y-1">
+                {nav.map((n) =>
+                  n.items ? (
+                    <div key={n.label} className="rounded-2xl bg-secondary/55 p-2">
+                      <div className="px-2 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                        {n.label}
+                      </div>
+                      <div className="grid gap-1">
+                        {n.items.map((item) => (
+                          <a
+                            key={item.label}
+                            href={item.href}
+                            onClick={() => setMobile(false)}
+                            className="rounded-xl px-3 py-3 transition-colors active:bg-white"
+                          >
+                            <div className="text-sm font-semibold text-foreground">{item.label}</div>
+                            <div className="mt-0.5 text-xs leading-snug text-muted-foreground">
+                              {item.desc}
+                            </div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <a
+                      key={n.label}
+                      href={n.href ?? "/#servicios"}
+                      onClick={() => setMobile(false)}
+                      className="block rounded-2xl px-4 py-3 text-base font-semibold transition-colors active:bg-secondary"
+                    >
+                      {n.label}
+                    </a>
+                  ),
+                )}
                 <a
                   href="/diagnostico?origen=header-mobile"
-                  className="rounded-full border border-border py-3 text-center text-sm font-semibold"
+                  onClick={() => setMobile(false)}
+                  className="mt-3 flex items-center justify-center rounded-full bg-aqua px-5 py-3 text-sm font-semibold text-primary"
                 >
                   Aplicar a diagnóstico
                 </a>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.header>

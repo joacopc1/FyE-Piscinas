@@ -82,13 +82,17 @@ function Hero() {
       {/* Background video with parallax + slow zoom */}
       <motion.div style={{ y, scale }} className="absolute inset-0 will-change-transform">
         <video
-          className="absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
+          className="hero-bg-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
           autoPlay
           muted
           loop
           playsInline
           preload="auto"
+          disablePictureInPicture
           aria-hidden="true"
+          onLoadedMetadata={(event) => {
+            event.currentTarget.play().catch(() => {});
+          }}
           onCanPlay={(event) => {
             event.currentTarget.play().catch(() => {});
           }}
@@ -298,12 +302,12 @@ function OfferStack() {
                 className="absolute inset-0 h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/86 via-primary/18 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-7 text-white md:p-10">
-                <h2 className="max-w-xl font-display text-4xl font-medium leading-[1.02] md:text-5xl">
+              <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-10">
+                <h2 className="max-w-sm font-display text-3xl font-medium leading-[1.02] md:max-w-xl md:text-5xl">
                   Piscina lista para disfrutar.
-                  <span className="block text-aqua">Sin comprar a ciegas.</span>
+                  <span className="hidden text-aqua md:block">Sin comprar a ciegas.</span>
                 </h2>
-                <p className="mt-5 max-w-xl text-base leading-relaxed text-white/84">
+                <p className="mt-5 hidden max-w-xl text-base leading-relaxed text-white/84 md:block">
                   Una propuesta para elegir bien, coordinar flete, colocación, vereda perimetral,
                   caseta, bomba, filtro y llegar al primer uso con acompañamiento real.
                 </p>
