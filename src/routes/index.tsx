@@ -3,10 +3,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
   MessageCircle,
-  ShieldCheck,
-  Wrench,
-  Sparkles,
-  HeartHandshake,
   Check,
   Plus,
   Minus,
@@ -55,7 +51,6 @@ function Home() {
     <div className="min-h-screen bg-white text-foreground">
       <Header />
       <Hero />
-      <TrustStrip />
       <Pains />
       <OfferStack />
       <Services />
@@ -196,37 +191,6 @@ function HeroStat({ value, label }: { value: string; label: string }) {
       <span className="font-display text-lg leading-none text-white md:text-xl">{value}</span>
       <span className="mt-1 text-[9px] uppercase tracking-[0.22em] text-white/55">{label}</span>
     </div>
-  );
-}
-
-/* ---------------- TRUST STRIP ---------------- */
-function TrustStrip() {
-  const claims = [
-    { icon: HeartHandshake, label: "Instalación acompañada" },
-    { icon: Sparkles, label: "Casco directo de fábrica" },
-    { icon: ShieldCheck, label: "10 años en el casco" },
-    { icon: Wrench, label: "Proyectos residenciales" },
-  ];
-  return (
-    <section className="border-b border-border bg-white">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-5 py-10 md:grid-cols-4 md:px-8">
-        {claims.map((c, i) => (
-          <motion.div
-            key={c.label}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.08, duration: 0.5 }}
-            className="flex items-center gap-3"
-          >
-            <span className="grid h-10 w-10 place-items-center rounded-full bg-background text-primary hairline-border">
-              <c.icon className="h-5 w-5" />
-            </span>
-            <span className="text-sm font-medium text-foreground/85">{c.label}</span>
-          </motion.div>
-        ))}
-      </div>
-    </section>
   );
 }
 
