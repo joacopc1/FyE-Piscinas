@@ -24,10 +24,11 @@ import { useEffect, useRef, useState } from "react";
 import { Header } from "@/components/site/Header";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 
-import heroPool from "@/assets/hero-pool.jpg";
 import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
 import work3 from "@/assets/work-3.jpg";
+
+const OFFER_HERO_IMAGE = "/pexels-mia-dalisay-594958-27853288.jpg";
 
 export const Route = createFileRoute("/piscina-lista-para-disfrutar")({
   head: () => ({
@@ -44,7 +45,7 @@ export const Route = createFileRoute("/piscina-lista-para-disfrutar")({
         content:
           "Elegí, instalá y estrená tu piscina con un proceso claro, 10 años en el casco y acompañamiento de principio a fin.",
       },
-      { property: "og:image", content: heroPool },
+      { property: "og:image", content: OFFER_HERO_IMAGE },
     ],
   }),
   component: OfferPage,
@@ -83,15 +84,13 @@ function OfferHero() {
     <section ref={ref} className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-deep">
       <motion.div style={{ y, scale }} className="absolute inset-0 will-change-transform">
         <img
-          src={heroPool}
+          src={OFFER_HERO_IMAGE}
           alt="Piscina lista para disfrutar en una casa con jardín"
-          className="h-full w-full object-cover"
-          width={1920}
-          height={1280}
+          className="h-full w-full object-cover object-center md:object-[center_64%]"
+          width={1536}
+          height={2048}
         />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_30%,transparent_0%,rgba(0,0,0,0.55)_70%)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/85" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/15 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/44 via-black/12 to-black/82 md:from-black/36 md:via-black/10 md:to-black/58" />
       </motion.div>
 
       <motion.div
