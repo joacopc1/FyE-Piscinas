@@ -153,7 +153,7 @@ function Hero() {
                 className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-primary shadow-[var(--shadow-lift)] transition-all hover:-translate-y-0.5 hover:bg-aqua"
               >
                 Ver piscinas y servicios
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-active:translate-x-1" />
               </a>
               <a
                 href={whatsappUrl(whatsappMessages.home)}
@@ -389,7 +389,7 @@ function Services() {
           {services.map((s, index) => (
             <StaggerItem
               key={s.title}
-              className="group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary"
+              className="group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary transition-transform active:scale-[0.985]"
             >
               <a
                 href={s.href}
@@ -402,20 +402,20 @@ function Services() {
                 src={s.img}
                 alt={s.title}
                 loading={index < 2 ? "eager" : "lazy"}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/92 via-primary/24 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-95" />
+              <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/92 via-primary/24 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-95" />
 
               <div className="absolute inset-x-0 bottom-0 p-7 text-white md:p-8">
-                <h3 className="font-display text-3xl font-medium leading-none tracking-[-0.02em] transition-transform duration-500 group-hover:-translate-y-2">
+                <h3 className="touch-title-lift font-display text-3xl font-medium leading-none tracking-[-0.02em] transition-transform duration-500 group-hover:-translate-y-2">
                   {s.title}
                 </h3>
-                <p className="max-h-0 max-w-md translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100">
+                <p className="touch-reveal max-h-0 max-w-md translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100">
                   {s.body}
                 </p>
                 <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
                   Explorar
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="touch-arrow-nudge h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </div>
               </div>
             </StaggerItem>
@@ -521,7 +521,7 @@ function Works() {
           {works.map((w, i) => (
             <StaggerItem
               key={w.title}
-              className={`group relative cursor-pointer overflow-hidden rounded-3xl ${
+              className={`group relative cursor-pointer overflow-hidden rounded-3xl transition-transform active:scale-[0.985] ${
                 i === 0 ? "md:col-span-2 md:row-span-2" : ""
               }`}
             >
@@ -529,9 +529,9 @@ function Works() {
                 src={w.img}
                 alt={w.title}
                 loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/84 via-primary/18 to-transparent opacity-65 transition-opacity duration-500 group-hover:opacity-86" />
+              <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/84 via-primary/18 to-transparent opacity-65 transition-opacity duration-500 group-hover:opacity-86" />
               <div className="absolute bottom-0 left-0 p-6 text-white md:p-8">
                 <span className="inline-flex rounded-full bg-white/18 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
                   {w.tag}

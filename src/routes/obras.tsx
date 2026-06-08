@@ -112,7 +112,7 @@ function Gallery({
           {filteredWorks.map((work, index) => (
             <StaggerItem
               key={work.id}
-              className="group relative h-[320px] overflow-hidden rounded-3xl bg-secondary shadow-[0_22px_60px_rgba(2,30,54,0.16)] md:h-[360px]"
+              className="group relative h-[320px] overflow-hidden rounded-3xl bg-secondary shadow-[0_22px_60px_rgba(2,30,54,0.16)] transition-transform active:scale-[0.985] md:h-[360px]"
             >
               <a
                 href={`/obras/${work.id}`}
@@ -123,9 +123,9 @@ function Gallery({
                 src={work.image}
                 alt={work.alt}
                 loading={index < 2 ? "eager" : "lazy"}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/96 via-primary/38 to-transparent opacity-86 transition-opacity duration-500 group-hover:opacity-95" />
+              <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/96 via-primary/38 to-transparent opacity-86 transition-opacity duration-500 group-hover:opacity-95" />
 
               <div className="absolute inset-x-0 bottom-0 p-6 text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.48)] md:p-8">
                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-medium text-white/74">
@@ -136,12 +136,12 @@ function Gallery({
                 <h2 className="mt-3 font-display text-3xl font-medium leading-tight md:text-4xl">
                   {work.title}
                 </h2>
-                <p className="max-h-0 max-w-xl translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100">
+                <p className="touch-reveal max-h-0 max-w-xl translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100">
                   {work.summary}
                 </p>
                 <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
                   Ver proceso
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="touch-arrow-nudge h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                 </div>
               </div>
             </StaggerItem>

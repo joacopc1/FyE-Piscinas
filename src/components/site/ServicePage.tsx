@@ -102,7 +102,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
                   className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-primary shadow-[var(--shadow-lift)] transition-all hover:-translate-y-0.5 hover:bg-aqua"
                 >
                   Ordenar mi proyecto
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-active:translate-x-1" />
                 </a>
                 <a
                   href="#proceso"
@@ -277,13 +277,13 @@ export function ServicePage({ data }: { data: ServicePageData }) {
 
           <StaggerGroup className="mt-10 grid gap-6 md:grid-cols-3">
             {works.map((work) => (
-              <StaggerItem key={work.type} className="group">
+              <StaggerItem key={work.type} className="group transition-transform active:scale-[0.985]">
                 <div className="overflow-hidden rounded-2xl">
                   <img
                     src={work.img}
                     alt={work.type}
                     loading="lazy"
-                    className="h-[320px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="touch-image-zoom h-[320px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
                 <div className="mt-5">

@@ -139,7 +139,7 @@ function OfferHero() {
                 className="group inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-primary shadow-[var(--shadow-lift)] transition-all hover:-translate-y-0.5 hover:bg-aqua"
               >
                 Ordenar mi proyecto
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-active:translate-x-1" />
               </a>
               <a
                 href="#incluye"
@@ -562,7 +562,7 @@ function Works() {
         {works.map((w, i) => (
           <StaggerItem
             key={w.title}
-            className={`group relative cursor-pointer overflow-hidden rounded-3xl ${
+            className={`group relative cursor-pointer overflow-hidden rounded-3xl transition-transform active:scale-[0.985] ${
               i === 0 ? "md:col-span-2 md:row-span-2" : ""
             }`}
           >
@@ -570,9 +570,9 @@ function Works() {
               src={w.img}
               alt={w.title}
               loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+              className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/84 via-primary/18 to-transparent opacity-65 transition-opacity duration-500 group-hover:opacity-86" />
+            <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/84 via-primary/18 to-transparent opacity-65 transition-opacity duration-500 group-hover:opacity-86" />
             <div className="absolute bottom-0 left-0 p-6 text-white md:p-8">
               <h3 className="font-display text-2xl font-medium leading-tight md:text-3xl">
                 {w.title}
