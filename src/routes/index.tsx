@@ -81,14 +81,6 @@ function Hero() {
     <section ref={ref} className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-deep">
       {/* Background video with parallax + slow zoom */}
       <motion.div style={{ y, scale }} className="absolute inset-0 will-change-transform">
-        <img
-          src={heroPool}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-          width={1920}
-          height={1280}
-          aria-hidden="true"
-        />
         <video
           className="absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
           autoPlay
@@ -96,7 +88,6 @@ function Hero() {
           loop
           playsInline
           preload="auto"
-          poster={heroPool}
           aria-hidden="true"
           onCanPlay={(event) => {
             event.currentTarget.play().catch(() => {});
