@@ -44,7 +44,7 @@ export const Route = createFileRoute("/piscina-lista-para-disfrutar")({
       {
         property: "og:description",
         content:
-          "Elegí, instalá y estrená tu piscina con un proceso claro, 10 años en el casco y acompañamiento de principio a fin.",
+          "Elegí, instalá y estrená tu piscina con un proceso claro, 10 años de garantía y acompañamiento de principio a fin.",
       },
       { property: "og:image", content: OFFER_HERO_IMAGE },
     ],
@@ -157,9 +157,9 @@ function OfferHero() {
               className="mx-auto mt-6 flex max-w-lg flex-wrap items-center justify-center gap-4 border-t border-white/12 pt-4 text-white md:gap-6"
               aria-label="Prueba social de FYE Piscinas"
             >
-              <HeroStat value="+120" label="Proyectos" />
+              <HeroStat value="+30" label="Proyectos" />
               <span className="hidden h-6 w-px bg-white/15 sm:block" />
-              <HeroStat value="12 años" label="Trayectoria" />
+              <HeroStat value="+3 años" label="Trayectoria" />
               <span className="hidden h-6 w-px bg-white/15 sm:block" />
               <HeroStat value="98%" label="Satisfacción" />
             </motion.div>
@@ -244,7 +244,7 @@ function Promise() {
     {
       icon: TrendingUp,
       title: "Más confianza para lograrlo",
-      body: "Opciones claras, obras reales, 10 años en el casco y acompañamiento antes de avanzar.",
+      body: "Opciones claras, obras reales, 10 años de garantía y acompañamiento antes de avanzar.",
     },
     {
       icon: Timer,
@@ -297,7 +297,7 @@ function OfferValue() {
     "Vereda perimetral y terminaciones acordadas",
     "Puesta en marcha y primera orientación de uso",
     "Acompañamiento postventa inicial",
-    "Garantía de 10 años en el casco",
+    "10 años de garantía",
   ];
 
   const bonuses = [
@@ -361,7 +361,7 @@ function OfferValue() {
 
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
                 <Pill icon={Gift} label="Regalos gratis" />
-                <Pill icon={ShieldCheck} label="10 años en el casco" />
+                <Pill icon={ShieldCheck} label="10 años de garantía" />
                 <Pill icon={CalendarDays} label="4 proyectos por mes" />
               </div>
 
@@ -396,7 +396,7 @@ function Guarantees() {
   const items = [
     { icon: FileText, title: "Alcance explicado antes de avanzar" },
     { icon: Compass, title: "Recomendación según tu casa, no genérica" },
-    { icon: ShieldCheck, title: "10 años de garantía en el casco" },
+    { icon: ShieldCheck, title: "10 años de garantía" },
     { icon: Clock, title: "Soporte directo en la primera etapa" },
   ];
 
@@ -420,7 +420,7 @@ function Guarantees() {
               <div className="mt-7 font-display text-[7rem] font-medium leading-none text-aqua">
                 10
               </div>
-              <div className="mt-1 font-display text-2xl">años en el casco</div>
+              <div className="mt-1 font-display text-2xl">años de garantía</div>
               <p className="mt-5 max-w-sm text-sm leading-relaxed text-primary-foreground/80">
                 La oferta tiene que reducir riesgo. Por eso el respaldo, la claridad del alcance y
                 la comunicación posterior son parte central del proyecto.
@@ -606,7 +606,7 @@ function Faq() {
     },
     {
       q: "¿Tienen garantía?",
-      a: "Sí, FYE comunica 10 años de garantía en el casco. Las condiciones específicas se explican antes de confirmar el proyecto.",
+      a: "Sí, FYE comunica 10 años de garantía. Las condiciones específicas se explican antes de confirmar el proyecto.",
     },
     {
       q: "¿Puedo consultar aunque todavía no tenga definido el presupuesto?",

@@ -15,25 +15,30 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
-  const [animateState, setAnimateState] = useState("hidden");
+  const [fallbackTriggered, setFallbackTriggered] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setAnimateState("show");
-    }, 1000); // 1-second fallback to force visibility if viewport observer fails
-    return () => clearTimeout(timer);
+    const isIOS = typeof window !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (isIOS) {
+      const timer = setTimeout(() => {
+        setFallbackTriggered(true);
+      }, 1500); // 1.5-second safety fallback on iOS Safari
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (
     <motion.div
       variants={fadeUp}
       initial="hidden"
-      animate={animateState}
-      onViewportEnter={() => setAnimateState("show")}
+      whileInView="show"
       viewport={{ once: true, amount: 0.05, margin: "0px 0px -10% 0px" }}
       transition={{ delay }}
       className={className}
-      style={{ willChange: "opacity, transform" }}
+      style={{
+        willChange: "opacity, transform",
+        ...(fallbackTriggered ? { opacity: 1, transform: "none" } : {}),
+      }}
     >
       {children}
     </motion.div>
@@ -49,20 +54,10 @@ export function StaggerGroup({
   className?: string;
   stagger?: number;
 }) {
-  const [animateState, setAnimateState] = useState("hidden");
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setAnimateState("show");
-    }, 1200); // 1.2-second fallback to force stagger items visibility
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <motion.div
       initial="hidden"
-      animate={animateState}
-      onViewportEnter={() => setAnimateState("show")}
+      whileInView="show"
       viewport={{ once: true, amount: 0.01, margin: "0px 0px -10% 0px" }}
       variants={{
         hidden: {},
@@ -77,12 +72,27 @@ export function StaggerGroup({
 }
 
 export function StaggerItem({ children, className }: { children: ReactNode; className?: string }) {
+  const [fallbackTriggered, setFallbackTriggered] = useState(false);
+
+  useEffect(() => {
+    const isIOS = typeof window !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (isIOS) {
+      const timer = setTimeout(() => {
+        setFallbackTriggered(true);
+      }, 1500); // 1.5-second safety fallback on iOS Safari
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   return (
     <motion.div
       variants={fadeUp}
       whileTap={{ scale: 0.985 }}
       className={className}
-      style={{ willChange: "opacity, transform" }}
+      style={{
+        willChange: "opacity, transform",
+        ...(fallbackTriggered ? { opacity: 1, transform: "none" } : {}),
+      }}
     >
       {children}
     </motion.div>

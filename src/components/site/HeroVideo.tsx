@@ -34,7 +34,7 @@ export function HeroVideo({ src }: { src: string }) {
         <video
           ref={videoRef}
           className={`hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 md:object-[center_48%] ${
-            playing ? "opacity-100" : "opacity-0"
+            failed ? "opacity-0" : "opacity-100"
           }`}
           src={src}
           autoPlay

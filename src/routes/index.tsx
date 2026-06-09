@@ -154,9 +154,9 @@ function Hero() {
               className="mx-auto mt-6 flex max-w-lg flex-wrap items-center justify-center gap-4 border-t border-white/12 pt-4 md:gap-6"
               aria-label="Prueba social de FYE Piscinas"
             >
-              <HeroStat value="+120" label="Proyectos" />
+              <HeroStat value="+30" label="Proyectos" />
               <span className="hidden h-6 w-px bg-white/15 sm:block" />
-              <HeroStat value="12 años" label="Trayectoria" />
+              <HeroStat value="+3 años" label="Trayectoria" />
               <span className="hidden h-6 w-px bg-white/15 sm:block" />
               <HeroStat value="98%" label="Satisfacción" />
             </motion.div>
@@ -564,7 +564,7 @@ function Faq() {
     },
     {
       q: "¿Dan garantía?",
-      a: "Sí. FYE comunica 10 años de garantía en el casco y acompañamiento posterior. Las condiciones exactas se confirman antes de avanzar.",
+      a: "Sí. FYE comunica 10 años de garantía y acompañamiento posterior. Las condiciones exactas se confirman antes de avanzar.",
     },
     {
       q: "¿Puedo pagar en cuotas?",

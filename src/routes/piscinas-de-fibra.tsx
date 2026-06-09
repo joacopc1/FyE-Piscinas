@@ -96,9 +96,9 @@ const data: ServicePageData = {
     { icon: ShieldCheck, title: "Respaldo informado en la propuesta" },
     { icon: Clock, title: "Soporte directo en la primera etapa" },
   ],
-  guaranteeHeadline: "10 años en el casco.",
+  guaranteeHeadline: "10 años de garantía.",
   guaranteeBody:
-    "Roberto comunicó 10 años de garantía en el casco. Las condiciones y alcance exacto se explican antes de confirmar el proyecto.",
+    "Roberto comunicó 10 años de garantía. Las condiciones y alcance exacto se explican antes de confirmar el proyecto.",
   faqs: [
     {
       q: "¿En cuánto tiempo tengo la piscina?",
