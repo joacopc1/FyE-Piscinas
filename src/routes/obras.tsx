@@ -112,7 +112,7 @@ function Gallery({
           {filteredWorks.map((work, index) => (
             <StaggerItem
               key={work.id}
-              className="group relative h-[320px] overflow-hidden rounded-3xl bg-secondary shadow-[0_22px_60px_rgba(2,30,54,0.16)] transition-transform active:scale-[0.985] md:h-[360px]"
+              className="card group relative h-[320px] overflow-hidden rounded-3xl bg-secondary shadow-[0_22px_60px_rgba(2,30,54,0.16)] transition-transform active:scale-[0.985] md:h-[360px]"
             >
               <a
                 href={`/obras/${work.id}`}
@@ -136,7 +136,7 @@ function Gallery({
                 <h2 className="mt-3 font-display text-3xl font-medium leading-tight md:text-4xl">
                   {work.title}
                 </h2>
-                <p className="touch-reveal max-h-0 max-w-xl translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100">
+                <p className="reveal-on-hover touch-reveal max-h-0 max-w-xl translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100">
                   {work.summary}
                 </p>
                 <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">

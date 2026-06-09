@@ -277,7 +277,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
 
           <StaggerGroup className="mt-10 grid gap-6 md:grid-cols-3">
             {works.map((work) => (
-              <StaggerItem key={work.type} className="group transition-transform active:scale-[0.985]">
+              <StaggerItem key={work.type} className="card group transition-transform active:scale-[0.985]">
                 <div className="overflow-hidden rounded-2xl">
                   <img
                     src={work.img}

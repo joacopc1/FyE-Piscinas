@@ -116,6 +116,14 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
+  button,
+  a,
+  [role="button"],
+  .card,
+  .interactive {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
   h1,
   h2,
   h3,
@@ -153,6 +161,10 @@
     box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--foreground) 8%, transparent);
   }
 
+  .hero-video::-webkit-media-controls,
+  .hero-video::-webkit-media-controls-panel,
+  .hero-video::-webkit-media-controls-play-button,
+  .hero-video::-webkit-media-controls-start-playback-button,
   .hero-bg-video::-webkit-media-controls,
   .hero-bg-video::-webkit-media-controls-panel,
   .hero-bg-video::-webkit-media-controls-play-button,
@@ -162,7 +174,28 @@
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .card {
+    transition:
+      transform 300ms ease,
+      box-shadow 300ms ease,
+      border-color 300ms ease;
+  }
+}
+
 @media (hover: none), (pointer: coarse) {
+  .card:active {
+    transform: scale(0.98);
+  }
+
+  .card .reveal-on-hover {
+    margin-top: 0.75rem;
+    max-height: 7rem;
+    opacity: 1 !important;
+    transform: none !important;
+    translate: 0 0;
+  }
+
   .touch-image-zoom {
     scale: 1.03;
   }

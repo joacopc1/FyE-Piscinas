@@ -29,7 +29,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState<string | null>(null);
   const [mobile, setMobile] = useState(false);
-  const isSolid = solid || scrolled;
+  const isSolid = solid || scrolled || mobile;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -119,13 +119,14 @@ export function Header({ solid = false }: { solid?: boolean }) {
             Aplicar a diagnóstico
           </a>
           <button
-            onClick={() => setMobile(true)}
+            onClick={() => setMobile((value) => !value)}
             className={`grid h-10 w-10 place-items-center rounded-md lg:hidden ${
               isSolid ? "text-foreground" : "text-white"
             }`}
-            aria-label="Abrir menú"
+            aria-label={mobile ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={mobile}
           >
-            <Menu className="h-6 w-6" />
+            {mobile ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
@@ -140,37 +141,20 @@ export function Header({ solid = false }: { solid?: boolean }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.18 }}
-              className="fixed inset-0 z-40 bg-primary/28 backdrop-blur-[2px] lg:hidden"
+              className="fixed inset-x-0 top-16 bottom-0 z-40 bg-primary/20 backdrop-blur-sm md:top-20 lg:hidden"
               onClick={() => setMobile(false)}
             />
             <motion.div
-              initial={{ opacity: 0, y: -10, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed inset-x-4 top-20 z-50 max-h-[calc(100svh-6rem)] overflow-y-auto rounded-3xl border border-border bg-background p-4 shadow-[var(--shadow-lift)] lg:hidden"
+              className="absolute inset-x-0 top-full z-50 max-h-[calc(100svh-4rem)] overflow-y-auto border-y border-border bg-background/96 px-5 py-4 shadow-[var(--shadow-lift)] backdrop-blur-xl md:max-h-[calc(100svh-5rem)] lg:hidden"
             >
-              <div className="flex items-center justify-between border-b border-border/70 pb-3">
-                <img
-                  src="/logo FYE Piscinas.png"
-                  alt="FYE Piscinas"
-                  className="h-10 w-auto"
-                  width={186}
-                  height={125}
-                />
-                <button
-                  className="grid h-10 w-10 place-items-center rounded-full bg-secondary text-foreground"
-                  onClick={() => setMobile(false)}
-                  aria-label="Cerrar menú"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-
-              <div className="mt-3 space-y-1">
+              <div className="mx-auto max-w-7xl space-y-1">
                 {nav.map((n) =>
                   n.items ? (
-                    <div key={n.label} className="rounded-2xl bg-secondary/55 p-2">
+                    <div key={n.label} className="rounded-2xl bg-secondary/70 p-2">
                       <div className="px-2 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                         {n.label}
                       </div>

@@ -562,7 +562,7 @@ function Works() {
         {works.map((w, i) => (
           <StaggerItem
             key={w.title}
-            className={`group relative cursor-pointer overflow-hidden rounded-3xl transition-transform active:scale-[0.985] ${
+            className={`card group relative cursor-pointer overflow-hidden rounded-3xl transition-transform active:scale-[0.985] ${
               i === 0 ? "md:col-span-2 md:row-span-2" : ""
             }`}
           >

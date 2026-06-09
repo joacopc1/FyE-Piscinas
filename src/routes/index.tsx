@@ -14,6 +14,7 @@ import {
 import { useRef, useState } from "react";
 
 import { Header } from "@/components/site/Header";
+import { HeroVideo } from "@/components/site/HeroVideo";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 import { whatsappMessages, whatsappUrl } from "@/lib/contact";
 
@@ -25,6 +26,7 @@ import work2 from "@/assets/work-2.jpg";
 import work3 from "@/assets/work-3.jpg";
 
 const HERO_VIDEO_SRC = "/9044153-hd_720_1280_30fps.mp4";
+const HERO_POSTER_SRC = "/pexels-mia-dalisay-594958-27853288.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -76,27 +78,7 @@ function Hero() {
     <section ref={ref} className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-deep">
       {/* Background video with parallax + slow zoom */}
       <motion.div style={{ y, scale }} className="absolute inset-0 will-change-transform">
-        <video
-          className="hero-bg-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          disablePictureInPicture
-          aria-hidden="true"
-          onLoadedMetadata={(event) => {
-            event.currentTarget.play().catch(() => {});
-          }}
-          onCanPlay={(event) => {
-            event.currentTarget.play().catch(() => {});
-          }}
-          onError={(event) => {
-            event.currentTarget.style.display = "none";
-          }}
-        >
-          <source src={HERO_VIDEO_SRC} type="video/mp4" />
-        </video>
+        <HeroVideo src={HERO_VIDEO_SRC} poster={HERO_POSTER_SRC} />
         {/* Cinematic gradients */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/12 to-black/78 md:from-black/34 md:via-black/10 md:to-black/50" />
       </motion.div>
@@ -357,7 +339,7 @@ function Services() {
           {services.map((s, index) => (
             <StaggerItem
               key={s.title}
-              className="group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary transition-transform active:scale-[0.985]"
+              className="card group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary transition-transform active:scale-[0.985]"
             >
               <a
                 href={s.href}
@@ -378,7 +360,7 @@ function Services() {
                 <h3 className="touch-title-lift font-display text-3xl font-medium leading-none tracking-[-0.02em] transition-transform duration-500 group-hover:-translate-y-2">
                   {s.title}
                 </h3>
-                <p className="touch-reveal max-h-0 max-w-md translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100">
+                <p className="reveal-on-hover touch-reveal max-h-0 max-w-md translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100">
                   {s.body}
                 </p>
                 <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
@@ -489,7 +471,7 @@ function Works() {
           {works.map((w, i) => (
             <StaggerItem
               key={w.title}
-              className={`group relative cursor-pointer overflow-hidden rounded-3xl transition-transform active:scale-[0.985] ${
+              className={`card group relative cursor-pointer overflow-hidden rounded-3xl transition-transform active:scale-[0.985] ${
                 i === 0 ? "md:col-span-2 md:row-span-2" : ""
               }`}
             >
