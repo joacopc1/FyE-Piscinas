@@ -27,7 +27,7 @@ import work2 from "@/assets/work-2.jpg";
 import work3 from "@/assets/work-3.jpg";
 
 const HERO_VIDEO_SRC = "/9044153-hd_720_1280_30fps.mp4";
-const HERO_POSTER_SRC = "/pexels-mia-dalisay-594958-27853288.jpg";
+const HERO_POSTER_SRC = heroPool;
 
 export const Route = createFileRoute("/")({
   head: () => ({

@@ -20,7 +20,7 @@ export function Reveal({
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, amount: 0.1 }}
       transition={{ delay }}
       className={className}
     >
@@ -42,7 +42,7 @@ export function StaggerGroup({
     <motion.div
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, amount: 0.05 }}
       variants={{
         hidden: {},
         show: { transition: { staggerChildren: stagger } },
