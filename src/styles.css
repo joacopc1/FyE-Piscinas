@@ -163,31 +163,46 @@
   .hairline-border {
     box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--foreground) 8%, transparent);
   }
-
-  video.hero-video,
-  video.hero-bg-video {
-    -webkit-appearance: none;
-    appearance: none;
-  }
-  
-  /* Hide native Safari iOS media controls and play button overlay */
-  video::-webkit-media-controls,
-  video::-webkit-media-controls-panel,
-  video::-webkit-media-controls-play-button,
-  video::-webkit-media-controls-start-playback-button,
-  video::-webkit-media-controls-overlay-play-button,
-  ::-webkit-media-controls,
-  ::-webkit-media-controls-panel,
-  ::-webkit-media-controls-play-button,
-  ::-webkit-media-controls-start-playback-button,
-  ::-webkit-media-controls-overlay-play-button {
-    display: none !important;
-    -webkit-appearance: none !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-  }
 }
 
+/* ======================================================================
+   FORCE-HIDE native Safari / iOS video controls and play button overlay.
+   Placed OUTSIDE @layer so it has maximum CSS specificity.
+   ====================================================================== */
+video.hero-video,
+video.hero-bg-video {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+}
+
+video::-webkit-media-controls,
+video::-webkit-media-controls-enclosure,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-play-button,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-overlay-play-button,
+video::-webkit-media-controls-current-time-display,
+video::-webkit-media-controls-time-remaining-display,
+*::-webkit-media-controls,
+*::-webkit-media-controls-enclosure,
+*::-webkit-media-controls-panel,
+*::-webkit-media-controls-play-button,
+*::-webkit-media-controls-start-playback-button,
+*::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* ======================================================================
+   Desktop: hover-capable devices — smooth card transitions
+   ====================================================================== */
 @media (hover: hover) and (pointer: fine) {
   .card {
     transition:
@@ -197,11 +212,30 @@
   }
 }
 
+/* ======================================================================
+   Touch devices — active states for feedback + permanently expanded content
+   ====================================================================== */
 @media (hover: none), (pointer: coarse) {
+  /* Generic card active feedback */
   .card:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
+    box-shadow: var(--shadow-lift);
   }
 
+  /* Pains / Process / any StaggerItem card — active feedback on tap */
+  [class*="rounded-2xl"][class*="border"][class*="bg-card"]:active {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
+    transition: transform 150ms ease, box-shadow 150ms ease;
+  }
+
+  /* Works gallery cards — active feedback */
+  [class*="rounded-3xl"][class*="group"]:active {
+    transform: scale(0.97);
+    box-shadow: var(--shadow-lift);
+  }
+
+  /* Service cards — permanently reveal text on touch devices */
   .card .reveal-on-hover {
     margin-top: 0.75rem;
     max-height: 7rem;
@@ -233,3 +267,4 @@
     translate: 0.25rem 0;
   }
 }
+
