@@ -27,7 +27,6 @@ import work2 from "@/assets/work-2.jpg";
 import work3 from "@/assets/work-3.jpg";
 
 const HERO_VIDEO_SRC = "/9044153-hd_720_1280_30fps.mp4";
-const HERO_POSTER_SRC = heroPool;
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -79,7 +78,7 @@ function Hero() {
     <section ref={ref} className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-deep">
       {/* Background video with parallax + slow zoom */}
       <motion.div style={{ y, scale }} className="absolute inset-0 will-change-transform">
-        <HeroVideo src={HERO_VIDEO_SRC} poster={HERO_POSTER_SRC} />
+        <HeroVideo src={HERO_VIDEO_SRC} />
         {/* Cinematic gradients */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/12 to-black/78 md:from-black/34 md:via-black/10 md:to-black/50" />
       </motion.div>
@@ -238,70 +237,68 @@ function OfferStack() {
   ];
   return (
     <section className="relative overflow-hidden bg-white px-5 py-14 text-foreground md:px-8 md:py-20">
-      <Reveal>
-        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-border bg-card shadow-[var(--shadow-soft)]">
-          <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="relative min-h-[440px] overflow-hidden lg:min-h-[620px]">
-              <img
-                src={work2}
-                alt="Familia disfrutando una piscina instalada en casa"
-                loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/86 via-primary/18 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-10">
-                <h2 className="max-w-sm font-display text-3xl font-medium leading-[1.02] md:max-w-xl md:text-5xl">
-                  Piscina lista para disfrutar.
-                  <span className="hidden text-aqua md:block">Sin comprar a ciegas.</span>
-                </h2>
-                <p className="mt-5 hidden max-w-xl text-base leading-relaxed text-white/84 md:block">
-                  Una propuesta para elegir bien, coordinar flete, colocación, vereda perimetral,
-                  caseta, bomba, filtro y llegar al primer uso con acompañamiento real.
-                </p>
-              </div>
+      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-border bg-card shadow-[var(--shadow-soft)]">
+        <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
+          <Reveal className="relative min-h-[440px] overflow-hidden lg:min-h-[620px] h-full">
+            <img
+              src={work2}
+              alt="Familia disfrutando una piscina instalada en casa"
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/86 via-primary/18 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-10">
+              <h2 className="max-w-sm font-display text-3xl font-medium leading-[1.02] md:max-w-xl md:text-5xl">
+                Piscina lista para disfrutar.
+                <span className="hidden text-aqua md:block">Sin comprar a ciegas.</span>
+              </h2>
+              <p className="mt-5 hidden max-w-xl text-base leading-relaxed text-white/84 md:block">
+                Una propuesta para elegir bien, coordinar flete, colocación, vereda perimetral,
+                caseta, bomba, filtro y llegar al primer uso con acompañamiento real.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.15} className="h-full flex flex-col justify-center p-7 md:p-10 lg:p-12">
+            <div className="grid gap-3 sm:grid-cols-3">
+              {["Elección guiada", "Instalación completa", "Postventa inicial"].map((item) => (
+                <div key={item} className="rounded-2xl border border-border bg-white p-4">
+                  <div className="h-1.5 w-8 rounded-full bg-aqua" />
+                  <div className="mt-3 text-sm font-semibold leading-tight">{item}</div>
+                </div>
+              ))}
             </div>
 
-            <div className="flex flex-col justify-center p-7 md:p-10 lg:p-12">
-              <div className="grid gap-3 sm:grid-cols-3">
-                {["Elección guiada", "Instalación completa", "Postventa inicial"].map((item) => (
-                  <div key={item} className="rounded-2xl border border-border bg-white p-4">
-                    <div className="h-1.5 w-8 rounded-full bg-aqua" />
-                    <div className="mt-3 text-sm font-semibold leading-tight">{item}</div>
-                  </div>
-                ))}
-              </div>
+            <h3 className="mt-8 font-display text-2xl font-medium leading-tight md:text-3xl">
+              Qué te llevás con la propuesta.
+            </h3>
+            <ul className="mt-6 space-y-3">
+              {stack.map((s) => (
+                <li key={s.title} className="flex items-center gap-3 text-sm font-semibold">
+                  {s.type === "bonus" ? (
+                    <span className="grid h-7 w-7 flex-none place-items-center text-base">
+                      🎁
+                    </span>
+                  ) : (
+                    <span className="grid h-7 w-7 flex-none place-items-center rounded-full bg-aqua text-primary">
+                      <Check className="h-3.5 w-3.5" strokeWidth={3} />
+                    </span>
+                  )}
+                  <span>{s.title}</span>
+                </li>
+              ))}
+            </ul>
 
-              <h3 className="mt-8 font-display text-2xl font-medium leading-tight md:text-3xl">
-                Qué te llevás con la propuesta.
-              </h3>
-              <ul className="mt-6 space-y-3">
-                {stack.map((s) => (
-                  <li key={s.title} className="flex items-center gap-3 text-sm font-semibold">
-                    {s.type === "bonus" ? (
-                      <span className="grid h-7 w-7 flex-none place-items-center text-base">
-                        🎁
-                      </span>
-                    ) : (
-                      <span className="grid h-7 w-7 flex-none place-items-center rounded-full bg-aqua text-primary">
-                        <Check className="h-3.5 w-3.5" strokeWidth={3} />
-                      </span>
-                    )}
-                    <span>{s.title}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <a
-                href="/piscina-lista-para-disfrutar"
-                className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-aqua px-7 py-3.5 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
-              >
-                Conocer la propuesta
-                <ArrowRight className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
+            <a
+              href="/piscina-lista-para-disfrutar"
+              className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-aqua px-7 py-3.5 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
+            >
+              Conocer la propuesta
+              <ArrowRight className="h-4 w-4" />
+            </a>
+          </Reveal>
         </div>
-      </Reveal>
+      </div>
     </section>
   );
 }

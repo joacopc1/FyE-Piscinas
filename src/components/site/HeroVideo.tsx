@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export function HeroVideo({ src, poster }: { src: string; poster: string }) {
+export function HeroVideo({ src }: { src: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -30,12 +30,6 @@ export function HeroVideo({ src, poster }: { src: string; poster: string }) {
 
   return (
     <>
-      <img
-        src={poster}
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
-        aria-hidden="true"
-      />
       {!failed && (
         <video
           ref={videoRef}
@@ -68,4 +62,5 @@ export function HeroVideo({ src, poster }: { src: string; poster: string }) {
     </>
   );
 }
+
 

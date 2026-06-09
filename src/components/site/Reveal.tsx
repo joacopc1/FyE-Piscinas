@@ -1,5 +1,5 @@
 import { motion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -15,11 +15,21 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
+  const [animateState, setAnimateState] = useState("hidden");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimateState("show");
+    }, 1000); // 1-second fallback to force visibility if viewport observer fails
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <motion.div
       variants={fadeUp}
       initial="hidden"
-      whileInView="show"
+      animate={animateState}
+      onViewportEnter={() => setAnimateState("show")}
       viewport={{ once: true, amount: 0.05, margin: "0px 0px -10% 0px" }}
       transition={{ delay }}
       className={className}
@@ -39,10 +49,20 @@ export function StaggerGroup({
   className?: string;
   stagger?: number;
 }) {
+  const [animateState, setAnimateState] = useState("hidden");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimateState("show");
+    }, 1200); // 1.2-second fallback to force stagger items visibility
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <motion.div
       initial="hidden"
-      whileInView="show"
+      animate={animateState}
+      onViewportEnter={() => setAnimateState("show")}
       viewport={{ once: true, amount: 0.01, margin: "0px 0px -10% 0px" }}
       variants={{
         hidden: {},
@@ -68,4 +88,5 @@ export function StaggerItem({ children, className }: { children: ReactNode; clas
     </motion.div>
   );
 }
+
 
