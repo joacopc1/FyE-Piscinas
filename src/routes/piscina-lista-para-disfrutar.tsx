@@ -22,6 +22,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 
 import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 
 import work1 from "@/assets/work-1.jpg";
@@ -695,65 +696,4 @@ function FinalCTA() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-4 md:px-8">
-        <div className="md:col-span-2">
-          <div className="flex items-center gap-2">
-            <span className="grid h-9 w-9 place-items-center rounded-lg bg-primary font-display text-lg font-semibold text-primary-foreground">
-              F
-            </span>
-            <span className="font-display text-xl font-semibold">FYE Piscinas</span>
-          </div>
-          <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-            Diseñamos, instalamos y acompañamos proyectos de piscinas residenciales en Uruguay.
-          </p>
-        </div>
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-foreground/60">
-            Empresa
-          </div>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>
-              <Link to="/" className="hover:text-foreground">
-                Inicio
-              </Link>
-            </li>
-            <li>
-              <Link to="/" hash="servicios" className="hover:text-foreground">
-                Servicios
-              </Link>
-            </li>
-            <li>
-              <Link to="/" hash="obras" className="hover:text-foreground">
-                Obras
-              </Link>
-            </li>
-            <li>
-              <Link to="/" hash="contacto" className="hover:text-foreground">
-                Contacto
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-foreground/60">
-            Contacto
-          </div>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>Montevideo, Uruguay</li>
-            <li>hola@fyepiscinas.uy</li>
-            <li>+598 99 000 000</li>
-          </ul>
-        </div>
-      </div>
-      <div className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-5 text-xs text-muted-foreground md:flex-row md:px-8">
-          <span>© {new Date().getFullYear()} FYE Piscinas. Todos los derechos reservados.</span>
-          <span>Hecho con cuidado en Uruguay.</span>
-        </div>
-      </div>
-    </footer>
-  );
-}
+

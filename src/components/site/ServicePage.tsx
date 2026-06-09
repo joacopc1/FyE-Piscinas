@@ -14,6 +14,7 @@ import {
 import { useEffect, useState, type ReactNode } from "react";
 
 import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 import { whatsappMessages, whatsappUrl } from "@/lib/contact";
 
@@ -381,73 +382,4 @@ function Faq({ faqs }: { faqs: { q: string; a: string }[] }) {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-white">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-4 md:px-8">
-        <div className="md:col-span-2">
-          <div className="flex items-center gap-2">
-            <img
-              src="/logo FYE Piscinas.png"
-              alt="FYE Piscinas"
-              className="h-10 w-auto"
-              width={186}
-              height={125}
-            />
-          </div>
-          <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-            Diseñamos, instalamos y acompañamos proyectos de piscinas residenciales en Uruguay.
-          </p>
-        </div>
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-foreground/60">
-            Servicios
-          </div>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>
-              <Link to="/piscinas-de-fibra" className="hover:text-foreground">
-                Piscinas instaladas
-              </Link>
-            </li>
-            <li>
-              <Link to="/jacuzzi-spa" className="hover:text-foreground">
-                Jacuzzi / Spa
-              </Link>
-            </li>
-            <li>
-              <Link to="/climatizacion" className="hover:text-foreground">
-                Climatización
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-wider text-foreground/60">
-            Navegación
-          </div>
-          <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>
-              <Link to="/" className="hover:text-foreground">
-                Inicio
-              </Link>
-            </li>
-            <li>
-              <Link to="/obras" className="hover:text-foreground">
-                Obras
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/diagnostico"
-                search={{ origen: "footer" }}
-                className="hover:text-foreground"
-              >
-                Diagnóstico
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </footer>
-  );
-}
+

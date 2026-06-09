@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 
 export function HeroVideo({ src, poster }: { src: string; poster: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [failed, setFailed] = useState(false);
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
@@ -19,8 +18,8 @@ export function HeroVideo({ src, poster }: { src: string; poster: string }) {
     const tryPlay = () => {
       video
         .play()
-        .then(() => setFailed(false))
-        .catch(() => setFailed(true));
+        .then(() => {})
+        .catch(() => {});
     };
 
     tryPlay();
@@ -36,32 +35,32 @@ export function HeroVideo({ src, poster }: { src: string; poster: string }) {
         className="absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
         aria-hidden="true"
       />
-      {!failed && (
-        <video
-          ref={videoRef}
-          className={`hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 md:object-[center_48%] ${
-            playing ? "opacity-100" : "opacity-0"
-          }`}
-          src={src}
-          poster={poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          disablePictureInPicture
-          controls={false}
-          aria-hidden="true"
-          onLoadedMetadata={(event) => {
-            event.currentTarget.play().catch(() => setFailed(true));
-          }}
-          onCanPlay={(event) => {
-            event.currentTarget.play().catch(() => setFailed(true));
-          }}
-          onPlaying={() => setPlaying(true)}
-          onError={() => setFailed(true)}
-        />
-      )}
+      <video
+        ref={videoRef}
+        className={`hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 md:object-[center_48%] ${
+          playing ? "opacity-100" : "opacity-0"
+        }`}
+        src={src}
+        poster={poster}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        disablePictureInPicture
+        controls={false}
+        aria-hidden="true"
+        onLoadedMetadata={(event) => {
+          event.currentTarget.play().catch(() => {});
+        }}
+        onCanPlay={(event) => {
+          event.currentTarget.play().catch(() => {});
+        }}
+        onPlaying={() => setPlaying(true)}
+        onError={() => {
+          // If error occurs, playing remains false and poster stays visible
+        }}
+      />
     </>
   );
 }

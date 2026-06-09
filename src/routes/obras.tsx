@@ -3,6 +3,7 @@ import { ArrowRight, Check, Home, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Header } from "@/components/site/Header";
+import { Footer } from "@/components/site/Footer";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 import { whatsappMessages, whatsappUrl } from "@/lib/contact";
 import { Work, WorkCategory, workFilters, works } from "@/lib/works";
@@ -240,28 +241,4 @@ function FinalCTA() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-white py-10">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between md:px-8">
-        <a href="/" className="flex items-center gap-2 text-foreground">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary font-display text-sm font-semibold text-primary-foreground">
-            F
-          </span>
-          <span className="font-display text-lg font-semibold">FYE Piscinas</span>
-        </a>
-        <div className="flex flex-wrap gap-5">
-          <a href="/#servicios" className="hover:text-foreground">
-            Servicios
-          </a>
-          <a href="/obras" className="hover:text-foreground">
-            Obras
-          </a>
-          <a href="/#contacto" className="hover:text-foreground">
-            Contacto
-          </a>
-        </div>
-      </div>
-    </footer>
-  );
-}
+

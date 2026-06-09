@@ -1,4 +1,4 @@
-import { motion, useReducedMotion, type Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import type { ReactNode } from "react";
 
 const fadeUp: Variants = {
@@ -15,18 +15,12 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
     <motion.div
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.12, margin: "0px 0px -8% 0px" }}
+      viewport={{ once: true, margin: "-80px" }}
       transition={{ delay }}
       className={className}
     >
@@ -44,17 +38,11 @@ export function StaggerGroup({
   className?: string;
   stagger?: number;
 }) {
-  const reduceMotion = useReducedMotion();
-
-  if (reduceMotion) {
-    return <div className={className}>{children}</div>;
-  }
-
   return (
     <motion.div
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.08, margin: "0px 0px -8% 0px" }}
+      viewport={{ once: true, margin: "-60px" }}
       variants={{
         hidden: {},
         show: { transition: { staggerChildren: stagger } },
@@ -73,3 +61,4 @@ export function StaggerItem({ children, className }: { children: ReactNode; clas
     </motion.div>
   );
 }
+
