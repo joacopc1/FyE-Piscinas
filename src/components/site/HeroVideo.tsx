@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 export function HeroVideo({ src, poster }: { src: string; poster: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -18,7 +19,7 @@ export function HeroVideo({ src, poster }: { src: string; poster: string }) {
     const tryPlay = () => {
       video
         .play()
-        .then(() => {})
+        .then(() => setPlaying(true))
         .catch(() => {});
     };
 
@@ -35,32 +36,36 @@ export function HeroVideo({ src, poster }: { src: string; poster: string }) {
         className="absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
         aria-hidden="true"
       />
-      <video
-        ref={videoRef}
-        className={`hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 md:object-[center_48%] ${
-          playing ? "opacity-100" : "opacity-0"
-        }`}
-        src={src}
-        poster={poster}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        disablePictureInPicture
-        controls={false}
-        aria-hidden="true"
-        onLoadedMetadata={(event) => {
-          event.currentTarget.play().catch(() => {});
-        }}
-        onCanPlay={(event) => {
-          event.currentTarget.play().catch(() => {});
-        }}
-        onPlaying={() => setPlaying(true)}
-        onError={() => {
-          // If error occurs, playing remains false and poster stays visible
-        }}
-      />
+      {!failed && (
+        <video
+          ref={videoRef}
+          className={`hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-500 md:object-[center_48%] ${
+            playing ? "opacity-100" : "opacity-0"
+          }`}
+          src={src}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          // @ts-expect-error iOS attribute
+          disableRemotePlayback=""
+          controls={false}
+          controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
+          aria-hidden="true"
+          tabIndex={-1}
+          onLoadedMetadata={(event) => {
+            event.currentTarget.play().catch(() => {});
+          }}
+          onCanPlay={(event) => {
+            event.currentTarget.play().catch(() => {});
+          }}
+          onPlaying={() => setPlaying(true)}
+          onError={() => setFailed(true)}
+        />
+      )}
     </>
   );
 }
+

@@ -134,42 +134,37 @@ export function Header({ solid = false }: { solid?: boolean }) {
       <AnimatePresence>
         {mobile && (
           <>
-            <motion.button
-              type="button"
-              aria-label="Cerrar menú"
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.18 }}
-              className="fixed inset-x-0 top-16 bottom-0 z-40 bg-primary/20 backdrop-blur-sm md:top-20 lg:hidden"
+              transition={{ duration: 0.15 }}
+              className="fixed inset-0 z-40 bg-black/10 backdrop-blur-[2px] lg:hidden"
               onClick={() => setMobile(false)}
             />
             <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-x-0 top-full z-50 max-h-[calc(100svh-4rem)] overflow-y-auto border-y border-border bg-background/96 px-5 py-4 shadow-[var(--shadow-lift)] backdrop-blur-xl md:max-h-[calc(100svh-5rem)] lg:hidden"
+              initial={{ opacity: 0, y: -8, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -8, scale: 0.98 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute right-5 top-[calc(100%+8px)] z-50 w-[min(20rem,calc(100vw-2.5rem))] origin-top-right rounded-2xl border border-border bg-background/96 p-3 shadow-[var(--shadow-lift)] backdrop-blur-xl lg:hidden"
             >
-              <div className="mx-auto max-w-7xl space-y-1">
+              <div className="space-y-1.5">
                 {nav.map((n) =>
                   n.items ? (
-                    <div key={n.label} className="rounded-2xl bg-secondary/70 p-2">
-                      <div className="px-2 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    <div key={n.label} className="rounded-xl bg-secondary/60 p-2">
+                      <div className="px-2 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/80">
                         {n.label}
                       </div>
-                      <div className="grid gap-1">
+                      <div className="grid gap-0.5">
                         {n.items.map((item) => (
                           <a
                             key={item.label}
                             href={item.href}
                             onClick={() => setMobile(false)}
-                            className="rounded-xl px-3 py-3 transition-colors active:bg-white"
+                            className="rounded-lg px-2.5 py-1.5 transition-colors active:bg-white/80"
                           >
-                            <div className="text-sm font-semibold text-foreground">{item.label}</div>
-                            <div className="mt-0.5 text-xs leading-snug text-muted-foreground">
-                              {item.desc}
-                            </div>
+                            <div className="text-xs font-semibold text-foreground">{item.label}</div>
                           </a>
                         ))}
                       </div>
@@ -179,7 +174,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
                       key={n.label}
                       href={n.href ?? "/#servicios"}
                       onClick={() => setMobile(false)}
-                      className="block rounded-2xl px-4 py-3 text-base font-semibold transition-colors active:bg-secondary"
+                      className="block rounded-xl px-3 py-2 text-sm font-semibold transition-colors active:bg-secondary"
                     >
                       {n.label}
                     </a>
@@ -188,7 +183,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
                 <a
                   href="/diagnostico?origen=header-mobile"
                   onClick={() => setMobile(false)}
-                  className="mt-3 flex items-center justify-center rounded-full bg-aqua px-5 py-3 text-sm font-semibold text-primary"
+                  className="mt-2 flex items-center justify-center rounded-full bg-aqua px-4 py-2.5 text-xs font-semibold text-primary"
                 >
                   Aplicar a diagnóstico
                 </a>

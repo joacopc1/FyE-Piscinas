@@ -20,9 +20,10 @@ export function Reveal({
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.1 }}
+      viewport={{ once: true, amount: 0.05, margin: "0px 0px -10% 0px" }}
       transition={{ delay }}
       className={className}
+      style={{ willChange: "opacity, transform" }}
     >
       {children}
     </motion.div>
@@ -42,12 +43,13 @@ export function StaggerGroup({
     <motion.div
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.05 }}
+      viewport={{ once: true, amount: 0.01, margin: "0px 0px -10% 0px" }}
       variants={{
         hidden: {},
         show: { transition: { staggerChildren: stagger } },
       }}
       className={className}
+      style={{ willChange: "opacity, transform" }}
     >
       {children}
     </motion.div>
@@ -56,7 +58,12 @@ export function StaggerGroup({
 
 export function StaggerItem({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <motion.div variants={fadeUp} whileTap={{ scale: 0.985 }} className={className}>
+    <motion.div
+      variants={fadeUp}
+      whileTap={{ scale: 0.985 }}
+      className={className}
+      style={{ willChange: "opacity, transform" }}
+    >
       {children}
     </motion.div>
   );
