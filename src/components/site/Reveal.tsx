@@ -22,7 +22,7 @@ export function Reveal({
     if (isIOS) {
       const timer = setTimeout(() => {
         setFallbackTriggered(true);
-      }, 1500); // 1.5-second safety fallback on iOS Safari
+      }, 2500); // 2.5-second safety fallback on iOS Safari
       return () => clearTimeout(timer);
     }
   }, []);
@@ -79,7 +79,7 @@ export function StaggerItem({ children, className }: { children: ReactNode; clas
     if (isIOS) {
       const timer = setTimeout(() => {
         setFallbackTriggered(true);
-      }, 1500); // 1.5-second safety fallback on iOS Safari
+      }, 2500); // 2.5-second safety fallback on iOS Safari
       return () => clearTimeout(timer);
     }
   }, []);
