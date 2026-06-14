@@ -118,6 +118,20 @@ function RootShell({ children }: { children: ReactNode }) {
       <body>
         {children}
         <Scripts />
+        {/* Glovi Widget */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.glovi = window.glovi || {};
+              window.glovi.config = {
+                agentId: '4c1386ed-8063-415b-b573-671a0736a986',
+                primaryColor: '#5c92cc'
+              };
+            `,
+          }}
+        />
+        <script src="https://glovi.vercel.app//widget.js" async />
+        {/* End Glovi Widget */}
       </body>
     </html>
   );

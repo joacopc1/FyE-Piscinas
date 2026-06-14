@@ -270,7 +270,7 @@ function OfferStack() {
             </div>
 
             <h3 className="mt-8 font-display text-2xl font-medium leading-tight md:text-3xl">
-              Qué te llevás con la propuesta.
+              Todo lo que incluye tu proyecto
             </h3>
             <ul className="mt-6 space-y-3">
               {stack.map((s) => (
@@ -293,7 +293,7 @@ function OfferStack() {
               href="/piscina-lista-para-disfrutar"
               className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-aqua px-7 py-3.5 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
             >
-              Conocer la propuesta
+              Conocer el plan
               <ArrowRight className="h-4 w-4" />
             </a>
           </Reveal>
