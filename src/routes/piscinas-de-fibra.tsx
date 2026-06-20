@@ -98,27 +98,27 @@ const data: ServicePageData = {
   ],
   guaranteeHeadline: "10 años de garantía.",
   guaranteeBody:
-    "Roberto comunicó 10 años de garantía. Las condiciones y alcance exacto se explican antes de confirmar el proyecto.",
+    "Nuestros cascos de fibra de vidrio y la instalación de las tuberías hidráulicas cuentan con un respaldo estructural de 10 años. Además, los equipos de bombeo tienen cobertura de cambio técnico directo durante el primer año en caso de fallas.",
   faqs: [
     {
       q: "¿En cuánto tiempo tengo la piscina?",
-      a: "Según Roberto, una vez que el casco llega al lugar, la instalación puede resolverse en pocos días si el terreno, acceso y agenda están en condiciones.",
+      a: "Una vez que el casco de fibra llega a tu domicilio, la excavación, colocación y conexionado hidráulico se completan en pocos días, sujeto a las condiciones climáticas y de accesibilidad del terreno.",
     },
     {
       q: "¿Qué medidas hay disponibles?",
-      a: "Se valida según catálogo real, espacio, uso esperado y tipo de instalación que conviene para tu casa.",
+      a: "Contamos con diversos modelos de cascos de fibra de vidrio que se adaptan a patios pequeños y grandes. Evaluamos las dimensiones ideales en base al espacio libre y al tipo de circulación de tu jardín.",
     },
     {
-      q: "¿Qué incluye una venta normal?",
-      a: "Roberto indicó que puede incluir flete, colocación, vereda perimetral, caseta, bomba, filtro y mano de obra. El alcance final se confirma antes de avanzar.",
+      q: "¿Qué incluye la instalación estándar?",
+      a: "Nuestra propuesta incluye el flete del casco, excavación, colocación completa, bomba, filtro de arena, caseta protectora de fibra, llaves de paso, luces LED, tablero eléctrico con timer automático, trámites ante el MTOP para cargas pesadas y una vereda perimetral construida con baldosas atérmicas de 50x50 cm.",
     },
     {
-      q: "¿Qué pasa si mi terreno tiene desnivel?",
-      a: "Se evalúa antes. Lo importante es detectarlo temprano para evitar sorpresas.",
+      q: "¿Qué pasa si hay napa freática alta o lluvias?",
+      a: "Si al excavar se detecta agua subterránea, instalamos sistemas de alivio y drenaje adecuados para estabilizar el terreno. En caso de lluvias intensas durante la obra, pausamos temporalmente el pozo y recondicionamos todo el suelo para garantizar una base firme antes de asentar el casco.",
     },
     {
-      q: "¿Incluye obra civil?",
-      a: "El alcance exacto debe quedar escrito en la propuesta antes de avanzar, especialmente excavación, acceso, terminaciones y condiciones del terreno.",
+      q: "¿Cómo se maneja el acceso y la logística del casco?",
+      a: "Se requiere un pasillo de entrada libre de aproximadamente 3 metros de ancho (dependiendo del modelo de piscina elegido). Si el terreno no tiene acceso directo por los laterales, se requiere contratar una grúa telescópica para cruzar el casco sobre la casa, costo que corre por cuenta del cliente mientras que FYE coordina la logística.",
     },
   ],
   finalCtaTitle: (

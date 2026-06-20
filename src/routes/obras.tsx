@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check, Home, Sparkles } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -115,8 +115,9 @@ function Gallery({
               key={work.id}
               className="card group relative h-[320px] overflow-hidden rounded-3xl bg-secondary shadow-[0_22px_60px_rgba(2,30,54,0.16)] transition-transform active:scale-[0.985] md:h-[360px]"
             >
-              <a
-                href={`/obras/${work.id}`}
+              <Link
+                to="/obras/$obraId"
+                params={{ obraId: work.id }}
                 className="absolute inset-0 z-10 text-left"
                 aria-label={`Ver proceso de ${work.title}`}
               />
@@ -184,7 +185,7 @@ function TrustBlock() {
         <div className="grid gap-3">
           {points.map((point, index) => (
             <Reveal key={point.title} delay={index * 0.08}>
-              <div className="flex items-start gap-4 rounded-3xl border border-border bg-card p-5 md:p-6">
+              <div className="flex items-start gap-4 rounded-3xl border border-border bg-card p-5 md:p-6 transition-all duration-300 hover:-translate-y-1 hover:border-aqua/40 hover:shadow-md hover:bg-secondary/15">
                 <point.icon className="mt-0.5 h-5 w-5 flex-none text-aqua" strokeWidth={1.8} />
                 <div>
                   <h3 className="text-base font-semibold text-foreground">{point.title}</h3>
@@ -221,19 +222,20 @@ function FinalCTA() {
             tiempos y tu presupuesto.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a
-              href="/diagnostico?origen=obras"
+            <Link
+              to="/diagnostico"
+              search={{ origen: "obras" }}
               className="inline-flex items-center gap-2 rounded-full bg-aqua px-7 py-3.5 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
             >
               Consultar mi proyecto
               <ArrowRight className="h-4 w-4" />
-            </a>
-            <a
-              href="/piscina-lista-para-disfrutar"
+            </Link>
+            <Link
+              to="/piscina-lista-para-disfrutar"
               className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 px-7 py-3.5 text-sm font-semibold backdrop-blur transition-colors hover:bg-white/15"
             >
               Ver oferta principal
-            </a>
+            </Link>
           </div>
         </Reveal>
       </div>

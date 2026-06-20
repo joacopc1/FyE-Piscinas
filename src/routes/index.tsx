@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
@@ -18,10 +18,12 @@ import { HeroVideo } from "@/components/site/HeroVideo";
 import { Footer } from "@/components/site/Footer";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 import { whatsappMessages, whatsappUrl } from "@/lib/contact";
+import { works as realWorks } from "@/lib/works";
 
 import heroPool from "@/assets/hero-pool.jpg";
-import serviceSpa from "@/assets/service-spa.jpg";
-import serviceClimate from "@/assets/service-climate.jpg";
+import serviceAccessories from "@/assets/service-accessories.jpg";
+import serviceLandscaping from "@/assets/service-landscaping.jpg";
+import serviceClimatizacion from "@/assets/service-climatizacion.jpg";
 import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
 import work3 from "@/assets/work-3.jpg";
@@ -250,7 +252,6 @@ function OfferStack() {
             <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-10">
               <h2 className="max-w-sm font-display text-3xl font-medium leading-[1.02] md:max-w-xl md:text-5xl">
                 Piscina lista para disfrutar.
-                <span className="hidden text-aqua md:block">Sin comprar a ciegas.</span>
               </h2>
               <p className="mt-5 hidden max-w-xl text-base leading-relaxed text-white/84 md:block">
                 Una propuesta para elegir bien, coordinar flete, colocación, vereda perimetral,
@@ -260,16 +261,7 @@ function OfferStack() {
           </Reveal>
 
           <Reveal delay={0.15} className="h-full flex flex-col justify-center p-7 md:p-10 lg:p-12">
-            <div className="grid gap-3 sm:grid-cols-3">
-              {["Elección guiada", "Instalación completa", "Postventa inicial"].map((item) => (
-                <div key={item} className="rounded-2xl border border-border bg-white p-4">
-                  <div className="h-1.5 w-8 rounded-full bg-aqua" />
-                  <div className="mt-3 text-sm font-semibold leading-tight">{item}</div>
-                </div>
-              ))}
-            </div>
-
-            <h3 className="mt-8 font-display text-2xl font-medium leading-tight md:text-3xl">
+            <h3 className="font-display text-2xl font-medium leading-tight md:text-3xl">
               Todo lo que incluye tu proyecto
             </h3>
             <ul className="mt-6 space-y-3">
@@ -307,16 +299,23 @@ function OfferStack() {
 function Services() {
   const services = [
     {
-      title: "Jacuzzi / Spa",
-      body: "Un complemento de confort para transformar el exterior en un espacio de relax durante todo el año.",
-      img: serviceSpa,
-      href: "/jacuzzi-spa",
+      title: "Equipamiento y Accesorios",
+      body: "Potenciá tu piscina con cascadas de agua decorativas, mantas térmicas cobertoras, iluminación LED de bajo consumo y sistemas de automatización a medida.",
+      img: serviceAccessories,
+      href: "/equipamiento-accesorios",
+      external: false,
+    },
+    {
+      title: "Entorno y Paisajismo",
+      body: "Completamos tu proyecto con trabajos de jardinería, colocación de césped natural, cascadas y revoques estéticos de muros linderos para un acabado premium de obra.",
+      img: serviceLandscaping,
+      href: "/jardin-y-entornos",
       external: false,
     },
     {
       title: "Climatización",
       body: "Un upgrade para extender la temporada y hacer que la piscina se use más meses, no solo en verano.",
-      img: serviceClimate,
+      img: serviceClimatizacion,
       href: "/climatizacion",
       external: false,
     },
@@ -333,19 +332,27 @@ function Services() {
           </div>
         </Reveal>
 
-        <StaggerGroup className="mt-10 grid gap-8 md:grid-cols-2">
+        <StaggerGroup className="mt-10 grid gap-8 lg:grid-cols-3 md:grid-cols-2">
           {services.map((s, index) => (
             <StaggerItem
               key={s.title}
               className="card group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary transition-transform active:scale-[0.985]"
             >
-              <a
-                href={s.href}
-                target={s.external ? "_blank" : undefined}
-                rel={s.external ? "noopener" : undefined}
-                aria-label={`Explorar ${s.title}`}
-                className="absolute inset-0 z-10"
-              />
+              {s.external ? (
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`Explorar ${s.title}`}
+                  className="absolute inset-0 z-10"
+                />
+              ) : (
+                <Link
+                  to={s.href}
+                  aria-label={`Explorar ${s.title}`}
+                  className="absolute inset-0 z-10"
+                />
+              )}
               <img
                 src={s.img}
                 alt={s.title}
@@ -431,23 +438,7 @@ function Process() {
 
 /* ---------------- WORKS ---------------- */
 function Works() {
-  const works = [
-    {
-      img: work1,
-      title: "Residencia familiar",
-      tag: "Casco + instalación completa",
-    },
-    {
-      img: work2,
-      title: "Casa de verano",
-      tag: "Antes / colocación / resultado",
-    },
-    {
-      img: work3,
-      title: "Jardín con vista",
-      tag: "Piscina + entorno exterior",
-    },
-  ];
+  const displayedWorks = realWorks.slice(0, 3);
 
   return (
     <section id="obras" className="bg-white py-14 md:py-20">
@@ -459,30 +450,36 @@ function Works() {
                 Proyectos que ya están disfrutándose.
               </h2>
             </div>
-            <a href="/obras" className="text-sm font-semibold text-primary hover:text-aqua">
+            <Link to="/obras" className="text-sm font-semibold text-primary hover:text-aqua">
               Ver todas las obras →
-            </a>
+            </Link>
           </div>
         </Reveal>
 
         <StaggerGroup className="mt-10 grid auto-rows-[260px] gap-6 md:grid-cols-3 md:auto-rows-[280px]">
-          {works.map((w, i) => (
+          {displayedWorks.map((w, i) => (
             <StaggerItem
               key={w.title}
               className={`card group relative cursor-pointer overflow-hidden rounded-3xl transition-transform active:scale-[0.985] ${
                 i === 0 ? "md:col-span-2 md:row-span-2" : ""
               }`}
             >
+              <Link
+                to="/obras/$obraId"
+                params={{ obraId: w.id }}
+                className="absolute inset-0 z-10"
+                aria-label={`Ver obra ${w.title}`}
+              />
               <img
-                src={w.img}
-                alt={w.title}
+                src={w.image}
+                alt={w.alt}
                 loading="lazy"
                 className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
               <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/84 via-primary/18 to-transparent opacity-65 transition-opacity duration-500 group-hover:opacity-86" />
               <div className="absolute bottom-0 left-0 p-6 text-white md:p-8">
                 <span className="inline-flex rounded-full bg-white/18 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
-                  {w.tag}
+                  {w.category}
                 </span>
                 <h3 className="mt-3 font-display text-2xl font-medium leading-tight md:text-3xl">
                   {w.title}
@@ -499,10 +496,10 @@ function Works() {
 /* ---------------- CONTACT ---------------- */
 function Contact() {
   const details = [
-    { icon: MapPin, title: "Ubicación", body: "Montevideo, Uruguay. Consultá cobertura por zona." },
-    { icon: Phone, title: "WhatsApp", body: "+598 99 000 000" },
+    { icon: MapPin, title: "Ubicación", body: "Florida, Uruguay. Cobertura en Florida, Canelones, Durazno, Treinta y Tres, Lavalleja, Tacuarembó y San José." },
+    { icon: Phone, title: "WhatsApp", body: "+598 98 670 636" },
     { icon: Mail, title: "Email", body: "hola@fyepiscinas.uy" },
-    { icon: Clock, title: "Horario", body: "Lunes a viernes, 9:00 a 18:00" },
+    { icon: Clock, title: "Horario", body: "Lunes a domingo, 9:00 a 20:00" },
   ];
 
   return (
@@ -539,7 +536,7 @@ function Contact() {
           <div className="overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
             <iframe
               title="Ubicación FYE Piscinas"
-              src="https://www.google.com/maps?q=FYE%20Piscinas%20Uruguay&output=embed"
+              src="https://www.google.com/maps?q=Florida,%20Uruguay&output=embed"
               className="h-[360px] w-full border-0 md:h-[520px]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -556,15 +553,15 @@ function Faq() {
   const faqs = [
     {
       q: "¿Trabajan en todo el país?",
-      a: "Cubrimos Montevideo, Canelones, Maldonado y zonas vecinas. Consultanos por otras localidades.",
+      a: "Nuestra zona de instalación habitual cubre Florida, Canelones, Durazno, Treinta y Tres, Lavalleja, Paso de los Toros, Tacuarembó y San José. El traslado no tiene costo dentro de los 100 km desde Montevideo; a partir de esa distancia se coordina un costo de traslado extra.",
     },
     {
       q: "¿Cuánto demora la instalación?",
-      a: "Según Roberto, una vez que el casco llega al lugar, la instalación puede resolverse en pocos días si el terreno y el acceso están en condiciones.",
+      a: "Una vez que el casco de fibra llega al domicilio, la colocación y puesta en marcha técnica se completan en pocos días, sujeto a las condiciones del terreno y de accesibilidad.",
     },
     {
       q: "¿Dan garantía?",
-      a: "Sí. FYE comunica 10 años de garantía y acompañamiento posterior. Las condiciones exactas se confirman antes de avanzar.",
+      a: "Sí, brindamos 10 años de garantía estructural en el casco de fibra de vidrio y en la instalación de las tuberías hidráulicas. La bomba de calor (climatización) tiene 2 años de garantía, y para la bomba hidráulica de filtrado, si bien no tiene garantía extendida, la reemplazamos sin costo en caso de falla durante el primer año.",
     },
     {
       q: "¿Puedo pagar en cuotas?",

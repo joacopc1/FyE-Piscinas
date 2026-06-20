@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 const nav = [
   {
@@ -16,8 +17,21 @@ const nav = [
         desc: "Casco directo de fábrica y colocación.",
         href: "/piscinas-de-fibra",
       },
-      { label: "Jacuzzi / Spa", desc: "Relax y bienestar todo el año.", href: "/jacuzzi-spa" },
-      { label: "Climatización", desc: "Disfrutá la temporada extendida.", href: "/climatizacion" },
+      {
+        label: "Climatización",
+        desc: "Disfrutá la temporada extendida.",
+        href: "/climatizacion",
+      },
+      {
+        label: "Equipamiento y Accesorios",
+        desc: "Cascadas, luces, timer y mantas.",
+        href: "/equipamiento-accesorios",
+      },
+      {
+        label: "Jardinería y Entornos",
+        desc: "Césped natural, muros y cascadas.",
+        href: "/jardin-y-entornos",
+      },
     ],
   },
   { label: "Obras", href: "/obras", items: null },
@@ -48,7 +62,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 md:h-20 md:px-8">
-        <a href="/" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <img
             src="/logo FYE Piscinas.png"
             alt="FYE Piscinas"
@@ -58,7 +72,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
             width={186}
             height={125}
           />
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">
           {nav.map((n) => (
@@ -68,17 +82,31 @@ export function Header({ solid = false }: { solid?: boolean }) {
               onMouseEnter={() => n.items && setOpen(n.label)}
               onMouseLeave={() => setOpen(null)}
             >
-              <a
-                href={n.href ?? "/#servicios"}
-                className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
-                  isSolid
-                    ? "text-foreground/80 hover:text-foreground hover:bg-secondary"
-                    : "text-white/90 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                {n.label}
-                {n.items && <ChevronDown className="h-3.5 w-3.5 opacity-70" />}
-              </a>
+              {n.href && !n.href.includes("#") ? (
+                <Link
+                  to={n.href}
+                  className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                    isSolid
+                      ? "text-foreground/80 hover:text-foreground hover:bg-secondary"
+                      : "text-white/90 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  {n.label}
+                  {n.items && <ChevronDown className="h-3.5 w-3.5 opacity-70" />}
+                </Link>
+              ) : (
+                <a
+                  href={n.href ?? "/#servicios"}
+                  className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                    isSolid
+                      ? "text-foreground/80 hover:text-foreground hover:bg-secondary"
+                      : "text-white/90 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  {n.label}
+                  {n.items && <ChevronDown className="h-3.5 w-3.5 opacity-70" />}
+                </a>
+              )}
               <AnimatePresence>
                 {n.items && open === n.label && (
                   <motion.div
@@ -90,14 +118,14 @@ export function Header({ solid = false }: { solid?: boolean }) {
                   >
                     <div className="rounded-2xl border border-border bg-popover p-2 shadow-[var(--shadow-lift)]">
                       {n.items.map((item) => (
-                        <a
+                        <Link
                           key={item.label}
-                          href={item.href}
+                          to={item.href}
                           className="block rounded-xl px-4 py-3 transition-colors hover:bg-secondary"
                         >
                           <div className="text-sm font-semibold text-foreground">{item.label}</div>
                           <div className="text-xs text-muted-foreground">{item.desc}</div>
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </motion.div>
@@ -108,8 +136,9 @@ export function Header({ solid = false }: { solid?: boolean }) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <a
-            href="/diagnostico?origen=header"
+          <Link
+            to="/diagnostico"
+            search={{ origen: "header" }}
             className={`hidden rounded-full px-4 py-2 text-sm font-medium transition-all md:inline-flex ${
               isSolid
                 ? "border border-border text-foreground hover:bg-secondary"
@@ -117,7 +146,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
             }`}
           >
             Aplicar a diagnóstico
-          </a>
+          </Link>
           <button
             onClick={() => setMobile((value) => !value)}
             className={`grid h-10 w-10 place-items-center rounded-md lg:hidden ${
@@ -158,35 +187,47 @@ export function Header({ solid = false }: { solid?: boolean }) {
                       </div>
                       <div className="grid gap-0.5">
                         {n.items.map((item) => (
-                          <a
+                          <Link
                             key={item.label}
-                            href={item.href}
+                            to={item.href}
                             onClick={() => setMobile(false)}
                             className="rounded-lg px-2.5 py-1.5 transition-colors active:bg-white/80"
                           >
                             <div className="text-xs font-semibold text-foreground">{item.label}</div>
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     </div>
                   ) : (
-                    <a
-                      key={n.label}
-                      href={n.href ?? "/#servicios"}
-                      onClick={() => setMobile(false)}
-                      className="block rounded-xl px-3 py-2 text-sm font-semibold transition-colors active:bg-secondary"
-                    >
-                      {n.label}
-                    </a>
+                    n.href && !n.href.includes("#") ? (
+                      <Link
+                        key={n.label}
+                        to={n.href}
+                        onClick={() => setMobile(false)}
+                        className="block rounded-xl px-3 py-2 text-sm font-semibold transition-colors active:bg-secondary"
+                      >
+                        {n.label}
+                      </Link>
+                    ) : (
+                      <a
+                        key={n.label}
+                        href={n.href ?? "/#servicios"}
+                        onClick={() => setMobile(false)}
+                        className="block rounded-xl px-3 py-2 text-sm font-semibold transition-colors active:bg-secondary"
+                      >
+                        {n.label}
+                      </a>
+                    )
                   ),
                 )}
-                <a
-                  href="/diagnostico?origen=header-mobile"
+                <Link
+                  to="/diagnostico"
+                  search={{ origen: "header-mobile" }}
                   onClick={() => setMobile(false)}
                   className="mt-2 flex items-center justify-center rounded-full bg-aqua px-4 py-2.5 text-xs font-semibold text-primary"
                 >
                   Aplicar a diagnóstico
-                </a>
+                </Link>
               </div>
             </motion.div>
           </>

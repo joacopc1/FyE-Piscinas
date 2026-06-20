@@ -12,7 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as PiscinasDeFibraRouteImport } from './routes/piscinas-de-fibra'
 import { Route as PiscinaListaParaDisfrutarRouteImport } from './routes/piscina-lista-para-disfrutar'
 import { Route as ObrasRouteImport } from './routes/obras'
-import { Route as JacuzziSpaRouteImport } from './routes/jacuzzi-spa'
+import { Route as JardinYEntornosRouteImport } from './routes/jardin-y-entornos'
+import { Route as EquipamientoAccesoriosRouteImport } from './routes/equipamiento-accesorios'
 import { Route as DiagnosticoRouteImport } from './routes/diagnostico'
 import { Route as ClimatizacionRouteImport } from './routes/climatizacion'
 import { Route as IndexRouteImport } from './routes/index'
@@ -34,9 +35,14 @@ const ObrasRoute = ObrasRouteImport.update({
   path: '/obras',
   getParentRoute: () => rootRouteImport,
 } as any)
-const JacuzziSpaRoute = JacuzziSpaRouteImport.update({
-  id: '/jacuzzi-spa',
-  path: '/jacuzzi-spa',
+const JardinYEntornosRoute = JardinYEntornosRouteImport.update({
+  id: '/jardin-y-entornos',
+  path: '/jardin-y-entornos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EquipamientoAccesoriosRoute = EquipamientoAccesoriosRouteImport.update({
+  id: '/equipamiento-accesorios',
+  path: '/equipamiento-accesorios',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DiagnosticoRoute = DiagnosticoRouteImport.update({
@@ -64,7 +70,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/climatizacion': typeof ClimatizacionRoute
   '/diagnostico': typeof DiagnosticoRoute
-  '/jacuzzi-spa': typeof JacuzziSpaRoute
+  '/equipamiento-accesorios': typeof EquipamientoAccesoriosRoute
+  '/jardin-y-entornos': typeof JardinYEntornosRoute
   '/obras': typeof ObrasRoute
   '/piscina-lista-para-disfrutar': typeof PiscinaListaParaDisfrutarRoute
   '/piscinas-de-fibra': typeof PiscinasDeFibraRoute
@@ -74,7 +81,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/climatizacion': typeof ClimatizacionRoute
   '/diagnostico': typeof DiagnosticoRoute
-  '/jacuzzi-spa': typeof JacuzziSpaRoute
+  '/equipamiento-accesorios': typeof EquipamientoAccesoriosRoute
+  '/jardin-y-entornos': typeof JardinYEntornosRoute
   '/obras': typeof ObrasRoute
   '/piscina-lista-para-disfrutar': typeof PiscinaListaParaDisfrutarRoute
   '/piscinas-de-fibra': typeof PiscinasDeFibraRoute
@@ -85,7 +93,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/climatizacion': typeof ClimatizacionRoute
   '/diagnostico': typeof DiagnosticoRoute
-  '/jacuzzi-spa': typeof JacuzziSpaRoute
+  '/equipamiento-accesorios': typeof EquipamientoAccesoriosRoute
+  '/jardin-y-entornos': typeof JardinYEntornosRoute
   '/obras': typeof ObrasRoute
   '/piscina-lista-para-disfrutar': typeof PiscinaListaParaDisfrutarRoute
   '/piscinas-de-fibra': typeof PiscinasDeFibraRoute
@@ -97,7 +106,8 @@ export interface FileRouteTypes {
     | '/'
     | '/climatizacion'
     | '/diagnostico'
-    | '/jacuzzi-spa'
+    | '/equipamiento-accesorios'
+    | '/jardin-y-entornos'
     | '/obras'
     | '/piscina-lista-para-disfrutar'
     | '/piscinas-de-fibra'
@@ -107,7 +117,8 @@ export interface FileRouteTypes {
     | '/'
     | '/climatizacion'
     | '/diagnostico'
-    | '/jacuzzi-spa'
+    | '/equipamiento-accesorios'
+    | '/jardin-y-entornos'
     | '/obras'
     | '/piscina-lista-para-disfrutar'
     | '/piscinas-de-fibra'
@@ -117,7 +128,8 @@ export interface FileRouteTypes {
     | '/'
     | '/climatizacion'
     | '/diagnostico'
-    | '/jacuzzi-spa'
+    | '/equipamiento-accesorios'
+    | '/jardin-y-entornos'
     | '/obras'
     | '/piscina-lista-para-disfrutar'
     | '/piscinas-de-fibra'
@@ -128,7 +140,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ClimatizacionRoute: typeof ClimatizacionRoute
   DiagnosticoRoute: typeof DiagnosticoRoute
-  JacuzziSpaRoute: typeof JacuzziSpaRoute
+  EquipamientoAccesoriosRoute: typeof EquipamientoAccesoriosRoute
+  JardinYEntornosRoute: typeof JardinYEntornosRoute
   ObrasRoute: typeof ObrasRoute
   PiscinaListaParaDisfrutarRoute: typeof PiscinaListaParaDisfrutarRoute
   PiscinasDeFibraRoute: typeof PiscinasDeFibraRoute
@@ -158,11 +171,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ObrasRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/jacuzzi-spa': {
-      id: '/jacuzzi-spa'
-      path: '/jacuzzi-spa'
-      fullPath: '/jacuzzi-spa'
-      preLoaderRoute: typeof JacuzziSpaRouteImport
+    '/jardin-y-entornos': {
+      id: '/jardin-y-entornos'
+      path: '/jardin-y-entornos'
+      fullPath: '/jardin-y-entornos'
+      preLoaderRoute: typeof JardinYEntornosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/equipamiento-accesorios': {
+      id: '/equipamiento-accesorios'
+      path: '/equipamiento-accesorios'
+      fullPath: '/equipamiento-accesorios'
+      preLoaderRoute: typeof EquipamientoAccesoriosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/diagnostico': {
@@ -200,7 +220,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ClimatizacionRoute: ClimatizacionRoute,
   DiagnosticoRoute: DiagnosticoRoute,
-  JacuzziSpaRoute: JacuzziSpaRoute,
+  EquipamientoAccesoriosRoute: EquipamientoAccesoriosRoute,
+  JardinYEntornosRoute: JardinYEntornosRoute,
   ObrasRoute: ObrasRoute,
   PiscinaListaParaDisfrutarRoute: PiscinaListaParaDisfrutarRoute,
   PiscinasDeFibraRoute: PiscinasDeFibraRoute,

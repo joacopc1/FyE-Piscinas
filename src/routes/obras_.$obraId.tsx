@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
   ArrowRight,
@@ -45,13 +45,13 @@ function WorkDetailPage() {
       <div className="min-h-screen bg-white text-foreground">
         <Header solid />
         <main className="mx-auto max-w-3xl px-5 pt-36 pb-20 text-center md:px-8">
-          <a
-            href="/obras"
+          <Link
+            to="/obras"
             className="mx-auto inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-aqua"
           >
             <ArrowLeft className="h-4 w-4" />
             Volver a obras
-          </a>
+          </Link>
           <h1 className="mt-8 font-display text-4xl font-medium md:text-6xl">
             Esta obra no está disponible.
           </h1>
@@ -64,7 +64,7 @@ function WorkDetailPage() {
   }
 
   const relatedWorks = works.filter((item) => item.id !== work.id).slice(0, 3);
-  const diagnosticHref = `/diagnostico?origen=obra&obra=${encodeURIComponent(work.id)}&servicio=${encodeURIComponent(work.category)}`;
+
 
   return (
     <div className="min-h-screen bg-white text-foreground">
@@ -73,31 +73,34 @@ function WorkDetailPage() {
         <section className="bg-white pt-28 pb-10 md:pt-34 md:pb-14">
           <div className="mx-auto max-w-7xl px-5 md:px-8">
             <Reveal>
-              <a
-                href="/obras"
+              <Link
+                to="/obras"
                 className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-aqua"
               >
                 <ArrowLeft className="h-4 w-4" />
                 Obras / {work.title}
-              </a>
+              </Link>
             </Reveal>
 
-            <div className="mt-9 grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-end">
+            <div className="mt-9 max-w-5xl">
               <Reveal>
-                <div>
-                  <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium text-muted-foreground">
-                    <span>{work.category}</span>
-                    <span>{work.location}</span>
-                    <span>{work.duration}</span>
-                  </div>
-                  <h1 className="mt-4 max-w-3xl font-display text-5xl font-medium leading-[1.02] tracking-[-0.035em] md:text-7xl">
-                    {work.title}
-                  </h1>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-sm font-medium text-muted-foreground">
+                  <span className="rounded-full bg-secondary/80 px-3 py-1 text-xs font-semibold text-primary">{work.category}</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/30" />
+                  <span>{work.location}</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/30" />
+                  <span>{work.duration}</span>
                 </div>
               </Reveal>
 
+              <Reveal delay={0.06}>
+                <h1 className="mt-4 font-display text-2xl font-medium leading-[1.15] tracking-[-0.02em] sm:text-3xl md:text-[38px] lg:text-[40px] text-foreground">
+                  {work.title}
+                </h1>
+              </Reveal>
+
               <Reveal delay={0.12}>
-                <p className="max-w-xl text-lg leading-relaxed text-muted-foreground lg:justify-self-end">
+                <p className="mt-5 max-w-3xl text-lg leading-relaxed text-muted-foreground">
                   {work.summary}
                 </p>
               </Reveal>
@@ -105,36 +108,139 @@ function WorkDetailPage() {
           </div>
         </section>
 
-        <section className="bg-white pb-12 md:pb-16">
-          <div className="mx-auto max-w-7xl px-5 md:px-8">
+        <section className="bg-white pb-6 md:pb-8">
+          <div className="mx-auto max-w-5xl px-5 md:px-8">
             <Reveal>
-              <div className="relative h-[420px] overflow-hidden rounded-3xl bg-secondary shadow-[0_28px_80px_rgba(2,30,54,0.18)] md:h-[580px]">
-                <img src={work.image} alt={work.alt} className="h-full w-full object-cover" />
+              <div className="relative h-[310px] sm:h-[410px] md:h-[540px] overflow-hidden rounded-3xl bg-secondary shadow-[0_28px_80px_rgba(2,30,54,0.18)] transition-all duration-700 hover:scale-[1.01] hover:shadow-[0_35px_90px_rgba(2,30,54,0.25)] group">
+                <img src={work.image} alt={work.alt} className="h-full w-full object-cover object-center transition-transform duration-1000 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/68 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 max-w-2xl p-6 text-white drop-shadow-[0_2px_14px_rgba(0,0,0,0.45)] md:p-10">
-                  <p className="text-sm uppercase tracking-[0.18em] text-white/70">
+                  <p className="text-xs uppercase tracking-[0.18em] text-white/70">
                     Resultado final
                   </p>
-                  <p className="mt-3 text-xl leading-relaxed md:text-2xl">{work.result}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-white/90 md:text-base">{work.result}</p>
                 </div>
               </div>
             </Reveal>
+ 
+            {/* ZONA, TIEMPO, TIPO: 3 COLUMNS */}
+            <StaggerGroup className="grid gap-4 sm:grid-cols-3 mt-6 md:mt-8">
+              <StaggerItem>
+                <Meta icon={MapPin} label="Zona" value={work.location} />
+              </StaggerItem>
+              <StaggerItem>
+                <Meta icon={Clock} label="Plazo de instalación" value={work.duration} />
+              </StaggerItem>
+              <StaggerItem>
+                <Meta icon={Home} label="Tipo de piscina" value={work.category} />
+              </StaggerItem>
+            </StaggerGroup>
           </div>
         </section>
 
+
+        {/* SITUACIÓN INICIAL → RECOMENDACIÓN */}
         <section className="bg-white py-10 md:py-14">
-          <div className="mx-auto grid max-w-7xl gap-10 px-5 md:px-8 lg:grid-cols-[0.75fr_1.25fr]">
-            <aside className="space-y-3 lg:sticky lg:top-28 lg:self-start">
-              <Meta icon={MapPin} label="Zona" value={work.location} />
-              <Meta icon={Clock} label="Tiempo mock" value={work.duration} />
-              <Meta icon={Home} label="Tipo" value={work.category} />
-            </aside>
+          <div className="mx-auto max-w-7xl px-5 md:px-8">
+            <div className="relative grid gap-8 md:grid-cols-2 md:gap-0">
+              {/* Vertical divider line on desktop */}
+              <div className="hidden md:block absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-border" />
+              {/* Small connector dot */}
+              <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-8 w-8 items-center justify-center rounded-full bg-white border border-border text-aqua z-10">
+                <ArrowRight className="h-4 w-4" />
+              </div>
 
-            <div className="space-y-10">
-              <DetailBlock title="Situación inicial" body={work.initial} />
-              <DetailBlock title="Recomendación" body={work.recommendation} />
+              <Reveal className="md:pr-12 lg:pr-16">
+                <h2 className="font-display text-3xl font-medium leading-tight md:text-4xl">
+                  Situación inicial
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-foreground/78 md:text-lg">
+                  {work.initial}
+                </p>
+              </Reveal>
 
-              <div>
+              <Reveal delay={0.12} className="md:pl-12 lg:pl-16">
+                <h2 className="font-display text-3xl font-medium leading-tight md:text-4xl">
+                  Recomendación
+                </h2>
+                <p className="mt-4 text-base leading-relaxed text-foreground/78 md:text-lg">
+                  {work.recommendation}
+                </p>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white pt-16 pb-10 md:pt-24 md:pb-14">
+          <div className="mx-auto max-w-3xl px-5 md:px-8 space-y-12">
+
+            {work.detailedProcess ? (
+              <div className="pt-4">
+                <h2 className="font-display text-3xl font-medium leading-tight md:text-4xl mb-16 md:mb-20 text-center">
+                  El proceso de obra paso a paso
+                </h2>
+                <div className="space-y-12 relative before:absolute before:inset-y-0 before:left-[15px] before:w-0.5 before:bg-border/60">
+                  {[
+                    ...work.detailedProcess,
+                    {
+                      title: "Resultado Final",
+                      description: work.result,
+                      mediaUrl: work.image,
+                      mediaType: "image" as const,
+                    },
+                    ...(work.testimonialImage
+                      ? [
+                          {
+                            title: "Opinión del Cliente",
+                            description: "Conversación final sobre el resultado del proyecto y la puesta en marcha por WhatsApp.",
+                            mediaUrl: work.testimonialImage,
+                            mediaType: "image" as const,
+                          },
+                        ]
+                      : []),
+                  ].map((step, idx) => (
+                    <Reveal key={step.title} delay={idx * 0.05} className="w-full">
+                      <div className="relative pl-10 flex flex-col md:grid md:grid-cols-[1fr_280px] md:gap-10 gap-5">
+                        {/* Dot indicator */}
+                        <div className="absolute left-0 top-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-white border-2 border-aqua text-xs font-semibold text-primary z-10">
+                          {idx + 1}
+                        </div>
+                        
+                        <div>
+                          <h3 className="font-display text-[21px] font-semibold text-foreground md:text-[22px]">
+                            {step.title}
+                          </h3>
+                          <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-[17px]">
+                            {step.description}
+                          </p>
+                        </div>
+                        
+                        {step.mediaUrl && (
+                          <div className="max-w-[280px] overflow-hidden rounded-2xl border border-border shadow-sm transition-all duration-500 hover:scale-[1.03] hover:shadow-lg hover:border-aqua/20">
+                            {step.mediaType === "video" ? (
+                              <video
+                                src={encodeURI(step.mediaUrl)}
+                                controls
+                                preload="metadata"
+                                playsInline
+                                className="w-full h-auto block bg-black/5"
+                              />
+                            ) : (
+                              <img
+                                src={encodeURI(step.mediaUrl)}
+                                alt={step.title}
+                                className="w-full h-auto block"
+                              />
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="pt-4">
                 <h2 className="font-display text-3xl font-medium leading-tight md:text-4xl">
                   Cómo se trabajó.
                 </h2>
@@ -147,12 +253,10 @@ function WorkDetailPage() {
                   ))}
                 </ul>
               </div>
+            )}
 
-              <blockquote className="rounded-3xl bg-secondary p-7 font-display text-2xl font-medium leading-snug text-primary md:p-9 md:text-3xl">
-                “{work.quote}”
-              </blockquote>
-
-              <div className="rounded-3xl border border-border bg-card p-6 md:p-8">
+            <Reveal>
+              <div className="rounded-3xl border border-border bg-card p-6 md:p-8 pt-8 transition-all duration-500 hover:border-aqua/30 hover:shadow-[0_20px_50px_rgba(2,30,54,0.06)]">
                 <Sparkles className="h-6 w-6 text-aqua" strokeWidth={1.8} />
                 <h2 className="mt-4 font-display text-3xl font-medium leading-tight md:text-4xl">
                   ¿Querés algo parecido para tu casa?
@@ -162,13 +266,14 @@ function WorkDetailPage() {
                   tiempos y tipo de uso.
                 </p>
                 <div className="mt-7 flex flex-wrap gap-3">
-                  <a
-                    href={diagnosticHref}
+                  <Link
+                    to="/diagnostico"
+                    search={{ origen: "obra", obra: work.id, servicio: work.category }}
                     className="inline-flex items-center gap-2 rounded-full bg-aqua px-7 py-3.5 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
                   >
                     Aplicar a diagnóstico
                     <ArrowRight className="h-4 w-4" />
-                  </a>
+                  </Link>
                   <a
                     href={whatsappUrl(
                       `Hola FYE, vi la obra ${work.title} y quiero consultar por un proyecto parecido para mi casa.`,
@@ -182,7 +287,7 @@ function WorkDetailPage() {
                   </a>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </section>
 
@@ -193,12 +298,12 @@ function WorkDetailPage() {
                 <h2 className="max-w-xl font-display text-4xl font-medium leading-[1.08] md:text-5xl">
                   Más proyectos para mirar.
                 </h2>
-                <a
-                  href="/obras"
+                <Link
+                  to="/obras"
                   className="hidden text-sm font-semibold text-primary hover:text-aqua md:inline-flex"
                 >
                   Ver todas las obras →
-                </a>
+                </Link>
               </div>
             </Reveal>
 
@@ -208,8 +313,9 @@ function WorkDetailPage() {
                   key={item.id}
                   className="group relative h-[300px] overflow-hidden rounded-3xl bg-secondary shadow-[0_22px_60px_rgba(2,30,54,0.14)]"
                 >
-                  <a
-                    href={`/obras/${item.id}`}
+                  <Link
+                    to="/obras/$obraId"
+                    params={{ obraId: item.id }}
                     className="absolute inset-0 z-10"
                     aria-label={`Ver obra ${item.title}`}
                   />
@@ -238,7 +344,7 @@ function WorkDetailPage() {
 
 function Meta({ icon: Icon, label, value }: { icon: typeof MapPin; label: string; value: string }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-border p-4">
+    <div className="flex items-center gap-3 rounded-2xl border border-border p-4 transition-all duration-300 hover:-translate-y-1 hover:border-aqua/40 hover:shadow-md hover:bg-secondary/15">
       <Icon className="h-5 w-5 flex-none text-aqua" strokeWidth={1.8} />
       <div>
         <div className="text-xs text-muted-foreground">{label}</div>
@@ -248,13 +354,3 @@ function Meta({ icon: Icon, label, value }: { icon: typeof MapPin; label: string
   );
 }
 
-function DetailBlock({ title, body }: { title: string; body: string }) {
-  return (
-    <div>
-      <h2 className="font-display text-3xl font-medium leading-tight md:text-4xl">{title}</h2>
-      <p className="mt-4 max-w-3xl text-base leading-relaxed text-foreground/78 md:text-lg">
-        {body}
-      </p>
-    </div>
-  );
-}

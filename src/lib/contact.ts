@@ -1,4 +1,4 @@
-export const WHATSAPP_NUMBER = "59899000000";
+export const WHATSAPP_NUMBER = "59898670636";
 
 export const whatsappMessages = {
   home: "Hola FYE, quiero consultar por una piscina para mi casa. Me gustaría que me orienten con opciones y próximos pasos.",

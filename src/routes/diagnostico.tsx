@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Check, ChevronDown, Send } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
@@ -120,13 +120,14 @@ function DiagnosticoPage() {
         <section className="bg-white pt-28 pb-6 md:pt-32 md:pb-8">
           <div className="mx-auto max-w-7xl px-5 md:px-8">
             <Reveal>
-              <a
-                href={sourceWork ? `/obras/${sourceWork.id}` : "/"}
+              <Link
+                to={sourceWork ? "/obras/$obraId" : "/"}
+                params={sourceWork ? { obraId: sourceWork.id } : undefined}
                 className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-aqua"
               >
                 <ArrowLeft className="h-4 w-4" />
                 {sourceWork ? `Volver a ${sourceWork.title}` : "Volver al inicio"}
-              </a>
+              </Link>
             </Reveal>
 
             <div className="mx-auto mt-7 max-w-3xl text-center">
@@ -254,8 +255,10 @@ function normalizeServiceParam(service?: string) {
     "piscina-fibra": "Piscina instalada",
     "piscina-instalada": "Piscina instalada",
     "piscinas-de-fibra": "Piscina instalada",
-    jacuzzi: "Jacuzzi / Spa",
-    "jacuzzi-spa": "Jacuzzi / Spa",
+    "equipamiento-accesorios": "Equipamiento y Accesorios",
+    accesorios: "Equipamiento y Accesorios",
+    "jardin-y-entornos": "Jardinería y Entornos",
+    paisajismo: "Jardinería y Entornos",
     climatizacion: "Climatización",
     mantenimiento: "Consulta postventa",
   };
@@ -281,8 +284,9 @@ function StepContent({
             onChange={(value) => update("service", value)}
             options={[
               "Piscina instalada",
-              "Jacuzzi / Spa",
+              "Equipamiento y Accesorios",
               "Climatización",
+              "Jardinería y Entornos",
               "Todavía no sé",
             ]}
             placeholder="Elegí una opción"
@@ -292,8 +296,11 @@ function StepContent({
           <Input
             value={data.zone}
             onChange={(value) => update("zone", value)}
-            placeholder="Ej: Montevideo, Canelones, Maldonado"
+            placeholder="Ej: Florida, Canelones, Durazno, San José..."
           />
+          <p className="mt-1.5 text-xs text-muted-foreground/80 leading-normal">
+            Cobertura base: Florida, Canelones, Durazno, San José, Lavalleja, Tacuarembó, Treinta y Tres. Flete extra aplica desde los 100 km de Montevideo.
+          </p>
         </Field>
         <Field label="Tipo de propiedad">
           <Select
@@ -374,18 +381,21 @@ function StepContent({
             placeholder="Elegí una opción"
           />
         </Field>
-        <Field label="Acceso al lugar">
+        <Field label="Acceso al patio / terreno">
           <Select
             value={data.access}
             onChange={(value) => update("access", value)}
             options={[
-              "Fácil acceso",
-              "Acceso medio",
-              "Difícil / hay que revisar",
-              "No lo tengo claro",
+              "Entrada amplia de más de 3 metros (pasa camión)",
+              "Entrada angosta menor de 3 metros (requiere evaluar)",
+              "Sin pasaje lateral (requiere hidrogrúa sobre techo/muro)",
+              "No lo tengo claro / Prefiero visita técnica",
             ]}
             placeholder="Elegí una opción"
           />
+          <p className="mt-1.5 text-xs text-muted-foreground/80 leading-normal">
+            *Nota: Se requiere un ancho de 3m según la piscina. Si es necesario contratar hidrogrúa, el costo corre por cuenta del cliente.
+          </p>
         </Field>
       </div>
     );

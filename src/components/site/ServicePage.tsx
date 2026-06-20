@@ -25,7 +25,8 @@ import work3 from "@/assets/work-3.jpg";
 export type ServicePageData = {
   slug: string;
   label: string;
-  title: ReactNode;
+  titlePart1: string;
+  titlePart2: string;
   subheadline: string;
   heroImage: string;
   forWho: { title: string; body: string }[];
@@ -74,7 +75,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
     <div className="min-h-screen bg-white text-foreground">
       <Header />
 
-      <section className="relative h-[88svh] min-h-[620px] w-full overflow-hidden bg-deep">
+      <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-deep">
         <div className="absolute inset-0">
           <img src={data.heroImage} alt="" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_30%,transparent_0%,rgba(0,0,0,0.55)_70%)]" />
@@ -82,22 +83,42 @@ export function ServicePage({ data }: { data: ServicePageData }) {
           <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/15 to-transparent" />
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10 flex h-full flex-col items-center justify-center pt-24 text-center"
-        >
+        <div className="relative z-10 flex h-full flex-col items-center justify-center pt-28 text-center md:pt-36">
           <div className="mx-auto w-full max-w-7xl px-5 md:px-8">
-            <div className="mx-auto max-w-4xl">
-              <h1 className="font-[var(--font-hero)] text-3xl font-medium leading-[1.04] tracking-[-0.035em] text-balance text-white drop-shadow-[0_18px_42px_rgba(0,0,0,0.32)] sm:text-4xl lg:text-6xl">
-                {data.title}
+            <div className="mx-auto max-w-3xl -translate-y-2 md:-translate-y-4">
+              <h1 className="mt-6 font-[var(--font-hero)] text-3xl font-medium leading-[1.05] tracking-[-0.035em] text-balance text-white drop-shadow-[0_18px_42px_rgba(0,0,0,0.32)] sm:text-4xl lg:text-5xl">
+                <motion.span
+                  initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                  className="block"
+                >
+                  {data.titlePart1}
+                </motion.span>
+                <motion.span
+                  initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  className="block"
+                >
+                  {data.titlePart2}
+                </motion.span>
               </h1>
-              <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/82 md:text-lg">
+              <motion.p
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/82 md:text-lg"
+              >
                 {data.subheadline}
-              </p>
+              </motion.p>
 
-              <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                className="mt-9 flex flex-wrap items-center justify-center gap-3"
+              >
                 <a
                   href={diagnostico}
                   className="group inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-primary shadow-[var(--shadow-lift)] transition-all hover:-translate-y-0.5 hover:bg-aqua"
@@ -111,10 +132,10 @@ export function ServicePage({ data }: { data: ServicePageData }) {
                 >
                   Ver cómo funciona
                 </a>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </section>
 
       <section className="bg-white py-14 md:py-20">

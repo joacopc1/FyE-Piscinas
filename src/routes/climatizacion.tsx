@@ -28,12 +28,8 @@ export const Route = createFileRoute("/climatizacion")({
 const data: ServicePageData = {
   slug: "climatizacion",
   label: "climatización",
-  title: (
-    <>
-      Más meses de piscina,
-      <span className="block text-aqua/95">con un sistema bien elegido.</span>
-    </>
-  ),
+  titlePart1: "Más meses de piscina,",
+  titlePart2: "con un sistema bien elegido.",
   subheadline:
     "Te recomendamos el sistema adecuado según tu piscina, lo instalamos y te acompañamos para extender la temporada sin sorpresas de consumo.",
   heroImage: heroClimate,

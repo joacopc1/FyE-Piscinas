@@ -27,7 +27,7 @@ import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 
 import work1 from "@/assets/work-1.jpg";
 import work2 from "@/assets/work-2.jpg";
-import work3 from "@/assets/work-3.jpg";
+import { works as realWorks } from "@/lib/works";
 
 const OFFER_HERO_IMAGE = "/pexels-mia-dalisay-594958-27853288.jpg";
 
@@ -531,23 +531,7 @@ function Scarcity() {
 }
 
 function Works() {
-  const works = [
-    {
-      img: work1,
-      title: "Residencia familiar",
-      tag: "Casco + instalación completa",
-    },
-    {
-      img: work2,
-      title: "Casa de verano",
-      tag: "Instalación + puesta en marcha",
-    },
-    {
-      img: work3,
-      title: "Jardín con vista",
-      tag: "Terminaciones + acompañamiento",
-    },
-  ];
+  const displayedWorks = realWorks.slice(0, 3);
 
   return (
     <section className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
@@ -560,22 +544,31 @@ function Works() {
       </Reveal>
 
       <StaggerGroup className="mt-12 grid auto-rows-[260px] gap-6 md:grid-cols-3 md:auto-rows-[280px]">
-        {works.map((w, i) => (
+        {displayedWorks.map((w, i) => (
           <StaggerItem
-            key={w.title}
+            key={w.id}
             className={`card group relative cursor-pointer overflow-hidden rounded-3xl transition-transform active:scale-[0.985] ${
               i === 0 ? "md:col-span-2 md:row-span-2" : ""
             }`}
           >
+            <Link
+              to="/obras/$obraId"
+              params={{ obraId: w.id }}
+              className="absolute inset-0 z-10"
+              aria-label={`Ver obra ${w.title}`}
+            />
             <img
-              src={w.img}
-              alt={w.title}
+              src={w.image}
+              alt={w.alt}
               loading="lazy"
               className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/84 via-primary/18 to-transparent opacity-65 transition-opacity duration-500 group-hover:opacity-86" />
             <div className="absolute bottom-0 left-0 p-6 text-white md:p-8">
-              <h3 className="font-display text-2xl font-medium leading-tight md:text-3xl">
+              <span className="inline-flex rounded-full bg-white/18 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
+                {w.category}
+              </span>
+              <h3 className="mt-3 font-display text-2xl font-medium leading-tight md:text-3xl">
                 {w.title}
               </h3>
             </div>
@@ -590,23 +583,23 @@ function Faq() {
   const faqs = [
     {
       q: "¿Cómo sé qué piscina me conviene?",
-      a: "Te ayudamos a definirlo en la consulta inicial. Analizamos tu espacio, el uso que le vas a dar, la localidad, el acceso y tu presupuesto antes de recomendar una opción.",
+      a: "Te ayudamos a definirlo en la consulta inicial. Analizamos tu espacio, el uso esperado, el acceso al patio y tu presupuesto para recomendarte el modelo óptimo de casco.",
     },
     {
       q: "¿La instalación está incluida?",
-      a: "Sí. La propuesta busca contemplar instalación, coordinación, flete, mano de obra, bomba, filtro, caseta y terminaciones acordadas. El alcance final se confirma antes de avanzar.",
+      a: "Sí, nuestro servicio incluye flete, excavación, colocación del casco, bomba, filtro de arena, caseta de fibra, llaves de paso, luces LED, tablero eléctrico con timer automático, trámites de transporte ante el MTOP y vereda perimetral con baldosas atérmicas de 50x50 cm.",
     },
     {
       q: "¿Cuánto demora el proceso?",
-      a: "Depende de la agenda, zona y proyecto. Una vez que la piscina llega al lugar, la instalación puede resolverse en pocos días según las condiciones del terreno.",
+      a: "Una vez que el casco de fibra arriba a tu domicilio, la excavación, colocación y puesta en marcha hidráulica se resuelven en un promedio de pocos días, sujeto a las condiciones de tu terreno y accesibilidad.",
     },
     {
       q: "¿Qué significa puesta en marcha?",
-      a: "Es la primera orientación para dejar la piscina operativa, explicar cuidados iniciales y ordenar dudas después de instalada.",
+      a: "Es la primera orientación donde dejamos el sistema de filtrado operativo, te explicamos cómo funciona el equipamiento y te capacitamos en los cuidados y mantenimiento del agua.",
     },
     {
       q: "¿Tienen garantía?",
-      a: "Sí, FYE comunica 10 años de garantía. Las condiciones específicas se explican antes de confirmar el proyecto.",
+      a: "Sí. Ofrecemos 10 años de garantía estructural en el casco y la instalación hidráulica. Adicionalmente, las bombas de calor tienen 2 años de garantía, y la bomba de agua cuenta con reemplazo inmediato sin costo si falla durante el primer año.",
     },
     {
       q: "¿Puedo consultar aunque todavía no tenga definido el presupuesto?",

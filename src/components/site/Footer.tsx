@@ -41,13 +41,18 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link to="/jacuzzi-spa" className="hover:text-foreground">
-                Jacuzzi / Spa
+              <Link to="/climatizacion" className="hover:text-foreground">
+                Climatización
               </Link>
             </li>
             <li>
-              <Link to="/climatizacion" className="hover:text-foreground">
-                Climatización
+              <Link to="/equipamiento-accesorios" className="hover:text-foreground">
+                Equipamiento y Accesorios
+              </Link>
+            </li>
+            <li>
+              <Link to="/jardin-y-entornos" className="hover:text-foreground">
+                Jardinería y Entornos
               </Link>
             </li>
           </ul>
@@ -59,15 +64,15 @@ export function Footer() {
             Contacto
           </div>
           <ul className="mt-3 space-y-2 text-sm text-muted-foreground">
-            <li>Montevideo, Uruguay</li>
+            <li>Florida, Uruguay</li>
             <li>
               <a href="mailto:hola@fyepiscinas.uy" className="hover:text-foreground">
                 hola@fyepiscinas.uy
               </a>
             </li>
             <li>
-              <a href="https://wa.me/59899000000" target="_blank" rel="noopener" className="hover:text-foreground">
-                +598 99 000 000
+              <a href="https://wa.me/59898670636" target="_blank" rel="noopener" className="hover:text-foreground">
+                +598 98 670 636
               </a>
             </li>
             <li className="pt-2">
