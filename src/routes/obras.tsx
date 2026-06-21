@@ -106,7 +106,10 @@ function Gallery({
   }, []);
 
   const isTouch = () =>
-    typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
+    typeof window !== "undefined" &&
+    (navigator.maxTouchPoints > 0 ||
+      window.matchMedia("(pointer: coarse)").matches ||
+      window.matchMedia("(hover: none)").matches);
 
   return (
     <section id="galeria" className="bg-white py-8 md:py-12">
@@ -144,6 +147,7 @@ function Gallery({
                 params={{ obraId: work.id }}
                 className="absolute inset-0 z-10 text-left"
                 aria-label={`Ver proceso de ${work.title}`}
+                aria-expanded={activeCard === work.id}
                 onClick={(e) => {
                   if (isTouch() && activeCard !== work.id) {
                     e.preventDefault();
@@ -273,5 +277,4 @@ function FinalCTA() {
     </section>
   );
 }
-
 

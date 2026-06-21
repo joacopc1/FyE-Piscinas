@@ -315,7 +315,10 @@ function Services() {
   }, []);
 
   const isTouch = () =>
-    typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
+    typeof window !== "undefined" &&
+    (navigator.maxTouchPoints > 0 ||
+      window.matchMedia("(pointer: coarse)").matches ||
+      window.matchMedia("(hover: none)").matches);
 
   const services = [
     {
@@ -367,6 +370,7 @@ function Services() {
                     target="_blank"
                     rel="noopener"
                     aria-label={`Explorar ${s.title}`}
+                    aria-expanded={activeCard === s.title}
                     className="absolute inset-0 z-10"
                     onClick={(e) => {
                       if (isTouch() && activeCard !== s.title) {
@@ -379,6 +383,7 @@ function Services() {
                   <Link
                     to={s.href}
                     aria-label={`Explorar ${s.title}`}
+                    aria-expanded={activeCard === s.title}
                     className="absolute inset-0 z-10"
                     onClick={(e) => {
                       if (isTouch() && activeCard !== s.title) {
@@ -684,4 +689,3 @@ function FinalCTA() {
     </section>
   );
 }
-
