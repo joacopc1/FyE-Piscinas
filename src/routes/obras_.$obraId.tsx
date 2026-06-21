@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeft,
   ArrowRight,
+  ArrowDown,
   Check,
   Clock,
   Home,
@@ -52,7 +53,7 @@ function WorkDetailPage() {
             <ArrowLeft className="h-4 w-4" />
             Volver a obras
           </Link>
-          <h1 className="mt-8 font-display text-4xl font-medium md:text-6xl">
+          <h1 className="mt-8 font-display text-3xl font-medium md:text-6xl">
             Esta obra no está disponible.
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-muted-foreground">
@@ -118,21 +119,21 @@ function WorkDetailPage() {
                   <p className="text-xs uppercase tracking-[0.18em] text-white/70">
                     Resultado final
                   </p>
-                  <p className="mt-2 text-sm leading-relaxed text-white/90 md:text-base">{work.result}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-white/90 md:text-base hidden sm:block">{work.result}</p>
                 </div>
               </div>
             </Reveal>
  
             {/* ZONA, TIEMPO, TIPO: 3 COLUMNS */}
-            <StaggerGroup className="grid gap-4 sm:grid-cols-3 mt-6 md:mt-8">
+            <StaggerGroup className="grid grid-cols-3 gap-2 sm:gap-4 mt-6 md:mt-8">
               <StaggerItem>
                 <Meta icon={MapPin} label="Zona" value={work.location} />
               </StaggerItem>
               <StaggerItem>
-                <Meta icon={Clock} label="Plazo de instalación" value={work.duration} />
+                <Meta icon={Clock} label="Plazo" value={work.duration} />
               </StaggerItem>
               <StaggerItem>
-                <Meta icon={Home} label="Tipo de piscina" value={work.category} />
+                <Meta icon={Home} label="Tipo" value={work.category === "Piscinas instaladas" ? "Piscina de casco" : work.category} />
               </StaggerItem>
             </StaggerGroup>
           </div>
@@ -142,31 +143,42 @@ function WorkDetailPage() {
         {/* SITUACIÓN INICIAL → RECOMENDACIÓN */}
         <section className="bg-white py-10 md:py-14">
           <div className="mx-auto max-w-7xl px-5 md:px-8">
-            <div className="relative grid gap-8 md:grid-cols-2 md:gap-0">
-              {/* Vertical divider line on desktop */}
-              <div className="hidden md:block absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-border" />
-              {/* Small connector dot */}
-              <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-8 w-8 items-center justify-center rounded-full bg-white border border-border text-aqua z-10">
-                <ArrowRight className="h-4 w-4" />
+            <div className="flex flex-col md:grid md:grid-cols-2 md:gap-8 relative">
+              <Reveal className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-6 md:p-8 hover:border-aqua/30 transition-all duration-300 hover:shadow-[var(--shadow-soft)] hover:-translate-y-0.5">
+                <div>
+                  <span className="block text-xs font-semibold tracking-wider text-aqua uppercase mb-3">
+                    Situación inicial
+                  </span>
+                  <p className="text-base leading-relaxed text-foreground/78 md:text-lg">
+                    {work.initial}
+                  </p>
+                </div>
+              </Reveal>
+
+              {/* Downward arrow connector on mobile */}
+              <div className="flex md:hidden justify-center items-center py-2 text-aqua">
+                <div className="h-6 w-px bg-border/80" />
+                <div className="mx-2.5 flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card shadow-sm text-aqua">
+                  <ArrowDown className="h-4 w-4" />
+                </div>
+                <div className="h-6 w-px bg-border/80" />
               </div>
 
-              <Reveal className="md:pr-12 lg:pr-16">
-                <h2 className="font-display text-3xl font-medium leading-tight md:text-4xl">
-                  Situación inicial
-                </h2>
-                <p className="mt-4 text-base leading-relaxed text-foreground/78 md:text-lg">
-                  {work.initial}
-                </p>
+              <Reveal delay={0.12} className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-6 md:p-8 hover:border-aqua/30 transition-all duration-300 hover:shadow-[var(--shadow-soft)] hover:-translate-y-0.5">
+                <div>
+                  <span className="block text-xs font-semibold tracking-wider text-aqua uppercase mb-3">
+                    Recomendación
+                  </span>
+                  <p className="text-base leading-relaxed text-foreground/78 md:text-lg">
+                    {work.recommendation}
+                  </p>
+                </div>
               </Reveal>
 
-              <Reveal delay={0.12} className="md:pl-12 lg:pl-16">
-                <h2 className="font-display text-3xl font-medium leading-tight md:text-4xl">
-                  Recomendación
-                </h2>
-                <p className="mt-4 text-base leading-relaxed text-foreground/78 md:text-lg">
-                  {work.recommendation}
-                </p>
-              </Reveal>
+              {/* Desktop divider arrow overlay */}
+              <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-card border border-border text-aqua z-10 shadow-sm">
+                <ArrowRight className="h-5 w-5" />
+              </div>
             </div>
           </div>
         </section>
@@ -176,9 +188,12 @@ function WorkDetailPage() {
 
             {work.detailedProcess ? (
               <div className="pt-4">
-                <h2 className="font-display text-3xl font-medium leading-tight md:text-4xl mb-16 md:mb-20 text-center">
-                  El proceso de obra paso a paso
-                </h2>
+                <div className="text-center mb-12 md:mb-16">
+                  <h2 className="font-display text-2xl font-medium leading-tight md:text-4xl">
+                    El proceso de obra <span className="block">paso a paso</span>
+                  </h2>
+                </div>
+                
                 <div className="space-y-12 relative before:absolute before:inset-y-0 before:left-[15px] before:w-0.5 before:bg-border/60">
                   {[
                     ...work.detailedProcess,
@@ -207,7 +222,7 @@ function WorkDetailPage() {
                         </div>
                         
                         <div>
-                          <h3 className="font-display text-[21px] font-semibold text-foreground md:text-[22px]">
+                          <h3 className="font-display text-lg font-semibold text-foreground md:text-[22px]">
                             {step.title}
                           </h3>
                           <p className="mt-3 text-base leading-relaxed text-muted-foreground md:text-[17px]">
@@ -241,7 +256,7 @@ function WorkDetailPage() {
               </div>
             ) : (
               <div className="pt-4">
-                <h2 className="font-display text-3xl font-medium leading-tight md:text-4xl">
+                <h2 className="font-display text-2xl font-medium leading-tight md:text-4xl">
                   Cómo se trabajó.
                 </h2>
                 <ul className="mt-6 grid gap-4">
@@ -258,7 +273,7 @@ function WorkDetailPage() {
             <Reveal>
               <div className="rounded-3xl border border-border bg-card p-6 md:p-8 pt-8 transition-all duration-500 hover:border-aqua/30 hover:shadow-[0_20px_50px_rgba(2,30,54,0.06)]">
                 <Sparkles className="h-6 w-6 text-aqua" strokeWidth={1.8} />
-                <h2 className="mt-4 font-display text-3xl font-medium leading-tight md:text-4xl">
+                <h2 className="mt-4 font-display text-2xl font-medium leading-tight md:text-4xl">
                   ¿Querés algo parecido para tu casa?
                 </h2>
                 <p className="mt-4 max-w-2xl text-muted-foreground">
@@ -295,7 +310,7 @@ function WorkDetailPage() {
           <div className="mx-auto max-w-7xl px-5 md:px-8">
             <Reveal>
               <div className="flex items-end justify-between gap-6">
-                <h2 className="max-w-xl font-display text-4xl font-medium leading-[1.08] md:text-5xl">
+                <h2 className="max-w-xl font-display text-2xl font-medium leading-[1.08] md:text-5xl">
                   Más proyectos para mirar.
                 </h2>
                 <Link
@@ -328,7 +343,7 @@ function WorkDetailPage() {
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/92 via-primary/28 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-6 text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)]">
                     <div className="text-xs font-medium text-white/70">{item.category}</div>
-                    <h3 className="mt-2 font-display text-3xl font-medium leading-tight">
+                    <h3 className="mt-2 font-display text-2xl font-medium leading-tight md:text-3xl">
                       {item.title}
                     </h3>
                   </div>
@@ -344,11 +359,11 @@ function WorkDetailPage() {
 
 function Meta({ icon: Icon, label, value }: { icon: typeof MapPin; label: string; value: string }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-border p-4 transition-all duration-300 hover:-translate-y-1 hover:border-aqua/40 hover:shadow-md hover:bg-secondary/15">
-      <Icon className="h-5 w-5 flex-none text-aqua" strokeWidth={1.8} />
+    <div className="flex flex-col items-center text-center sm:flex-row sm:items-center sm:text-left gap-1.5 sm:gap-3 rounded-2xl border border-border p-2.5 sm:p-4 transition-all duration-300 hover:-translate-y-1 hover:border-aqua/40 hover:shadow-md hover:bg-secondary/15">
+      <Icon className="h-4 w-4 sm:h-5 sm:w-5 flex-none text-aqua" strokeWidth={1.8} />
       <div>
-        <div className="text-xs text-muted-foreground">{label}</div>
-        <div className="text-sm font-semibold text-foreground">{value}</div>
+        <div className="text-[10px] sm:text-xs text-muted-foreground">{label}</div>
+        <div className="text-xs sm:text-sm font-semibold text-foreground">{value}</div>
       </div>
     </div>
   );

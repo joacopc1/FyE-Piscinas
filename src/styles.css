@@ -234,37 +234,5 @@ video::-webkit-media-controls-time-remaining-display,
     transform: scale(0.97);
     box-shadow: var(--shadow-lift);
   }
-
-  /* Service cards — permanently reveal text on touch devices */
-  .card .reveal-on-hover {
-    margin-top: 0.75rem;
-    max-height: 7rem;
-    opacity: 1 !important;
-    transform: none !important;
-    translate: 0 0;
-  }
-
-  .touch-image-zoom {
-    scale: 1.03;
-  }
-
-  .touch-overlay-strong {
-    opacity: 0.92;
-  }
-
-  .touch-title-lift {
-    translate: 0 -0.35rem;
-  }
-
-  .touch-reveal {
-    margin-top: 0.75rem;
-    max-height: 7rem;
-    opacity: 1;
-    translate: 0 0;
-  }
-
-  .touch-arrow-nudge {
-    translate: 0.25rem 0;
-  }
 }
 

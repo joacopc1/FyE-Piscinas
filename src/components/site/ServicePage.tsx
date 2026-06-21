@@ -142,7 +142,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
             <div className="max-w-2xl">
-              <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+              <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
                 Para quién tiene sentido.
               </h2>
             </div>
@@ -167,7 +167,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
             <div className="max-w-2xl">
-              <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+              <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
                 Qué incluye.
               </h2>
               <p className="mt-4 text-lg text-muted-foreground">
@@ -196,7 +196,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
             <Reveal delay={0.1} className="lg:col-span-5">
               <div className="rounded-3xl border border-border bg-card p-7 shadow-[var(--shadow-soft)] md:p-9">
                 <ShieldCheck className="h-6 w-6 text-aqua" strokeWidth={1.8} />
-                <h3 className="mt-5 font-display text-2xl font-medium leading-tight">
+                <h3 className="mt-5 font-display text-xl font-medium leading-tight md:text-2xl">
                   {data.guaranteeHeadline ?? "Acompañamiento claro."}
                 </h3>
                 <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
@@ -230,7 +230,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
             <div className="max-w-2xl">
-              <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+              <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
                 Cómo trabajamos.
               </h2>
             </div>
@@ -240,17 +240,17 @@ export function ServicePage({ data }: { data: ServicePageData }) {
             {data.process.map((step, index) => (
               <StaggerItem
                 key={step.title}
-                className="relative rounded-2xl border border-border bg-card p-7"
+                className="relative rounded-2xl border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-1 hover:border-aqua/45 hover:shadow-[var(--shadow-soft)] hover:bg-secondary/10"
               >
                 <div className="flex items-baseline justify-between">
                   <span className="font-display text-3xl font-medium text-primary">
                     0{index + 1}
                   </span>
                   {index < data.process.length - 1 && (
-                    <ArrowRight className="h-4 w-4 text-aqua opacity-60" />
+                    <ArrowRight className="hidden md:block h-4 w-4 text-aqua opacity-60" />
                   )}
                 </div>
-                <h3 className="mt-6 text-lg font-semibold">{step.title}</h3>
+                <h3 className="mt-6 text-base font-semibold md:text-lg">{step.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{step.body}</p>
               </StaggerItem>
             ))}
@@ -262,7 +262,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-14">
             <Reveal className="lg:col-span-5">
-              <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+              <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
                 {data.trustTitle}
               </h2>
               <p className="mt-4 text-lg text-muted-foreground">{data.trustBody}</p>
@@ -291,7 +291,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         <div className="mx-auto max-w-7xl px-5 md:px-8">
           <Reveal>
             <div className="max-w-2xl">
-              <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+              <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
                 Obras relacionadas.
               </h2>
             </div>
@@ -310,7 +310,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
                 </div>
                 <div className="mt-5">
                   <div className="text-xs uppercase tracking-wider text-aqua">{work.stage}</div>
-                  <h3 className="mt-1 font-display text-xl font-medium">{work.type}</h3>
+                  <h3 className="mt-1 font-display text-lg font-medium md:text-xl">{work.type}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{work.desc}</p>
                 </div>
               </StaggerItem>
@@ -328,7 +328,7 @@ export function ServicePage({ data }: { data: ServicePageData }) {
         </div>
         <div className="relative mx-auto max-w-3xl px-5 text-center md:px-8">
           <Reveal>
-            <h2 className="font-display text-4xl font-medium leading-tight text-balance md:text-6xl">
+            <h2 className="font-display text-2xl font-medium leading-tight text-balance md:text-6xl">
               {data.finalCtaTitle}
             </h2>
             <p className="mx-auto mt-5 max-w-xl text-white/80">{data.finalCtaBody}</p>
@@ -367,7 +367,7 @@ function Faq({ faqs }: { faqs: { q: string; a: string }[] }) {
       <div className="mx-auto max-w-4xl px-5 md:px-8">
         <Reveal>
           <div className="text-center">
-            <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+            <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
               Preguntas frecuentes.
             </h2>
           </div>

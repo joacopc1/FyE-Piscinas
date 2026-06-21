@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check, Home, Sparkles } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -63,7 +63,7 @@ function Hero() {
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal>
           <div className="max-w-4xl">
-            <h1 className="font-display text-4xl font-medium leading-[1.02] tracking-[-0.035em] md:text-6xl">
+            <h1 className="font-display text-3xl font-medium leading-[1.02] tracking-[-0.035em] md:text-6xl">
               Obras que ya están disfrutándose.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
@@ -87,6 +87,16 @@ function Gallery({
   filteredWorks: Work[];
   onFilter: (filter: WorkCategory) => void;
 }) {
+  const [activeCard, setActiveCard] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = () => {
+      setActiveCard(null);
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => document.removeEventListener("click", handleOutsideClick);
+  }, []);
+
   return (
     <section id="galeria" className="bg-white py-8 md:py-12">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
@@ -113,7 +123,18 @@ function Gallery({
           {filteredWorks.map((work, index) => (
             <StaggerItem
               key={work.id}
-              className="card group relative h-[320px] overflow-hidden rounded-3xl bg-secondary shadow-[0_22px_60px_rgba(2,30,54,0.16)] transition-transform active:scale-[0.985] md:h-[360px]"
+              className={`card group relative h-[320px] overflow-hidden rounded-3xl bg-secondary border border-white/10 shadow-[0_22px_60px_rgba(2,30,54,0.16)] transition-transform active:scale-[0.985] md:h-[360px] ${
+                activeCard === work.id ? "is-active" : ""
+              }`}
+              onClick={(e) => {
+                if (window.matchMedia("(hover: none)").matches) {
+                  if (activeCard !== work.id) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setActiveCard(work.id);
+                  }
+                }
+              }}
             >
               <Link
                 to="/obras/$obraId"
@@ -125,9 +146,9 @@ function Gallery({
                 src={work.image}
                 alt={work.alt}
                 loading={index < 2 ? "eager" : "lazy"}
-                className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 group-[.is-active]:scale-105"
               />
-              <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/96 via-primary/38 to-transparent opacity-86 transition-opacity duration-500 group-hover:opacity-95" />
+              <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/96 via-primary/38 to-transparent opacity-86 transition-opacity duration-500 group-hover:opacity-95 group-[.is-active]:opacity-95" />
 
               <div className="absolute inset-x-0 bottom-0 p-6 text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.48)] md:p-8">
                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-medium text-white/74">
@@ -135,15 +156,15 @@ function Gallery({
                   <span>{work.location}</span>
                   <span>{work.duration}</span>
                 </div>
-                <h2 className="mt-3 font-display text-3xl font-medium leading-tight md:text-4xl">
+                <h2 className="mt-3 font-display text-xl font-medium leading-tight md:text-4xl">
                   {work.title}
                 </h2>
-                <p className="reveal-on-hover touch-reveal max-h-0 max-w-xl translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100">
+                <p className="reveal-on-hover touch-reveal max-h-0 max-w-xl translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100 group-[.is-active]:mt-3 group-[.is-active]:max-h-28 group-[.is-active]:translate-y-0 group-[.is-active]:opacity-100">
                   {work.summary}
                 </p>
                 <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
                   Ver proceso
-                  <ArrowRight className="touch-arrow-nudge h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="touch-arrow-nudge h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-[.is-active]:translate-x-1" />
                 </div>
               </div>
             </StaggerItem>
@@ -177,7 +198,7 @@ function TrustBlock() {
     <section className="bg-white py-12 md:py-16">
       <div className="mx-auto grid max-w-7xl gap-8 px-5 md:grid-cols-[0.85fr_1.15fr] md:px-8">
         <Reveal>
-          <h2 className="font-display text-4xl font-medium leading-[1.08] md:text-5xl">
+          <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
             La confianza se construye mostrando cómo se trabaja.
           </h2>
         </Reveal>
@@ -214,7 +235,7 @@ function FinalCTA() {
 
       <div className="relative mx-auto max-w-3xl px-5 text-center md:px-8">
         <Reveal>
-          <h2 className="font-display text-4xl font-medium leading-[1.08] md:text-6xl">
+          <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-6xl">
             Tu casa puede ser la próxima.
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-primary-foreground/76">

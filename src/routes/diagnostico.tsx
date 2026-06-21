@@ -132,7 +132,7 @@ function DiagnosticoPage() {
 
             <div className="mx-auto mt-7 max-w-3xl text-center">
               <Reveal>
-                <h1 className="font-display text-[2.1rem] font-medium leading-[1.04] tracking-[-0.035em] sm:text-4xl md:text-[3.25rem]">
+                <h1 className="font-display text-3xl font-medium leading-[1.04] tracking-[-0.035em] sm:text-4xl md:text-[3.25rem]">
                   <span className="block">Contanos tu idea y</span>
                   <span className="sr-only"> </span>
                   <span className="block">ordenamos el próximo paso.</span>

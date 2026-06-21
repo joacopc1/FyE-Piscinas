@@ -208,7 +208,7 @@ function Method() {
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal>
           <div className="max-w-2xl">
-            <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+            <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
               Un proceso pensado para que entiendas todo antes de avanzar.
             </h2>
           </div>
@@ -218,13 +218,13 @@ function Method() {
           {steps.map((s, i) => (
             <StaggerItem
               key={s.n}
-              className="relative rounded-2xl border border-border bg-card p-7"
+              className="relative rounded-2xl border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-1 hover:border-aqua/45 hover:shadow-[var(--shadow-soft)] hover:bg-secondary/10"
             >
               <div className="flex items-baseline justify-between">
                 <span className="font-display text-3xl font-medium text-primary">{s.n}</span>
-                {i < steps.length - 1 && <ArrowRight className="h-4 w-4 text-aqua opacity-60" />}
+                {i < steps.length - 1 && <ArrowRight className="hidden md:block h-4 w-4 text-aqua opacity-60" />}
               </div>
-              <h3 className="mt-6 text-lg font-semibold">{s.title}</h3>
+              <h3 className="mt-6 text-base font-semibold md:text-lg">{s.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{s.body}</p>
             </StaggerItem>
           ))}
@@ -262,7 +262,7 @@ function Promise() {
     <section className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
       <Reveal>
         <div className="max-w-3xl">
-          <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+          <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
             Una propuesta pensada para que digas que sí con confianza.
           </h2>
         </div>
@@ -277,7 +277,7 @@ function Promise() {
             <span className="grid h-11 w-11 place-items-center rounded-xl bg-aqua/15 text-primary">
               <p.icon className="h-5 w-5" />
             </span>
-            <h3 className="mt-5 font-display text-lg font-medium leading-snug">{p.title}</h3>
+            <h3 className="mt-5 font-display text-base font-medium leading-snug md:text-lg">{p.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
           </StaggerItem>
         ))}
@@ -311,7 +311,7 @@ function OfferValue() {
     <section id="incluye" className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
       <Reveal>
         <div className="max-w-3xl">
-          <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+          <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
             Piscina Lista para Disfrutar.
           </h2>
         </div>
@@ -333,7 +333,7 @@ function OfferValue() {
           <div className="relative overflow-hidden rounded-3xl border border-primary/15 bg-card p-7 shadow-[var(--shadow-lift)] md:p-9">
             <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-aqua/15 blur-3xl" />
             <div className="relative">
-              <h3 className="font-display text-3xl font-medium leading-tight md:text-4xl">
+              <h3 className="font-display text-xl font-medium leading-tight md:text-4xl">
                 Qué incluye la propuesta
               </h3>
 
@@ -430,7 +430,7 @@ function Guarantees() {
         </Reveal>
 
         <Reveal delay={0.15} className="lg:col-span-7">
-          <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+          <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
             Si vos no estás tranquilo,
             <span className="block">nosotros tampoco.</span>
           </h2>
@@ -466,7 +466,7 @@ function Scarcity() {
       <div className="mx-auto max-w-6xl px-5 md:px-8">
         <div className="grid items-center gap-10 lg:grid-cols-12">
           <Reveal className="lg:col-span-7">
-            <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+            <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
               Solo tomamos
               <span className="block text-aqua">4 proyectos por mes.</span>
             </h2>
@@ -537,7 +537,7 @@ function Works() {
     <section className="mx-auto max-w-7xl px-5 py-12 md:px-8 md:py-16">
       <Reveal>
         <div className="max-w-full">
-          <h2 className="font-display text-4xl font-medium leading-tight md:whitespace-nowrap md:text-5xl">
+          <h2 className="font-display text-2xl font-medium leading-tight md:whitespace-nowrap md:text-5xl">
             Familias que ya tienen su piscina lista.
           </h2>
         </div>
@@ -568,7 +568,7 @@ function Works() {
               <span className="inline-flex rounded-full bg-white/18 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
                 {w.category}
               </span>
-              <h3 className="mt-3 font-display text-2xl font-medium leading-tight md:text-3xl">
+              <h3 className="mt-3 font-display text-xl font-medium leading-tight md:text-3xl">
                 {w.title}
               </h3>
             </div>
@@ -612,7 +612,7 @@ function Faq() {
     <section className="mx-auto max-w-4xl px-5 py-12 md:px-8 md:py-16">
       <Reveal>
         <div className="text-center">
-          <h2 className="font-display text-4xl font-medium leading-tight md:text-5xl">
+          <h2 className="font-display text-2xl font-medium leading-tight md:text-5xl">
             Preguntas frecuentes.
           </h2>
         </div>
@@ -658,7 +658,7 @@ function FinalCTA() {
       </div>
       <div className="relative mx-auto max-w-3xl px-5 text-center md:px-8">
         <Reveal>
-          <h2 className="font-display text-4xl font-medium leading-tight text-balance md:text-6xl">
+          <h2 className="font-display text-2xl font-medium leading-tight text-balance md:text-6xl">
             ¿Querés evaluar qué piscina
             <span className="block text-aqua">tiene sentido para tu casa?</span>
           </h2>

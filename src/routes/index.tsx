@@ -11,7 +11,7 @@ import {
   Mail,
   Clock,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import { Header } from "@/components/site/Header";
 import { HeroVideo } from "@/components/site/HeroVideo";
@@ -201,7 +201,7 @@ function Pains() {
     <section className="mx-auto max-w-7xl px-5 py-14 md:px-8 md:py-20">
       <Reveal>
         <div className="max-w-2xl">
-          <h2 className="font-display text-4xl font-medium leading-[1.08] md:text-5xl">
+          <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
             Comprar una piscina no debería ser una apuesta.
           </h2>
         </div>
@@ -214,7 +214,7 @@ function Pains() {
             className="group relative rounded-2xl border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-lift)]"
           >
             <span className="font-display text-5xl text-aqua/30">{it.n}</span>
-            <h3 className="mt-4 text-xl font-semibold text-foreground">{it.title}</h3>
+            <h3 className="mt-4 text-lg font-semibold text-foreground md:text-xl">{it.title}</h3>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{it.body}</p>
           </StaggerItem>
         ))}
@@ -250,7 +250,7 @@ function OfferStack() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/86 via-primary/18 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-10">
-              <h2 className="max-w-sm font-display text-3xl font-medium leading-[1.02] md:max-w-xl md:text-5xl">
+              <h2 className="max-w-sm font-display text-2xl font-medium leading-[1.02] md:max-w-xl md:text-5xl">
                 Piscina lista para disfrutar.
               </h2>
               <p className="mt-5 hidden max-w-xl text-base leading-relaxed text-white/84 md:block">
@@ -261,7 +261,7 @@ function OfferStack() {
           </Reveal>
 
           <Reveal delay={0.15} className="h-full flex flex-col justify-center p-7 md:p-10 lg:p-12">
-            <h3 className="font-display text-2xl font-medium leading-tight md:text-3xl">
+            <h3 className="font-display text-lg font-medium leading-tight md:text-3xl">
               Todo lo que incluye tu proyecto
             </h3>
             <ul className="mt-6 space-y-3">
@@ -297,6 +297,16 @@ function OfferStack() {
 
 /* ---------------- SERVICES ---------------- */
 function Services() {
+  const [activeCard, setActiveCard] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = () => {
+      setActiveCard(null);
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => document.removeEventListener("click", handleOutsideClick);
+  }, []);
+
   const services = [
     {
       title: "Equipamiento y Accesorios",
@@ -326,7 +336,7 @@ function Services() {
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal>
           <div className="max-w-2xl">
-            <h2 className="font-display text-4xl font-medium leading-[1.08] md:text-5xl">
+            <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
               Servicios complementarios para potenciar tu piscina.
             </h2>
           </div>
@@ -336,7 +346,18 @@ function Services() {
           {services.map((s, index) => (
             <StaggerItem
               key={s.title}
-              className="card group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary transition-transform active:scale-[0.985]"
+              className={`card group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary border border-white/10 transition-transform active:scale-[0.985] ${
+                activeCard === s.title ? "is-active" : ""
+              }`}
+              onClick={(e) => {
+                if (window.matchMedia("(hover: none)").matches) {
+                  if (activeCard !== s.title) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setActiveCard(s.title);
+                  }
+                }
+              }}
             >
               {s.external ? (
                 <a
@@ -357,20 +378,20 @@ function Services() {
                 src={s.img}
                 alt={s.title}
                 loading={index < 2 ? "eager" : "lazy"}
-                className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 group-[.is-active]:scale-105"
               />
-              <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/92 via-primary/24 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-95" />
+              <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/92 via-primary/24 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-95 group-[.is-active]:opacity-95" />
 
               <div className="absolute inset-x-0 bottom-0 p-7 text-white md:p-8">
-                <h3 className="touch-title-lift font-display text-3xl font-medium leading-none tracking-[-0.02em] transition-transform duration-500 group-hover:-translate-y-2">
+                <h3 className="touch-title-lift font-display text-2xl font-medium leading-none tracking-[-0.02em] transition-transform duration-500 group-hover:-translate-y-2 group-[.is-active]:-translate-y-2 md:text-3xl">
                   {s.title}
                 </h3>
-                <p className="reveal-on-hover touch-reveal max-h-0 max-w-md translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100">
+                <p className="reveal-on-hover touch-reveal max-h-0 max-w-md translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100 group-[.is-active]:mt-3 group-[.is-active]:max-h-28 group-[.is-active]:translate-y-0 group-[.is-active]:opacity-100">
                   {s.body}
                 </p>
                 <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
                   Explorar
-                  <ArrowRight className="touch-arrow-nudge h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight className="touch-arrow-nudge h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-[.is-active]:translate-x-1" />
                 </div>
               </div>
             </StaggerItem>
@@ -410,7 +431,7 @@ function Process() {
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <Reveal>
           <div className="max-w-2xl">
-            <h2 className="font-display text-4xl font-medium leading-[1.08] md:text-5xl">
+            <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
               Cuatro pasos. Cero improvisación.
             </h2>
           </div>
@@ -420,13 +441,13 @@ function Process() {
           {steps.map((s, i) => (
             <StaggerItem
               key={s.n}
-              className="relative rounded-2xl border border-border bg-card p-7"
+              className="relative rounded-2xl border border-border bg-card p-7 transition-all duration-350 hover:-translate-y-1 hover:border-aqua/45 hover:shadow-[var(--shadow-soft)] hover:bg-secondary/10"
             >
               <div className="flex items-baseline justify-between">
                 <span className="font-display text-3xl font-medium text-primary">{s.n}</span>
-                {i < steps.length - 1 && <ArrowRight className="h-4 w-4 text-aqua opacity-60" />}
+                {i < steps.length - 1 && <ArrowRight className="hidden md:block h-4 w-4 text-aqua opacity-60" />}
               </div>
-              <h3 className="mt-6 text-lg font-semibold">{s.title}</h3>
+              <h3 className="mt-6 text-base font-semibold md:text-lg">{s.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{s.body}</p>
             </StaggerItem>
           ))}
@@ -446,13 +467,10 @@ function Works() {
         <Reveal>
           <div className="flex flex-col items-end justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
-              <h2 className="font-display text-4xl font-medium leading-[1.08] md:text-5xl">
+              <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
                 Proyectos que ya están disfrutándose.
               </h2>
             </div>
-            <Link to="/obras" className="text-sm font-semibold text-primary hover:text-aqua">
-              Ver todas las obras →
-            </Link>
           </div>
         </Reveal>
 
@@ -460,7 +478,7 @@ function Works() {
           {displayedWorks.map((w, i) => (
             <StaggerItem
               key={w.title}
-              className={`card group relative cursor-pointer overflow-hidden rounded-3xl transition-transform active:scale-[0.985] ${
+              className={`card group relative cursor-pointer overflow-hidden rounded-3xl border border-white/10 transition-transform active:scale-[0.985] ${
                 i === 0 ? "md:col-span-2 md:row-span-2" : ""
               }`}
             >
@@ -481,7 +499,7 @@ function Works() {
                 <span className="inline-flex rounded-full bg-white/18 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
                   {w.category}
                 </span>
-                <h3 className="mt-3 font-display text-2xl font-medium leading-tight md:text-3xl">
+                <h3 className="mt-3 font-display text-lg font-medium leading-tight md:text-3xl">
                   {w.title}
                 </h3>
               </div>
@@ -507,7 +525,7 @@ function Contact() {
       <div className="mx-auto grid max-w-7xl gap-8 px-5 md:grid-cols-[0.9fr_1.1fr] md:px-8">
         <Reveal>
           <div>
-            <h2 className="font-display text-4xl font-medium leading-[1.08] md:text-5xl">
+            <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
               Hablemos de tu proyecto.
             </h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">
@@ -574,7 +592,7 @@ function Faq() {
     <section className="mx-auto max-w-4xl px-5 py-14 md:px-8 md:py-20">
       <Reveal>
         <div className="text-center">
-          <h2 className="font-display text-4xl font-medium leading-[1.08] md:text-5xl">
+          <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
             Preguntas frecuentes.
           </h2>
         </div>
@@ -621,7 +639,7 @@ function FinalCTA() {
       </div>
       <div className="relative mx-auto max-w-3xl px-5 text-center md:px-8">
         <Reveal>
-          <h2 className="font-display text-4xl font-medium leading-[1.08] text-balance md:text-6xl">
+          <h2 className="font-display text-2xl font-medium leading-[1.08] text-balance md:text-6xl">
             ¿Ya tenés una idea?
             <span className="block text-aqua">Pedí una recomendación.</span>
           </h2>
