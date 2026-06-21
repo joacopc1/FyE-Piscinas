@@ -2,8 +2,8 @@ import { motion, type Variants } from "framer-motion";
 import { useEffect, useState, type ReactNode } from "react";
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } },
 };
 
 export function Reveal({
@@ -32,7 +32,7 @@ export function Reveal({
       variants={fadeUp}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.05, margin: "0px 0px -10% 0px" }}
+      viewport={{ once: true, amount: 0.02, margin: "0px 0px -5% 0px" }}
       transition={{ delay }}
       className={className}
       style={{
@@ -58,7 +58,7 @@ export function StaggerGroup({
     <motion.div
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.01, margin: "0px 0px -10% 0px" }}
+      viewport={{ once: true, amount: 0.01, margin: "0px 0px -5% 0px" }}
       variants={{
         hidden: {},
         show: { transition: { staggerChildren: stagger } },
@@ -87,7 +87,6 @@ export function StaggerItem({ children, className }: { children: ReactNode; clas
   return (
     <motion.div
       variants={fadeUp}
-      whileTap={{ scale: 0.985 }}
       className={className}
       style={{
         willChange: "opacity, transform",

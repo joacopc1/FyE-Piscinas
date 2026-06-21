@@ -94,7 +94,11 @@ function Gallery({
       setActiveCard(null);
     };
     document.addEventListener("click", handleOutsideClick);
-    return () => document.removeEventListener("click", handleOutsideClick);
+    document.addEventListener("touchstart", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
   }, []);
 
   return (
@@ -123,9 +127,13 @@ function Gallery({
           {filteredWorks.map((work, index) => (
             <StaggerItem
               key={work.id}
-              className={`card group relative h-[320px] overflow-hidden rounded-3xl bg-secondary border border-white/10 shadow-[0_22px_60px_rgba(2,30,54,0.16)] transition-transform active:scale-[0.985] md:h-[360px] ${
+              className={`card group relative h-[320px] overflow-hidden rounded-3xl bg-secondary border border-white/10 shadow-[0_22px_60px_rgba(2,30,54,0.16)] transition-transform md:h-[360px] ${
                 activeCard === work.id ? "is-active" : ""
               }`}
+              onTouchStart={(e) => {
+                e.stopPropagation();
+                setActiveCard(work.id);
+              }}
               onClick={(e) => {
                 if (window.matchMedia("(hover: none)").matches) {
                   if (activeCard !== work.id) {

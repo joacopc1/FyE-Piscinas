@@ -216,22 +216,14 @@ video::-webkit-media-controls-time-remaining-display,
    Touch devices — active states for feedback + permanently expanded content
    ====================================================================== */
 @media (hover: none), (pointer: coarse) {
-  /* Generic card active feedback */
+  /* Generic card feedback - stable states without layout shift/sinking */
   .card:active {
-    transform: scale(0.97);
+    border-color: var(--color-aqua);
     box-shadow: var(--shadow-lift);
   }
 
-  /* Pains / Process / any StaggerItem card — active feedback on tap */
   [class*="rounded-2xl"][class*="border"][class*="bg-card"]:active {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lift);
-    transition: transform 150ms ease, box-shadow 150ms ease;
-  }
-
-  /* Works gallery cards — active feedback */
-  [class*="rounded-3xl"][class*="group"]:active {
-    transform: scale(0.97);
+    border-color: var(--color-aqua);
     box-shadow: var(--shadow-lift);
   }
 }

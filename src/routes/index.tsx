@@ -62,7 +62,6 @@ function Home() {
       <Works />
       <Contact />
       <Faq />
-      <FinalCTA />
       <Footer />
     </div>
   );
@@ -304,7 +303,11 @@ function Services() {
       setActiveCard(null);
     };
     document.addEventListener("click", handleOutsideClick);
-    return () => document.removeEventListener("click", handleOutsideClick);
+    document.addEventListener("touchstart", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
   }, []);
 
   const services = [
@@ -346,9 +349,13 @@ function Services() {
           {services.map((s, index) => (
             <StaggerItem
               key={s.title}
-              className={`card group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary border border-white/10 transition-transform active:scale-[0.985] ${
+              className={`card group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary border border-white/10 transition-transform ${
                 activeCard === s.title ? "is-active" : ""
               }`}
+              onTouchStart={(e) => {
+                e.stopPropagation();
+                setActiveCard(s.title);
+              }}
               onClick={(e) => {
                 if (window.matchMedia("(hover: none)").matches) {
                   if (activeCard !== s.title) {
