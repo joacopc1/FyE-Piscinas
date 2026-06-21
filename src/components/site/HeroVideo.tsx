@@ -44,7 +44,6 @@ export function HeroVideo({ src }: { src: string }) {
     const interactionEvents = ["touchstart", "touchmove", "scroll", "click", "keydown"] as const;
     const onInteraction = () => {
       tryPlay();
-      // Remove all listeners after first successful interaction
       interactionEvents.forEach((evt) =>
         document.removeEventListener(evt, onInteraction)
       );
@@ -69,30 +68,36 @@ export function HeroVideo({ src }: { src: string }) {
   if (failed) return null;
 
   return (
-    <video
-      ref={videoRef}
-      className={`hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-700 md:object-[center_48%] ${
-        playing ? "opacity-100" : "opacity-0"
-      }`}
-      src={src}
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="auto"
-      disablePictureInPicture
-      // @ts-expect-error iOS attribute
-      disableRemotePlayback=""
-      controls={false}
-      controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
-      aria-hidden="true"
-      tabIndex={-1}
-      onLoadedData={(e) => e.currentTarget.play().catch(() => {})}
-      onLoadedMetadata={(e) => e.currentTarget.play().catch(() => {})}
-      onCanPlay={(e) => e.currentTarget.play().catch(() => {})}
-      onCanPlayThrough={(e) => e.currentTarget.play().catch(() => {})}
-      onPlaying={() => setPlaying(true)}
-      onError={() => setFailed(true)}
-    />
+    <div className="absolute inset-0 h-full w-full overflow-hidden bg-deep">
+      <video
+        ref={videoRef}
+        className="hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-100 transition-opacity duration-700 md:object-[center_48%]"
+        src={src}
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        disablePictureInPicture
+        // @ts-expect-error iOS attribute
+        disableRemotePlayback=""
+        controls={false}
+        controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
+        aria-hidden="true"
+        tabIndex={-1}
+        onLoadedData={(e) => e.currentTarget.play().catch(() => {})}
+        onLoadedMetadata={(e) => e.currentTarget.play().catch(() => {})}
+        onCanPlay={(e) => e.currentTarget.play().catch(() => {})}
+        onCanPlayThrough={(e) => e.currentTarget.play().catch(() => {})}
+        onPlaying={() => setPlaying(true)}
+        onError={() => setFailed(true)}
+      />
+      {/* Solid overlay hides the first frame until the video is actually playing */}
+      <div
+        className={`absolute inset-0 bg-deep transition-opacity duration-700 ${
+          playing ? "opacity-0" : "opacity-100"
+        }`}
+      />
+    </div>
   );
 }

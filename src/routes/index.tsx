@@ -297,18 +297,25 @@ function OfferStack() {
 /* ---------------- SERVICES ---------------- */
 function Services() {
   const [activeCard, setActiveCard] = useState<string | null>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleOutsideClick = () => {
-      setActiveCard(null);
+    const handleOutside = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node;
+      if (gridRef.current && !gridRef.current.contains(target)) {
+        setActiveCard(null);
+      }
     };
-    document.addEventListener("click", handleOutsideClick);
-    document.addEventListener("touchstart", handleOutsideClick);
+    document.addEventListener("click", handleOutside);
+    document.addEventListener("touchstart", handleOutside);
     return () => {
-      document.removeEventListener("click", handleOutsideClick);
-      document.removeEventListener("touchstart", handleOutsideClick);
+      document.removeEventListener("click", handleOutside);
+      document.removeEventListener("touchstart", handleOutside);
     };
   }, []);
+
+  const isTouch = () =>
+    typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
 
   const services = [
     {
@@ -345,42 +352,42 @@ function Services() {
           </div>
         </Reveal>
 
-        <StaggerGroup className="mt-10 grid gap-8 lg:grid-cols-3 md:grid-cols-2">
-          {services.map((s, index) => (
-            <StaggerItem
-              key={s.title}
-              className={`card group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary border border-white/10 transition-transform ${
-                activeCard === s.title ? "is-active" : ""
-              }`}
-              onTouchStart={(e) => {
-                e.stopPropagation();
-                setActiveCard(s.title);
-              }}
-              onClick={(e) => {
-                if (window.matchMedia("(hover: none)").matches) {
-                  if (activeCard !== s.title) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setActiveCard(s.title);
-                  }
-                }
-              }}
-            >
-              {s.external ? (
-                <a
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label={`Explorar ${s.title}`}
-                  className="absolute inset-0 z-10"
-                />
-              ) : (
-                <Link
-                  to={s.href}
-                  aria-label={`Explorar ${s.title}`}
-                  className="absolute inset-0 z-10"
-                />
-              )}
+        <div ref={gridRef}>
+          <StaggerGroup className="mt-10 grid gap-8 lg:grid-cols-3 md:grid-cols-2">
+            {services.map((s, index) => (
+              <StaggerItem
+                key={s.title}
+                className={`card group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary border border-white/10 transition-transform ${
+                  activeCard === s.title ? "is-active" : ""
+                }`}
+              >
+                {s.external ? (
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={`Explorar ${s.title}`}
+                    className="absolute inset-0 z-10"
+                    onClick={(e) => {
+                      if (isTouch() && activeCard !== s.title) {
+                        e.preventDefault();
+                        setActiveCard(s.title);
+                      }
+                    }}
+                  />
+                ) : (
+                  <Link
+                    to={s.href}
+                    aria-label={`Explorar ${s.title}`}
+                    className="absolute inset-0 z-10"
+                    onClick={(e) => {
+                      if (isTouch() && activeCard !== s.title) {
+                        e.preventDefault();
+                        setActiveCard(s.title);
+                      }
+                    }}
+                  />
+                )}
               <img
                 src={s.img}
                 alt={s.title}
@@ -403,7 +410,8 @@ function Services() {
               </div>
             </StaggerItem>
           ))}
-        </StaggerGroup>
+          </StaggerGroup>
+        </div>
       </div>
     </section>
   );
@@ -676,5 +684,4 @@ function FinalCTA() {
     </section>
   );
 }
-
 

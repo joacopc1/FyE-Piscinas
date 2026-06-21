@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check, Home, Sparkles } from "lucide-react";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -88,18 +88,25 @@ function Gallery({
   onFilter: (filter: WorkCategory) => void;
 }) {
   const [activeCard, setActiveCard] = useState<string | null>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleOutsideClick = () => {
-      setActiveCard(null);
+    const handleOutside = (e: MouseEvent | TouchEvent) => {
+      const target = e.target as Node;
+      if (gridRef.current && !gridRef.current.contains(target)) {
+        setActiveCard(null);
+      }
     };
-    document.addEventListener("click", handleOutsideClick);
-    document.addEventListener("touchstart", handleOutsideClick);
+    document.addEventListener("click", handleOutside);
+    document.addEventListener("touchstart", handleOutside);
     return () => {
-      document.removeEventListener("click", handleOutsideClick);
-      document.removeEventListener("touchstart", handleOutsideClick);
+      document.removeEventListener("click", handleOutside);
+      document.removeEventListener("touchstart", handleOutside);
     };
   }, []);
+
+  const isTouch = () =>
+    typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
 
   return (
     <section id="galeria" className="bg-white py-8 md:py-12">
@@ -123,32 +130,26 @@ function Gallery({
           </div>
         </Reveal>
 
-        <StaggerGroup className="mt-8 grid gap-6 md:grid-cols-3">
+        <div ref={gridRef}>
+          <StaggerGroup className="mt-8 grid gap-6 md:grid-cols-3">
           {filteredWorks.map((work, index) => (
             <StaggerItem
               key={work.id}
               className={`card group relative h-[320px] overflow-hidden rounded-3xl bg-secondary border border-white/10 shadow-[0_22px_60px_rgba(2,30,54,0.16)] transition-transform md:h-[360px] ${
                 activeCard === work.id ? "is-active" : ""
               }`}
-              onTouchStart={(e) => {
-                e.stopPropagation();
-                setActiveCard(work.id);
-              }}
-              onClick={(e) => {
-                if (window.matchMedia("(hover: none)").matches) {
-                  if (activeCard !== work.id) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setActiveCard(work.id);
-                  }
-                }
-              }}
             >
               <Link
                 to="/obras/$obraId"
                 params={{ obraId: work.id }}
                 className="absolute inset-0 z-10 text-left"
                 aria-label={`Ver proceso de ${work.title}`}
+                onClick={(e) => {
+                  if (isTouch() && activeCard !== work.id) {
+                    e.preventDefault();
+                    setActiveCard(work.id);
+                  }
+                }}
               />
               <img
                 src={work.image}
@@ -177,7 +178,8 @@ function Gallery({
               </div>
             </StaggerItem>
           ))}
-        </StaggerGroup>
+          </StaggerGroup>
+        </div>
       </div>
     </section>
   );
