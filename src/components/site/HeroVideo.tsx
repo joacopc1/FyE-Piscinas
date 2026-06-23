@@ -1,43 +1,65 @@
 import { useEffect, useRef, useState } from "react";
 
 export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    const container = containerRef.current;
+    if (!container) return;
 
+    // Create the video element programmatically
+    const video = document.createElement("video");
+    video.className = "hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]";
+    if (poster) {
+      video.poster = poster;
+    }
+
+    // Set attributes for native iOS Safari autoplay compatibility
+    video.autoplay = true;
+    video.loop = true;
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
+
+    video.setAttribute("autoplay", "");
     video.setAttribute("muted", "");
     video.setAttribute("playsinline", "");
     video.setAttribute("webkit-playsinline", "");
+    video.setAttribute("preload", "auto");
+    video.setAttribute("controlslist", "nodownload nofullscreen noremoteplayback noplaybackrate");
+    video.setAttribute("aria-hidden", "true");
+    video.tabIndex = -1;
 
+    // Create the source child element
+    const source = document.createElement("source");
+    source.src = src;
+    source.type = "video/mp4";
+    video.appendChild(source);
+
+    // Append to DOM container
+    container.appendChild(video);
+
+    // Play execution helper
     let cancelled = false;
-
     const tryPlay = () => {
       if (cancelled) return;
       video.muted = true;
       video.defaultMuted = true;
-      
-      // Ensure video source is loaded
-      if (video.readyState === 0) {
-        video.load();
-      }
-      
       video.play().catch(() => {
-        // iOS can reject autoplay until the first gesture; we keep retrying below.
+        // Ignored; retried on timer/interaction
       });
     };
 
+    video.load();
     tryPlay();
 
+    // Aggressive retries for iOS Safari autoplay
     const retryTimers = [50, 150, 300, 600, 1000, 2000, 3000].map((delay) =>
       window.setTimeout(tryPlay, delay),
     );
 
+    // Interaction triggers to catch cases where iOS blocks autoplay initially
     const interactionEvents = ["touchstart", "touchend", "pointerdown", "scroll", "click", "keydown"] as const;
     const onInteraction = () => tryPlay();
 
@@ -45,14 +67,19 @@ export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
       document.addEventListener(eventName, onInteraction, { passive: true });
     });
 
+    // Handle failure
+    video.onerror = () => setFailed(true);
+
     return () => {
       cancelled = true;
       retryTimers.forEach((timer) => window.clearTimeout(timer));
       interactionEvents.forEach((eventName) => {
         document.removeEventListener(eventName, onInteraction);
       });
+      video.pause();
+      video.remove();
     };
-  }, []);
+  }, [src, poster]);
 
   if (failed && poster) {
     return (
@@ -65,34 +92,7 @@ export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
     );
   }
 
-  if (failed) return null;
-
   return (
-    <video
-      ref={videoRef}
-      className="hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
-      poster={poster}
-      autoPlay
-      muted
-      loop
-      playsInline
-      // @ts-expect-error iOS attribute
-      webkit-playsinline="true"
-      preload="auto"
-      disablePictureInPicture
-      // @ts-expect-error iOS attribute
-      disableRemotePlayback=""
-      controls={false}
-      controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
-      aria-hidden="true"
-      tabIndex={-1}
-      onLoadedData={(event) => event.currentTarget.play().catch(() => {})}
-      onLoadedMetadata={(event) => event.currentTarget.play().catch(() => {})}
-      onCanPlay={(event) => event.currentTarget.play().catch(() => {})}
-      onCanPlayThrough={(event) => event.currentTarget.play().catch(() => {})}
-      onError={() => setFailed(true)}
-    >
-      <source src={src} type="video/mp4" />
-    </video>
+    <div ref={containerRef} className="absolute inset-0 pointer-events-none overflow-hidden bg-transparent" />
   );
 }
