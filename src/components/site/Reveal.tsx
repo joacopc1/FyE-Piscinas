@@ -103,7 +103,7 @@ export function Reveal({
       animate={shouldShow ? "show" : "hidden"}
       transition={{ delay }}
       className={className}
-      style={{ willChange: shouldShow ? "auto" : "opacity, transform" }}
+      style={{ willChange: "transform, opacity" }}
     >
       {children}
     </motion.div>
@@ -133,7 +133,7 @@ export function StaggerGroup({
         show: { transition: { staggerChildren: stagger } },
       }}
       className={className}
-      style={{ willChange: shouldShow ? "auto" : "opacity, transform" }}
+      style={{ willChange: "transform, opacity" }}
     >
       {children}
     </motion.div>

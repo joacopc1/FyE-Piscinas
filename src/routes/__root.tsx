@@ -116,7 +116,9 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <div className="overflow-x-hidden w-full m-0 p-0">
+          {children}
+        </div>
         <Scripts />
         {/* Glovi Widget */}
         <script
