@@ -6,13 +6,6 @@ const fadeUp: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
 };
 
-function isInsideRevealZone(element: HTMLElement) {
-  const rect = element.getBoundingClientRect();
-  const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
-
-  return rect.top <= viewportHeight * 0.9 && rect.bottom >= viewportHeight * 0.02;
-}
-
 function useReliableReveal<T extends HTMLElement>() {
   const ref = useRef<T>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -23,22 +16,8 @@ function useReliableReveal<T extends HTMLElement>() {
     const element = ref.current;
     if (!element) return;
 
-    let animationFrame = 0;
     let observer: IntersectionObserver | null = null;
-
     const reveal = () => setIsVisible(true);
-
-    const checkPosition = () => {
-      window.cancelAnimationFrame(animationFrame);
-      animationFrame = window.requestAnimationFrame(() => {
-        const current = ref.current;
-        if (current && isInsideRevealZone(current)) {
-          reveal();
-        }
-      });
-    };
-
-    checkPosition();
 
     if ("IntersectionObserver" in window) {
       observer = new IntersectionObserver(
@@ -49,33 +28,22 @@ function useReliableReveal<T extends HTMLElement>() {
         },
         {
           root: null,
-          rootMargin: "0px 0px 18% 0px",
-          threshold: [0, 0.01, 0.08],
+          rootMargin: "0px 0px -5% 0px",
+          threshold: [0, 0.05],
         },
       );
       observer.observe(element);
+    } else {
+      // Fallback for environment without IntersectionObserver
+      reveal();
     }
 
-    const events = ["scroll", "resize", "orientationchange", "touchmove", "touchend"] as const;
-    events.forEach((eventName) => {
-      window.addEventListener(eventName, checkPosition, { passive: true });
-    });
-
-    const firstCheck = window.setTimeout(checkPosition, 120);
-    const secondCheck = window.setTimeout(checkPosition, 700);
-    const interval = window.setInterval(checkPosition, 450);
-    const finalSafety = window.setTimeout(reveal, 9000);
+    // Safety fallback trigger after 2 seconds
+    const safetyTimeout = window.setTimeout(reveal, 2000);
 
     return () => {
-      window.cancelAnimationFrame(animationFrame);
       observer?.disconnect();
-      events.forEach((eventName) => {
-        window.removeEventListener(eventName, checkPosition);
-      });
-      window.clearTimeout(firstCheck);
-      window.clearTimeout(secondCheck);
-      window.clearInterval(interval);
-      window.clearTimeout(finalSafety);
+      window.clearTimeout(safetyTimeout);
     };
   }, [isVisible]);
 

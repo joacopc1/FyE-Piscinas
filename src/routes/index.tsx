@@ -93,16 +93,16 @@ function Hero() {
           <div className="mx-auto max-w-3xl -translate-y-2 md:-translate-y-4">
             <h1 className="mt-6 font-[var(--font-hero)] text-3xl font-medium leading-[1.05] tracking-[-0.035em] text-balance text-white drop-shadow-[0_18px_42px_rgba(0,0,0,0.32)] sm:text-4xl lg:text-5xl">
               <motion.span
-                initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 className="block"
               >
                 Tu piscina lista para disfrutar.
               </motion.span>
               <motion.span
-                initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 className="block"
               >
@@ -263,9 +263,9 @@ function OfferStack() {
             <h3 className="font-display text-lg font-medium leading-tight md:text-3xl">
               Todo lo que incluye tu proyecto
             </h3>
-            <ul className="mt-6 space-y-3">
+            <StaggerGroup className="mt-6 space-y-3">
               {stack.map((s) => (
-                <li key={s.title} className="flex items-center gap-3 text-sm font-semibold">
+                <StaggerItem key={s.title} className="flex items-center gap-3 text-sm font-semibold">
                   {s.type === "bonus" ? (
                     <span className="grid h-7 w-7 flex-none place-items-center text-base">
                       🎁
@@ -276,9 +276,9 @@ function OfferStack() {
                     </span>
                   )}
                   <span>{s.title}</span>
-                </li>
+                </StaggerItem>
               ))}
-            </ul>
+            </StaggerGroup>
 
             <a
               href="/piscina-lista-para-disfrutar"

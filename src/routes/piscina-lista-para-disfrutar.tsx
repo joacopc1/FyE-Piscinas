@@ -102,16 +102,16 @@ function OfferHero() {
           <div className="mx-auto max-w-3xl -translate-y-2 md:-translate-y-4">
             <h1 className="mt-6 font-[var(--font-hero)] text-3xl font-medium leading-[1.05] tracking-[-0.035em] text-balance text-white drop-shadow-[0_18px_42px_rgba(0,0,0,0.32)] sm:text-4xl lg:text-5xl">
               <motion.span
-                initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                 className="block"
               >
                 Instalá la piscina correcta.
               </motion.span>
               <motion.span
-                initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
                 className="block"
               >
@@ -337,17 +337,17 @@ function OfferValue() {
                 Qué incluye la propuesta
               </h3>
 
-              <ul className="mt-7 grid gap-3.5 sm:grid-cols-2">
+              <StaggerGroup className="mt-7 grid gap-3.5 sm:grid-cols-2">
                 {includes.map((s) => (
-                  <li key={s} className="flex items-start gap-3 text-sm">
+                  <StaggerItem key={s} className="flex items-start gap-3 text-sm">
                     <span className="mt-0.5 grid h-5 w-5 flex-none place-items-center rounded-full bg-aqua text-primary">
                       <Check className="h-3 w-3" strokeWidth={3} />
                     </span>
                     <span className="text-foreground/90">{s}</span>
-                  </li>
+                  </StaggerItem>
                 ))}
                 {bonuses.map((bonus) => (
-                  <li key={bonus} className="flex items-start gap-3 text-sm">
+                  <StaggerItem key={bonus} className="flex items-start gap-3 text-sm">
                     <span
                       aria-hidden
                       className="mt-0.5 grid h-5 w-5 flex-none place-items-center text-base leading-none"
@@ -355,9 +355,9 @@ function OfferValue() {
                       🎁
                     </span>
                     <span className="text-foreground/90">{bonus}</span>
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </StaggerGroup>
 
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
                 <Pill icon={Gift} label="Regalos gratis" />

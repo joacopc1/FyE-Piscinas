@@ -89,8 +89,8 @@ export const works: Work[] = [
       {
         title: "Paso 5: Conexiones Hidráulicas y Filtros",
         description: "Realizamos el conexionado técnico de retornos, skimmer y luces LED hasta la caseta subterránea de filtros para la puesta en marcha hidráulica automática.",
-        mediaUrl: "/WhatsApp Video 2026-06-18 at 08.12.51.mp4",
-        mediaType: "video",
+        mediaUrl: "/conexion-hidraulica-y-filtros.png",
+        mediaType: "image",
       },
     ],
     result:

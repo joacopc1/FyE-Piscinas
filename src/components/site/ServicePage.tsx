@@ -88,16 +88,16 @@ export function ServicePage({ data }: { data: ServicePageData }) {
             <div className="mx-auto max-w-3xl -translate-y-2 md:-translate-y-4">
               <h1 className="mt-6 font-[var(--font-hero)] text-3xl font-medium leading-[1.05] tracking-[-0.035em] text-balance text-white drop-shadow-[0_18px_42px_rgba(0,0,0,0.32)] sm:text-4xl lg:text-5xl">
                 <motion.span
-                  initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
                   className="block"
                 >
                   {data.titlePart1}
                 </motion.span>
                 <motion.span
-                  initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
                   className="block"
                 >
