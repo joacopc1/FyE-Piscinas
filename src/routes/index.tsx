@@ -79,7 +79,7 @@ function Hero() {
     <section ref={ref} className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-deep">
       {/* Background video with parallax + slow zoom */}
       <motion.div style={{ y, scale }} className="absolute inset-0 will-change-transform">
-        <HeroVideo src={HERO_VIDEO_SRC} />
+        <HeroVideo src={HERO_VIDEO_SRC} poster="/hero-poster.jpg" />
         {/* Cinematic gradients */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/12 to-black/78 md:from-black/34 md:via-black/10 md:to-black/50" />
       </motion.div>
