@@ -79,7 +79,7 @@ function Hero() {
     <section ref={ref} className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-deep">
       {/* Background video with parallax + slow zoom */}
       <motion.div style={{ y, scale }} className="absolute inset-0 will-change-transform">
-        <HeroVideo src={HERO_VIDEO_SRC} />
+        <HeroVideo src={HERO_VIDEO_SRC} poster={heroPool} />
         {/* Cinematic gradients */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/12 to-black/78 md:from-black/34 md:via-black/10 md:to-black/50" />
       </motion.div>
@@ -298,27 +298,60 @@ function OfferStack() {
 function Services() {
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const justActivatedRef = useRef<string | null>(null);
 
   useEffect(() => {
-    const handleOutside = (e: MouseEvent | TouchEvent) => {
-      const target = e.target as Node;
+    const handleOutside = (event: PointerEvent | TouchEvent) => {
+      const target = event.target as Node;
       if (gridRef.current && !gridRef.current.contains(target)) {
         setActiveCard(null);
+        justActivatedRef.current = null;
       }
     };
-    document.addEventListener("click", handleOutside);
-    document.addEventListener("touchstart", handleOutside);
+
+    document.addEventListener("pointerdown", handleOutside, { passive: true });
+    document.addEventListener("touchstart", handleOutside, { passive: true });
+
     return () => {
-      document.removeEventListener("click", handleOutside);
+      document.removeEventListener("pointerdown", handleOutside);
       document.removeEventListener("touchstart", handleOutside);
     };
   }, []);
 
   const isTouch = () =>
     typeof window !== "undefined" &&
-    (navigator.maxTouchPoints > 0 ||
+    ("ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
       window.matchMedia("(pointer: coarse)").matches ||
       window.matchMedia("(hover: none)").matches);
+
+  const activateForTouch = (id: string) => {
+    if (!isTouch()) return;
+
+    if (activeCard !== id) {
+      justActivatedRef.current = id;
+      setActiveCard(id);
+    }
+  };
+
+  const handleTouchNavigation = (
+    event: { preventDefault: () => void; stopPropagation: () => void },
+    id: string,
+  ) => {
+    if (!isTouch()) return;
+
+    if (activeCard !== id || justActivatedRef.current === id) {
+      event.preventDefault();
+      event.stopPropagation();
+      justActivatedRef.current = id;
+      setActiveCard(id);
+      window.setTimeout(() => {
+        if (justActivatedRef.current === id) {
+          justActivatedRef.current = null;
+        }
+      }, 120);
+    }
+  };
 
   const services = [
     {
@@ -360,6 +393,8 @@ function Services() {
             {services.map((s, index) => (
               <StaggerItem
                 key={s.title}
+                onPointerDownCapture={() => activateForTouch(s.title)}
+                onTouchStartCapture={() => activateForTouch(s.title)}
                 className={`card group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary border border-white/10 transition-transform ${
                   activeCard === s.title ? "is-active" : ""
                 }`}
@@ -372,12 +407,7 @@ function Services() {
                     aria-label={`Explorar ${s.title}`}
                     aria-expanded={activeCard === s.title}
                     className="absolute inset-0 z-10"
-                    onClick={(e) => {
-                      if (isTouch() && activeCard !== s.title) {
-                        e.preventDefault();
-                        setActiveCard(s.title);
-                      }
-                    }}
+                    onClickCapture={(event) => handleTouchNavigation(event, s.title)}
                   />
                 ) : (
                   <Link
@@ -385,36 +415,31 @@ function Services() {
                     aria-label={`Explorar ${s.title}`}
                     aria-expanded={activeCard === s.title}
                     className="absolute inset-0 z-10"
-                    onClick={(e) => {
-                      if (isTouch() && activeCard !== s.title) {
-                        e.preventDefault();
-                        setActiveCard(s.title);
-                      }
-                    }}
+                    onClickCapture={(event) => handleTouchNavigation(event, s.title)}
                   />
                 )}
-              <img
-                src={s.img}
-                alt={s.title}
-                loading={index < 2 ? "eager" : "lazy"}
-                className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 group-[.is-active]:scale-105"
-              />
-              <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/92 via-primary/24 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-95 group-[.is-active]:opacity-95" />
+                <img
+                  src={s.img}
+                  alt={s.title}
+                  loading={index < 2 ? "eager" : "lazy"}
+                  className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 group-[.is-active]:scale-105"
+                />
+                <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/92 via-primary/24 to-transparent opacity-85 transition-opacity duration-500 group-hover:opacity-95 group-[.is-active]:opacity-95" />
 
-              <div className="absolute inset-x-0 bottom-0 p-7 text-white md:p-8">
-                <h3 className="touch-title-lift font-display text-2xl font-medium leading-none tracking-[-0.02em] transition-transform duration-500 group-hover:-translate-y-2 group-[.is-active]:-translate-y-2 md:text-3xl">
-                  {s.title}
-                </h3>
-                <p className="reveal-on-hover touch-reveal max-h-0 max-w-md translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100 group-[.is-active]:mt-3 group-[.is-active]:max-h-28 group-[.is-active]:translate-y-0 group-[.is-active]:opacity-100">
-                  {s.body}
-                </p>
-                <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
-                  Explorar
-                  <ArrowRight className="touch-arrow-nudge h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-[.is-active]:translate-x-1" />
+                <div className="absolute inset-x-0 bottom-0 p-7 text-white md:p-8">
+                  <h3 className="touch-title-lift font-display text-2xl font-medium leading-none tracking-[-0.02em] transition-transform duration-500 group-hover:-translate-y-2 group-[.is-active]:-translate-y-2 md:text-3xl">
+                    {s.title}
+                  </h3>
+                  <p className="reveal-on-hover touch-reveal max-h-0 max-w-md translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100 group-[.is-active]:mt-3 group-[.is-active]:max-h-28 group-[.is-active]:translate-y-0 group-[.is-active]:opacity-100">
+                    {s.body}
+                  </p>
+                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
+                    Explorar
+                    <ArrowRight className="touch-arrow-nudge h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-[.is-active]:translate-x-1" />
+                  </div>
                 </div>
-              </div>
-            </StaggerItem>
-          ))}
+              </StaggerItem>
+            ))}
           </StaggerGroup>
         </div>
       </div>

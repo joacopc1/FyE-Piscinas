@@ -228,7 +228,7 @@ video::-webkit-media-controls-time-remaining-display,
   }
 
   .card.is-active .touch-image-zoom {
-    scale: 1.05;
+    transform: scale(1.05);
   }
 
   .card.is-active .touch-overlay-strong {
@@ -236,18 +236,18 @@ video::-webkit-media-controls-time-remaining-display,
   }
 
   .card.is-active .touch-title-lift {
-    translate: 0 -0.5rem;
+    transform: translateY(-0.5rem);
   }
 
   .card.is-active .touch-reveal {
     max-height: 7rem;
     margin-top: 0.75rem;
-    translate: 0 0;
+    transform: translateY(0);
     opacity: 1;
   }
 
   .card.is-active .touch-arrow-nudge {
-    translate: 0.25rem 0;
+    transform: translateX(0.25rem);
   }
 
   [class*="rounded-2xl"][class*="border"][class*="bg-card"]:active {

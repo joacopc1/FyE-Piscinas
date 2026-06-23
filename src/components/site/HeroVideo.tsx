@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 
-export function HeroVideo({ src }: { src: string }) {
+export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(false);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Force muted + inline attributes for iOS autoplay
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
@@ -21,83 +19,71 @@ export function HeroVideo({ src }: { src: string }) {
 
     const tryPlay = () => {
       if (cancelled) return;
-      video
-        .play()
-        .then(() => {
-          if (!cancelled) setPlaying(true);
-        })
-        .catch(() => {});
+      video.muted = true;
+      video.defaultMuted = true;
+      video.play().catch(() => {
+        // iOS can reject autoplay until the first gesture; we keep retrying below.
+      });
     };
 
-    // Attempt autoplay immediately
     tryPlay();
 
-    // Aggressive retries — iOS Safari sometimes needs the video to be
-    // fully decoded before it will honour autoplay on a muted video.
-    const t1 = setTimeout(tryPlay, 100);
-    const t2 = setTimeout(tryPlay, 300);
-    const t3 = setTimeout(tryPlay, 600);
-    const t4 = setTimeout(tryPlay, 1200);
-    const t5 = setTimeout(tryPlay, 2500);
-
-    // Also try on any user interaction (scroll, touch, click)
-    const interactionEvents = ["touchstart", "touchmove", "scroll", "click", "keydown"] as const;
-    const onInteraction = () => {
-      tryPlay();
-      interactionEvents.forEach((evt) =>
-        document.removeEventListener(evt, onInteraction)
-      );
-    };
-    interactionEvents.forEach((evt) =>
-      document.addEventListener(evt, onInteraction, { once: false, passive: true })
+    const retryTimers = [100, 300, 700, 1200, 2200, 3600].map((delay) =>
+      window.setTimeout(tryPlay, delay),
     );
+
+    const interactionEvents = ["touchstart", "touchend", "pointerdown", "scroll", "click", "keydown"] as const;
+    const onInteraction = () => tryPlay();
+
+    interactionEvents.forEach((eventName) => {
+      document.addEventListener(eventName, onInteraction, { passive: true });
+    });
 
     return () => {
       cancelled = true;
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      clearTimeout(t4);
-      clearTimeout(t5);
-      interactionEvents.forEach((evt) =>
-        document.removeEventListener(evt, onInteraction)
-      );
+      retryTimers.forEach((timer) => window.clearTimeout(timer));
+      interactionEvents.forEach((eventName) => {
+        document.removeEventListener(eventName, onInteraction);
+      });
     };
   }, []);
+
+  if (failed && poster) {
+    return (
+      <img
+        src={poster}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
+      />
+    );
+  }
 
   if (failed) return null;
 
   return (
-    <div className="absolute inset-0 h-full w-full overflow-hidden bg-deep">
-      <video
-        ref={videoRef}
-        className="hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-100 transition-opacity duration-700 md:object-[center_48%]"
-        src={src}
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="auto"
-        disablePictureInPicture
-        // @ts-expect-error iOS attribute
-        disableRemotePlayback=""
-        controls={false}
-        controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
-        aria-hidden="true"
-        tabIndex={-1}
-        onLoadedData={(e) => e.currentTarget.play().catch(() => {})}
-        onLoadedMetadata={(e) => e.currentTarget.play().catch(() => {})}
-        onCanPlay={(e) => e.currentTarget.play().catch(() => {})}
-        onCanPlayThrough={(e) => e.currentTarget.play().catch(() => {})}
-        onPlaying={() => setPlaying(true)}
-        onError={() => setFailed(true)}
-      />
-      {/* Solid overlay hides the first frame until the video is actually playing */}
-      <div
-        className={`absolute inset-0 bg-deep transition-opacity duration-700 ${
-          playing ? "opacity-0" : "opacity-100"
-        }`}
-      />
-    </div>
+    <video
+      ref={videoRef}
+      className="hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
+      src={src}
+      poster={poster}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      disablePictureInPicture
+      // @ts-expect-error iOS attribute
+      disableRemotePlayback=""
+      controls={false}
+      controlsList="nodownload nofullscreen noremoteplayback noplaybackrate"
+      aria-hidden="true"
+      tabIndex={-1}
+      onLoadedData={(event) => event.currentTarget.play().catch(() => {})}
+      onLoadedMetadata={(event) => event.currentTarget.play().catch(() => {})}
+      onCanPlay={(event) => event.currentTarget.play().catch(() => {})}
+      onCanPlayThrough={(event) => event.currentTarget.play().catch(() => {})}
+      onError={() => setFailed(true)}
+    />
   );
 }

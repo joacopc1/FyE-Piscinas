@@ -81,7 +81,6 @@ function Gallery({
   activeFilter,
   filteredWorks,
   onFilter,
-  onSelect,
 }: {
   activeFilter: WorkCategory;
   filteredWorks: Work[];
@@ -89,27 +88,60 @@ function Gallery({
 }) {
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const justActivatedRef = useRef<string | null>(null);
 
   useEffect(() => {
-    const handleOutside = (e: MouseEvent | TouchEvent) => {
-      const target = e.target as Node;
+    const handleOutside = (event: PointerEvent | TouchEvent) => {
+      const target = event.target as Node;
       if (gridRef.current && !gridRef.current.contains(target)) {
         setActiveCard(null);
+        justActivatedRef.current = null;
       }
     };
-    document.addEventListener("click", handleOutside);
-    document.addEventListener("touchstart", handleOutside);
+
+    document.addEventListener("pointerdown", handleOutside, { passive: true });
+    document.addEventListener("touchstart", handleOutside, { passive: true });
+
     return () => {
-      document.removeEventListener("click", handleOutside);
+      document.removeEventListener("pointerdown", handleOutside);
       document.removeEventListener("touchstart", handleOutside);
     };
   }, []);
 
   const isTouch = () =>
     typeof window !== "undefined" &&
-    (navigator.maxTouchPoints > 0 ||
+    ("ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
       window.matchMedia("(pointer: coarse)").matches ||
       window.matchMedia("(hover: none)").matches);
+
+  const activateForTouch = (id: string) => {
+    if (!isTouch()) return;
+
+    if (activeCard !== id) {
+      justActivatedRef.current = id;
+      setActiveCard(id);
+    }
+  };
+
+  const handleTouchNavigation = (
+    event: { preventDefault: () => void; stopPropagation: () => void },
+    id: string,
+  ) => {
+    if (!isTouch()) return;
+
+    if (activeCard !== id || justActivatedRef.current === id) {
+      event.preventDefault();
+      event.stopPropagation();
+      justActivatedRef.current = id;
+      setActiveCard(id);
+      window.setTimeout(() => {
+        if (justActivatedRef.current === id) {
+          justActivatedRef.current = null;
+        }
+      }, 120);
+    }
+  };
 
   return (
     <section id="galeria" className="bg-white py-8 md:py-12">
@@ -135,53 +167,50 @@ function Gallery({
 
         <div ref={gridRef}>
           <StaggerGroup className="mt-8 grid gap-6 md:grid-cols-3">
-          {filteredWorks.map((work, index) => (
-            <StaggerItem
-              key={work.id}
-              className={`card group relative h-[320px] overflow-hidden rounded-3xl bg-secondary border border-white/10 shadow-[0_22px_60px_rgba(2,30,54,0.16)] transition-transform md:h-[360px] ${
-                activeCard === work.id ? "is-active" : ""
-              }`}
-            >
-              <Link
-                to="/obras/$obraId"
-                params={{ obraId: work.id }}
-                className="absolute inset-0 z-10 text-left"
-                aria-label={`Ver proceso de ${work.title}`}
-                aria-expanded={activeCard === work.id}
-                onClick={(e) => {
-                  if (isTouch() && activeCard !== work.id) {
-                    e.preventDefault();
-                    setActiveCard(work.id);
-                  }
-                }}
-              />
-              <img
-                src={work.image}
-                alt={work.alt}
-                loading={index < 2 ? "eager" : "lazy"}
-                className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 group-[.is-active]:scale-105"
-              />
-              <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/96 via-primary/38 to-transparent opacity-86 transition-opacity duration-500 group-hover:opacity-95 group-[.is-active]:opacity-95" />
+            {filteredWorks.map((work, index) => (
+              <StaggerItem
+                key={work.id}
+                onPointerDownCapture={() => activateForTouch(work.id)}
+                onTouchStartCapture={() => activateForTouch(work.id)}
+                className={`card group relative h-[320px] overflow-hidden rounded-3xl bg-secondary border border-white/10 shadow-[0_22px_60px_rgba(2,30,54,0.16)] transition-transform md:h-[360px] ${
+                  activeCard === work.id ? "is-active" : ""
+                }`}
+              >
+                <Link
+                  to="/obras/$obraId"
+                  params={{ obraId: work.id }}
+                  className="absolute inset-0 z-10 text-left"
+                  aria-label={`Ver proceso de ${work.title}`}
+                  aria-expanded={activeCard === work.id}
+                  onClickCapture={(event) => handleTouchNavigation(event, work.id)}
+                />
+                <img
+                  src={work.image}
+                  alt={work.alt}
+                  loading={index < 2 ? "eager" : "lazy"}
+                  className="touch-image-zoom absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 group-[.is-active]:scale-105"
+                />
+                <div className="touch-overlay-strong absolute inset-0 bg-gradient-to-t from-primary/96 via-primary/38 to-transparent opacity-86 transition-opacity duration-500 group-hover:opacity-95 group-[.is-active]:opacity-95" />
 
-              <div className="absolute inset-x-0 bottom-0 p-6 text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.48)] md:p-8">
-                <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-medium text-white/74">
-                  <span>{work.category}</span>
-                  <span>{work.location}</span>
-                  <span>{work.duration}</span>
+                <div className="absolute inset-x-0 bottom-0 p-6 text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.48)] md:p-8">
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-medium text-white/74">
+                    <span>{work.category}</span>
+                    <span>{work.location}</span>
+                    <span>{work.duration}</span>
+                  </div>
+                  <h2 className="mt-3 font-display text-xl font-medium leading-tight md:text-4xl">
+                    {work.title}
+                  </h2>
+                  <p className="reveal-on-hover touch-reveal max-h-0 max-w-xl translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100 group-[.is-active]:mt-3 group-[.is-active]:max-h-28 group-[.is-active]:translate-y-0 group-[.is-active]:opacity-100">
+                    {work.summary}
+                  </p>
+                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
+                    Ver proceso
+                    <ArrowRight className="touch-arrow-nudge h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-[.is-active]:translate-x-1" />
+                  </div>
                 </div>
-                <h2 className="mt-3 font-display text-xl font-medium leading-tight md:text-4xl">
-                  {work.title}
-                </h2>
-                <p className="reveal-on-hover touch-reveal max-h-0 max-w-xl translate-y-3 overflow-hidden text-sm leading-relaxed text-white/86 opacity-0 transition-all duration-500 group-hover:mt-3 group-hover:max-h-28 group-hover:translate-y-0 group-hover:opacity-100 group-[.is-active]:mt-3 group-[.is-active]:max-h-28 group-[.is-active]:translate-y-0 group-[.is-active]:opacity-100">
-                  {work.summary}
-                </p>
-                <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white">
-                  Ver proceso
-                  <ArrowRight className="touch-arrow-nudge h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-[.is-active]:translate-x-1" />
-                </div>
-              </div>
-            </StaggerItem>
-          ))}
+              </StaggerItem>
+            ))}
           </StaggerGroup>
         </div>
       </div>
