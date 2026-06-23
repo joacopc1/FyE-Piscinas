@@ -21,6 +21,12 @@ export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
       if (cancelled) return;
       video.muted = true;
       video.defaultMuted = true;
+      
+      // Ensure video source is loaded
+      if (video.readyState === 0) {
+        video.load();
+      }
+      
       video.play().catch(() => {
         // iOS can reject autoplay until the first gesture; we keep retrying below.
       });
@@ -28,7 +34,7 @@ export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
 
     tryPlay();
 
-    const retryTimers = [100, 300, 700, 1200, 2200, 3600].map((delay) =>
+    const retryTimers = [50, 150, 300, 600, 1000, 2000, 3000].map((delay) =>
       window.setTimeout(tryPlay, delay),
     );
 
@@ -65,12 +71,13 @@ export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
     <video
       ref={videoRef}
       className="hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
-      src={src}
       poster={poster}
       autoPlay
       muted
       loop
       playsInline
+      // @ts-expect-error iOS attribute
+      webkit-playsinline="true"
       preload="auto"
       disablePictureInPicture
       // @ts-expect-error iOS attribute
@@ -84,6 +91,8 @@ export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
       onCanPlay={(event) => event.currentTarget.play().catch(() => {})}
       onCanPlayThrough={(event) => event.currentTarget.play().catch(() => {})}
       onError={() => setFailed(true)}
-    />
+    >
+      <source src={src} type="video/mp4" />
+    </video>
   );
 }

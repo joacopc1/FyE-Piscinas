@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useScroll, useTransform } from "framer-motion";
 import {
   ArrowRight,
+  ArrowDown,
   MessageCircle,
   Check,
   Plus,
@@ -92,17 +93,17 @@ function Hero() {
           <div className="mx-auto max-w-3xl -translate-y-2 md:-translate-y-4">
             <h1 className="mt-6 font-[var(--font-hero)] text-3xl font-medium leading-[1.05] tracking-[-0.035em] text-balance text-white drop-shadow-[0_18px_42px_rgba(0,0,0,0.32)] sm:text-4xl lg:text-5xl">
               <motion.span
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0, y: 45, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ type: "spring", stiffness: 60, damping: 14, mass: 0.95, delay: 0.2 }}
                 className="block"
               >
                 Tu piscina lista para disfrutar.
               </motion.span>
               <motion.span
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0, y: 45, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ type: "spring", stiffness: 60, damping: 14, mass: 0.95, delay: 0.35 }}
                 className="block"
               >
                 Tu casa, más viva todo el año.
@@ -110,9 +111,9 @@ function Hero() {
             </h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.0 }}
+              transition={{ type: "spring", stiffness: 60, damping: 14, mass: 0.95, delay: 0.8 }}
               className="mx-auto mt-5 max-w-4xl text-base font-normal leading-relaxed text-white/84 md:text-lg"
             >
               <span className="block md:whitespace-nowrap">
@@ -124,9 +125,9 @@ function Hero() {
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 25 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
+              transition={{ type: "spring", stiffness: 60, damping: 14, mass: 0.95, delay: 1.0 }}
               className="mt-10 flex flex-wrap items-center justify-center gap-3"
             >
               <a
@@ -148,9 +149,9 @@ function Hero() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.4 }}
+              transition={{ type: "spring", stiffness: 60, damping: 14, mass: 0.95, delay: 1.2 }}
               className="mx-auto mt-6 flex max-w-lg flex-wrap items-center justify-center gap-4 border-t border-white/12 pt-4 md:gap-6"
               aria-label="Prueba social de FYE Piscinas"
             >
@@ -197,9 +198,9 @@ function Pains() {
   ];
   return (
     <section className="mx-auto max-w-7xl px-5 py-14 md:px-8 md:py-20">
-      <Reveal>
+      <Reveal variant="fadeUp3D">
         <div className="max-w-2xl">
-          <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
+          <h2 className="font-display text-[26px] font-medium leading-[1.08] md:text-5xl">
             Comprar una piscina no debería ser una apuesta.
           </h2>
         </div>
@@ -209,6 +210,7 @@ function Pains() {
         {items.map((it) => (
           <StaggerItem
             key={it.n}
+            variant="fadeUp3D"
             className="group relative rounded-2xl border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-lift)]"
           >
             <span className="font-display text-5xl text-aqua/30">{it.n}</span>
@@ -239,8 +241,8 @@ function OfferStack() {
     <section className="relative overflow-hidden bg-white px-5 py-14 text-foreground md:px-8 md:py-20">
       {/* Title placed above the card block - visible only on desktop */}
       <div className="mx-auto max-w-7xl mb-8 md:mb-12 hidden md:block">
-        <Reveal>
-          <h2 className="font-display text-3xl font-medium leading-[1.08] md:text-5xl">
+        <Reveal variant="fadeUp3D">
+          <h2 className="font-display text-[32px] font-medium leading-[1.08] md:text-5xl">
             Piscina lista para disfrutar<span className="text-aqua">.</span>
           </h2>
           <p className="mt-4 max-w-2xl text-base text-muted-foreground">
@@ -251,7 +253,7 @@ function OfferStack() {
 
       <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-border bg-card shadow-[var(--shadow-soft)]">
         <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
-          <Reveal className="relative min-h-[440px] overflow-hidden lg:min-h-[620px] h-full">
+          <Reveal variant="slideInLeft" className="relative min-h-[440px] overflow-hidden lg:min-h-[620px] h-full">
             <img
               src={work2}
               alt="Familia disfrutando una piscina instalada en casa"
@@ -261,18 +263,18 @@ function OfferStack() {
             <div className="absolute inset-0 bg-gradient-to-t from-primary/86 via-primary/18 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-10 z-20">
               {/* Title inside card - visible only on mobile */}
-              <h2 className="max-w-sm font-display text-2xl font-medium leading-[1.02] block md:hidden mb-3">
+              <h2 className="max-w-sm font-display text-[26px] font-medium leading-[1.02] block md:hidden mb-3">
                 Piscina lista para disfrutar<span className="text-aqua">.</span>
               </h2>
-              <p className="max-w-xl text-base leading-relaxed text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+              <p className="hidden md:block max-w-xl text-base leading-relaxed text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
                 Coordinamos flete, colocación, vereda perimetral, caseta de filtrado, bomba, filtro de arena y puesta en marcha con acompañamiento real en el primer uso.
               </p>
             </div>
           </Reveal>
 
-          <Reveal delay={0.15} className="h-full flex flex-col justify-center p-7 md:p-10 lg:p-12">
+          <Reveal variant="slideInRight" delay={0.15} className="h-full flex flex-col justify-center p-7 md:p-10 lg:p-12">
             <h3 className="font-display text-lg font-medium leading-tight md:text-3xl">
-              Todo lo que incluye tu proyecto
+              Todo lo que incluye tu piscina
             </h3>
             <StaggerGroup className="mt-6 space-y-3">
               {stack.map((s) => (
@@ -295,7 +297,7 @@ function OfferStack() {
               href="/piscina-lista-para-disfrutar"
               className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-aqua px-7 py-3.5 text-sm font-semibold text-primary transition-transform hover:-translate-y-0.5"
             >
-              Conocer el plan
+              Conocer piscina
               <ArrowRight className="h-4 w-4" />
             </a>
           </Reveal>
@@ -391,9 +393,9 @@ function Services() {
   return (
     <section id="servicios" className="bg-white py-14 md:py-20">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <Reveal>
+        <Reveal variant="fadeUp3D">
           <div className="max-w-2xl">
-            <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
+            <h2 className="font-display text-[26px] font-medium leading-[1.08] md:text-5xl">
               Servicios complementarios para potenciar tu piscina.
             </h2>
           </div>
@@ -404,6 +406,7 @@ function Services() {
             {services.map((s, index) => (
               <StaggerItem
                 key={s.title}
+                variant="fadeUp3D"
                 onPointerDownCapture={() => activateForTouch(s.title)}
                 onTouchStartCapture={() => activateForTouch(s.title)}
                 className={`card group relative min-h-[390px] cursor-pointer overflow-hidden rounded-3xl bg-secondary border border-white/10 transition-transform ${
@@ -485,28 +488,37 @@ function Process() {
   return (
     <section className="relative overflow-hidden bg-white py-14 md:py-20">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <Reveal>
+        <Reveal variant="fadeUp3D">
           <div className="max-w-2xl">
-            <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
+            <h2 className="font-display text-[26px] font-medium leading-[1.08] md:text-5xl">
               Cuatro pasos. Cero improvisación.
             </h2>
           </div>
         </Reveal>
 
         <StaggerGroup stagger={0.12} className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {steps.map((s, i) => (
-            <StaggerItem
-              key={s.n}
-              className="relative rounded-2xl border border-border bg-card p-7 transition-all duration-350 hover:-translate-y-1 hover:border-aqua/45 hover:shadow-[var(--shadow-soft)] hover:bg-secondary/10"
-            >
-              <div className="flex items-baseline justify-between">
-                <span className="font-display text-3xl font-medium text-primary">{s.n}</span>
-                {i < steps.length - 1 && <ArrowRight className="hidden md:block h-4 w-4 text-aqua opacity-60" />}
-              </div>
-              <h3 className="mt-6 text-base font-semibold md:text-lg">{s.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{s.body}</p>
-            </StaggerItem>
-          ))}
+          {steps.map((s, i) => {
+            const stepVariant = i === 0 ? "slideInLeft" : i === 3 ? "slideInRight" : "fadeUp3D";
+            return (
+              <StaggerItem
+                key={s.n}
+                variant={stepVariant}
+                className="relative rounded-2xl border border-border bg-card p-7 transition-all duration-350 hover:-translate-y-1 hover:border-aqua/45 hover:shadow-[var(--shadow-soft)] hover:bg-secondary/10"
+              >
+                <div className="flex items-baseline justify-between">
+                  <span className="font-display text-3xl font-medium text-primary">{s.n}</span>
+                  {i < steps.length - 1 && (
+                    <>
+                      <ArrowRight className="hidden lg:block h-4 w-4 text-aqua opacity-60" />
+                      <ArrowDown className="block lg:hidden h-4 w-4 text-aqua opacity-60" />
+                    </>
+                  )}
+                </div>
+                <h3 className="mt-6 text-base font-semibold md:text-lg">{s.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{s.body}</p>
+              </StaggerItem>
+            );
+          })}
         </StaggerGroup>
       </div>
     </section>
@@ -520,10 +532,10 @@ function Works() {
   return (
     <section id="obras" className="bg-white py-14 md:py-20">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
-        <Reveal>
+        <Reveal variant="fadeUp3D">
           <div className="flex flex-col items-end justify-between gap-6 md:flex-row md:items-end">
             <div className="max-w-2xl">
-              <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
+              <h2 className="font-display text-[26px] font-medium leading-[1.08] md:text-5xl">
                 Proyectos que ya están disfrutándose.
               </h2>
             </div>
@@ -534,6 +546,7 @@ function Works() {
           {displayedWorks.map((w, i) => (
             <StaggerItem
               key={w.title}
+              variant="fadeUp3D"
               className={`card group relative cursor-pointer overflow-hidden rounded-3xl border border-white/10 transition-transform active:scale-[0.985] ${
                 i === 0 ? "md:col-span-2 md:row-span-2" : ""
               }`}
@@ -579,9 +592,9 @@ function Contact() {
   return (
     <section id="contacto" className="bg-white py-14 md:py-20">
       <div className="mx-auto grid max-w-7xl gap-8 px-5 md:grid-cols-[0.9fr_1.1fr] md:px-8">
-        <Reveal>
+        <Reveal variant="slideInLeft">
           <div>
-            <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
+            <h2 className="font-display text-[26px] font-medium leading-[1.08] md:text-5xl">
               Hablemos de tu proyecto.
             </h2>
             <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">
@@ -606,7 +619,7 @@ function Contact() {
           </div>
         </Reveal>
 
-        <Reveal delay={0.15}>
+        <Reveal variant="slideInRight" delay={0.15}>
           <div className="overflow-hidden rounded-3xl border border-border shadow-[var(--shadow-soft)]">
             <iframe
               title="Ubicación FYE Piscinas"
@@ -646,9 +659,9 @@ function Faq() {
 
   return (
     <section className="mx-auto max-w-4xl px-5 py-14 md:px-8 md:py-20">
-      <Reveal>
+      <Reveal variant="fadeUp3D">
         <div className="text-center">
-          <h2 className="font-display text-2xl font-medium leading-[1.08] md:text-5xl">
+          <h2 className="font-display text-[26px] font-medium leading-[1.08] md:text-5xl">
             Preguntas frecuentes.
           </h2>
         </div>
@@ -694,8 +707,8 @@ function FinalCTA() {
         <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-aqua/30 blur-[140px]" />
       </div>
       <div className="relative mx-auto max-w-3xl px-5 text-center md:px-8">
-        <Reveal>
-          <h2 className="font-display text-2xl font-medium leading-[1.08] text-balance md:text-6xl">
+        <Reveal variant="fadeUp3D">
+          <h2 className="font-display text-[26px] font-medium leading-[1.08] text-balance md:text-6xl">
             ¿Ya tenés una idea?
             <span className="block text-aqua">Pedí una recomendación.</span>
           </h2>

@@ -1,9 +1,62 @@
 import { motion, useReducedMotion, type HTMLMotionProps, type Variants } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 14 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
+export const variantsMap: Record<string, Variants> = {
+  fadeUp: {
+    hidden: { opacity: 0, y: 28, scale: 0.97 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 70,
+        damping: 14,
+        mass: 0.8,
+      },
+    },
+  },
+  fadeUp3D: {
+    hidden: { opacity: 0, y: 45, scale: 0.94, rotateX: 12 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotateX: 0,
+      transition: {
+        type: "spring",
+        stiffness: 65,
+        damping: 15,
+        mass: 0.85,
+      },
+    },
+  },
+  slideInLeft: {
+    hidden: { opacity: 0, x: -35 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 70,
+        damping: 14,
+        mass: 0.8,
+      },
+    },
+  },
+  slideInRight: {
+    hidden: { opacity: 0, x: 35 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 70,
+        damping: 14,
+        mass: 0.8,
+      },
+    },
+  },
 };
 
 function useReliableReveal<T extends HTMLElement>() {
@@ -21,16 +74,16 @@ function useReliableReveal<T extends HTMLElement>() {
 
     if ("IntersectionObserver" in window) {
       observer = new IntersectionObserver(
-        (entries) => {
-          if (entries.some((entry) => entry.isIntersecting || entry.intersectionRatio > 0)) {
-            reveal();
-          }
-        },
-        {
-          root: null,
-          rootMargin: "0px 0px -8% 0px",
-          threshold: [0, 0.05],
-        },
+          (entries) => {
+            if (entries.some((entry) => entry.isIntersecting || entry.intersectionRatio > 0)) {
+              reveal();
+            }
+          },
+          {
+            root: null,
+            rootMargin: "0px 0px -8% 0px",
+            threshold: [0, 0.05],
+          },
       );
       observer.observe(element);
     } else {
@@ -50,10 +103,12 @@ export function Reveal({
   children,
   delay = 0,
   className,
+  variant = "fadeUp",
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
+  variant?: "fadeUp" | "fadeUp3D" | "slideInLeft" | "slideInRight";
 }) {
   const { ref, isVisible } = useReliableReveal<HTMLDivElement>();
   const reduceMotion = useReducedMotion();
@@ -62,7 +117,7 @@ export function Reveal({
   return (
     <motion.div
       ref={ref}
-      variants={fadeUp}
+      variants={variantsMap[variant]}
       initial="hidden"
       animate={shouldShow ? "show" : "hidden"}
       transition={{ delay }}
@@ -107,11 +162,12 @@ export function StaggerGroup({
 type StaggerItemProps = Omit<HTMLMotionProps<"div">, "variants"> & {
   children: ReactNode;
   className?: string;
+  variant?: "fadeUp" | "fadeUp3D" | "slideInLeft" | "slideInRight";
 };
 
-export function StaggerItem({ children, className, ...props }: StaggerItemProps) {
+export function StaggerItem({ children, className, variant = "fadeUp", ...props }: StaggerItemProps) {
   return (
-    <motion.div variants={fadeUp} className={className} {...props}>
+    <motion.div variants={variantsMap[variant]} className={className} {...props}>
       {children}
     </motion.div>
   );

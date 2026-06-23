@@ -476,8 +476,9 @@ video::-webkit-media-controls-time-remaining-display,
 .animate-in,
 .animate-out,
 [class*="animate-"],
-[class*="transition-"] {
-  will-change: transform;
+[class*="transition-"],
+.perspective-container {
+  will-change: transform, opacity;
   -webkit-transform: translate3d(0, 0, 0);
           transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
