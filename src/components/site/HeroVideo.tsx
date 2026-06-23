@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState(true); // Default to true (show fallback first)
 
   useEffect(() => {
     const container = containerRef.current;
@@ -46,9 +46,13 @@ export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
       if (cancelled) return;
       video.muted = true;
       video.defaultMuted = true;
-      video.play().catch(() => {
-        // Ignored; retried on timer/interaction
-      });
+      video.play()
+        .then(() => {
+          setFailed(false);
+        })
+        .catch(() => {
+          setFailed(true);
+        });
     };
 
     video.load();
@@ -59,7 +63,7 @@ export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
       window.setTimeout(tryPlay, delay),
     );
 
-    // Interaction triggers to catch cases where iOS blocks autoplay initially
+    // Interaction triggers to catch cases where iOS blocks autoplay initially (like Low Power Mode)
     const interactionEvents = ["touchstart", "touchend", "pointerdown", "scroll", "click", "keydown"] as const;
     const onInteraction = () => tryPlay();
 
@@ -81,18 +85,24 @@ export function HeroVideo({ src, poster }: { src: string; poster?: string }) {
     };
   }, [src, poster]);
 
-  if (failed && poster) {
-    return (
-      <img
-        src={poster}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%]"
-      />
-    );
-  }
-
   return (
-    <div ref={containerRef} className="absolute inset-0 pointer-events-none overflow-hidden bg-transparent" />
+    <div className="absolute inset-0 pointer-events-none overflow-hidden bg-transparent">
+      {poster && (
+        <img
+          src={poster}
+          alt=""
+          aria-hidden="true"
+          className={`absolute inset-0 h-full w-full object-cover object-center md:object-[center_48%] transition-opacity duration-500 ${
+            failed ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      )}
+      <div
+        ref={containerRef}
+        className={`absolute inset-0 pointer-events-none transition-opacity duration-500 ${
+          failed ? "opacity-0" : "opacity-100"
+        }`}
+      />
+    </div>
   );
 }
