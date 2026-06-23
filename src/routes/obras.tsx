@@ -32,6 +32,10 @@ export const Route = createFileRoute("/obras")({
 function ObrasPage() {
   const [activeFilter, setActiveFilter] = useState<WorkCategory>("Todas");
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const filteredWorks = useMemo(() => {
     if (activeFilter === "Todas") return works;
     return works.filter((work) => work.category === activeFilter);

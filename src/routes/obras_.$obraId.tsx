@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -40,6 +41,10 @@ export const Route = createFileRoute("/obras_/$obraId")({
 function WorkDetailPage() {
   const { obraId } = Route.useParams();
   const work = getWorkById(obraId);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [obraId]);
 
   if (!work) {
     return (
@@ -110,8 +115,8 @@ function WorkDetailPage() {
         </section>
 
         <section className="bg-white pb-6 md:pb-8">
-          <div className="mx-auto max-w-5xl px-5 md:px-8">
-            <Reveal>
+          <div className="mx-auto max-w-7xl px-5 md:px-8">
+            <Reveal variant="fadeUp3D">
               <div className="relative h-[310px] sm:h-[410px] md:h-[540px] overflow-hidden rounded-3xl bg-secondary shadow-[0_28px_80px_rgba(2,30,54,0.18)] transition-all duration-700 hover:scale-[1.01] hover:shadow-[0_35px_90px_rgba(2,30,54,0.25)] group">
                 <img src={work.image} alt={work.alt} className="h-full w-full object-cover object-center transition-transform duration-1000 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/68 via-transparent to-transparent" />
@@ -126,13 +131,13 @@ function WorkDetailPage() {
  
             {/* ZONA, TIEMPO, TIPO: 3 COLUMNS */}
             <StaggerGroup className="grid grid-cols-3 gap-2 sm:gap-4 mt-6 md:mt-8">
-              <StaggerItem>
+              <StaggerItem variant="fadeUp3D">
                 <Meta icon={MapPin} label="Zona" value={work.location} />
               </StaggerItem>
-              <StaggerItem>
+              <StaggerItem variant="fadeUp3D">
                 <Meta icon={Clock} label="Plazo" value={work.duration} />
               </StaggerItem>
-              <StaggerItem>
+              <StaggerItem variant="fadeUp3D">
                 <Meta icon={Home} label="Tipo" value={work.category === "Piscinas instaladas" ? "Piscina de casco" : work.category} />
               </StaggerItem>
             </StaggerGroup>
@@ -144,7 +149,7 @@ function WorkDetailPage() {
         <section className="bg-white py-10 md:py-14">
           <div className="mx-auto max-w-7xl px-5 md:px-8">
             <div className="flex flex-col md:grid md:grid-cols-2 md:gap-8 relative">
-              <Reveal className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-6 md:p-8 hover:border-aqua/30 transition-all duration-300 hover:shadow-[var(--shadow-soft)] hover:-translate-y-0.5">
+              <Reveal variant="slideInLeft" className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-6 md:p-8 hover:border-aqua/30 transition-all duration-300 hover:shadow-[var(--shadow-soft)] hover:-translate-y-0.5">
                 <div>
                   <span className="block text-xs font-semibold tracking-wider text-aqua uppercase mb-3">
                     Situación inicial
@@ -164,7 +169,7 @@ function WorkDetailPage() {
                 <div className="h-6 w-px bg-border/80" />
               </div>
 
-              <Reveal delay={0.12} className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-6 md:p-8 hover:border-aqua/30 transition-all duration-300 hover:shadow-[var(--shadow-soft)] hover:-translate-y-0.5">
+              <Reveal variant="slideInRight" delay={0.12} className="relative flex flex-col justify-between overflow-hidden rounded-3xl border border-border bg-card p-6 md:p-8 hover:border-aqua/30 transition-all duration-300 hover:shadow-[var(--shadow-soft)] hover:-translate-y-0.5">
                 <div>
                   <span className="block text-xs font-semibold tracking-wider text-aqua uppercase mb-3">
                     Recomendación
@@ -188,11 +193,13 @@ function WorkDetailPage() {
 
             {work.detailedProcess ? (
               <div className="pt-4">
-                <div className="text-center mb-12 md:mb-16">
-                  <h2 className="font-display text-2xl font-medium leading-tight md:text-4xl">
-                    El proceso de obra <span className="block">paso a paso</span>
-                  </h2>
-                </div>
+                <Reveal variant="fadeUp3D">
+                  <div className="text-center mb-12 md:mb-16">
+                    <h2 className="font-display text-[26px] font-medium leading-tight md:text-4xl">
+                      El proceso de obra <span className="block">paso a paso</span>
+                    </h2>
+                  </div>
+                </Reveal>
                 
                 <div className="space-y-12 relative before:absolute before:inset-y-0 before:left-[15px] before:w-0.5 before:bg-border/60">
                   {[
@@ -214,7 +221,7 @@ function WorkDetailPage() {
                         ]
                       : []),
                   ].map((step, idx) => (
-                    <Reveal key={step.title} delay={idx * 0.05} className="w-full">
+                    <Reveal variant="fadeUp3D" key={step.title} delay={idx * 0.05} className="w-full">
                       <div className="relative pl-10 flex flex-col md:grid md:grid-cols-[1fr_280px] md:gap-10 gap-5">
                         {/* Dot indicator */}
                         <div className="absolute left-0 top-1.5 flex h-8 w-8 items-center justify-center rounded-full bg-white border-2 border-aqua text-xs font-semibold text-primary z-10">
@@ -256,9 +263,11 @@ function WorkDetailPage() {
               </div>
             ) : (
               <div className="pt-4">
-                <h2 className="font-display text-2xl font-medium leading-tight md:text-4xl">
-                  Cómo se trabajó.
-                </h2>
+                <Reveal variant="fadeUp3D">
+                  <h2 className="font-display text-[26px] font-medium leading-tight md:text-4xl">
+                    Cómo se trabajó.
+                  </h2>
+                </Reveal>
                 <ul className="mt-6 grid gap-4">
                   {work.process.map((step) => (
                     <li key={step} className="flex gap-4 rounded-3xl border border-border p-5">
@@ -270,10 +279,10 @@ function WorkDetailPage() {
               </div>
             )}
 
-            <Reveal>
+            <Reveal variant="fadeUp3D">
               <div className="rounded-3xl border border-border bg-card p-6 md:p-8 pt-8 transition-all duration-500 hover:border-aqua/30 hover:shadow-[0_20px_50px_rgba(2,30,54,0.06)]">
                 <Sparkles className="h-6 w-6 text-aqua" strokeWidth={1.8} />
-                <h2 className="mt-4 font-display text-2xl font-medium leading-tight md:text-4xl">
+                <h2 className="mt-4 font-display text-[26px] font-medium leading-tight md:text-4xl">
                   ¿Querés algo parecido para tu casa?
                 </h2>
                 <p className="mt-4 max-w-2xl text-muted-foreground">
@@ -308,9 +317,9 @@ function WorkDetailPage() {
 
         <section className="bg-white py-12 md:py-16">
           <div className="mx-auto max-w-7xl px-5 md:px-8">
-            <Reveal>
+            <Reveal variant="fadeUp3D">
               <div className="flex items-end justify-between gap-6">
-                <h2 className="max-w-xl font-display text-2xl font-medium leading-[1.08] md:text-5xl">
+                <h2 className="max-w-xl font-display text-[26px] font-medium leading-[1.08] md:text-5xl">
                   Más proyectos para mirar.
                 </h2>
                 <Link
@@ -326,6 +335,7 @@ function WorkDetailPage() {
               {relatedWorks.map((item) => (
                 <StaggerItem
                   key={item.id}
+                  variant="fadeUp3D"
                   className="group relative h-[300px] overflow-hidden rounded-3xl bg-secondary shadow-[0_22px_60px_rgba(2,30,54,0.14)]"
                 >
                   <Link
