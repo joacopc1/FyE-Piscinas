@@ -245,9 +245,6 @@ function OfferStack() {
           <h2 className="font-display text-[32px] font-medium leading-[1.08] md:text-5xl">
             Piscina lista para disfrutar<span className="text-aqua">.</span>
           </h2>
-          <p className="mt-4 max-w-2xl text-base text-muted-foreground">
-            Nuestra propuesta de valor principal: un proyecto claro de principio a fin, sin sorpresas ni compras a ciegas.
-          </p>
         </Reveal>
       </div>
 
@@ -498,11 +495,10 @@ function Process() {
 
         <StaggerGroup stagger={0.12} className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => {
-            const stepVariant = i === 0 ? "slideInLeft" : i === 3 ? "slideInRight" : "fadeUp3D";
             return (
               <StaggerItem
                 key={s.n}
-                variant={stepVariant}
+                variant="fadeUp3D"
                 className="relative rounded-2xl border border-border bg-card p-7 transition-all duration-350 hover:-translate-y-1 hover:border-aqua/45 hover:shadow-[var(--shadow-soft)] hover:bg-secondary/10"
               >
                 <div className="flex items-baseline justify-between">
