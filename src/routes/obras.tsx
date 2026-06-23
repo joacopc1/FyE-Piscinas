@@ -8,8 +8,6 @@ import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 import { whatsappMessages, whatsappUrl } from "@/lib/contact";
 import { Work, WorkCategory, workFilters, works } from "@/lib/works";
 
-import heroPool from "@/assets/hero-pool.jpg";
-
 export const Route = createFileRoute("/obras")({
   head: () => ({
     meta: [
@@ -268,8 +266,8 @@ function FinalCTA() {
   return (
     <section className="relative overflow-hidden bg-deep py-20 text-primary-foreground md:py-24">
       <img
-        src={heroPool}
-        alt="Piscina terminada en una casa moderna"
+        src={works[0].image}
+        alt="Piscina terminada"
         loading="lazy"
         className="absolute inset-0 h-full w-full object-cover"
       />

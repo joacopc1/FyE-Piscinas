@@ -20,7 +20,6 @@ import { Reveal, StaggerGroup, StaggerItem } from "@/components/site/Reveal";
 import { whatsappMessages, whatsappUrl } from "@/lib/contact";
 import { works as realWorks } from "@/lib/works";
 
-import heroPool from "@/assets/hero-pool.jpg";
 import serviceAccessories from "@/assets/service-accessories.jpg";
 import serviceLandscaping from "@/assets/service-landscaping.jpg";
 import serviceClimatizacion from "@/assets/service-climatizacion.jpg";
@@ -44,7 +43,7 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Un proyecto claro de principio a fin. Comprá con confianza y disfrutá tu casa.",
       },
-      { property: "og:image", content: heroPool },
+      { property: "og:image", content: work2 },
     ],
   }),
   component: Home,
@@ -79,7 +78,7 @@ function Hero() {
     <section ref={ref} className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-deep">
       {/* Background video with parallax + slow zoom */}
       <motion.div style={{ y, scale }} className="absolute inset-0 will-change-transform">
-        <HeroVideo src={HERO_VIDEO_SRC} poster={heroPool} />
+        <HeroVideo src={HERO_VIDEO_SRC} />
         {/* Cinematic gradients */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/12 to-black/78 md:from-black/34 md:via-black/10 md:to-black/50" />
       </motion.div>
