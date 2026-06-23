@@ -1,4 +1,4 @@
-import { motion, type HTMLMotionProps, type Variants } from "framer-motion";
+import { motion, useReducedMotion, type HTMLMotionProps, type Variants } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const fadeUp: Variants = {
@@ -92,7 +92,8 @@ export function Reveal({
   className?: string;
 }) {
   const { ref, isVisible } = useReliableReveal<HTMLDivElement>();
-  const shouldShow = isVisible;
+  const reduceMotion = useReducedMotion();
+  const shouldShow = isVisible || reduceMotion;
 
   return (
     <motion.div
@@ -119,7 +120,8 @@ export function StaggerGroup({
   stagger?: number;
 }) {
   const { ref, isVisible } = useReliableReveal<HTMLDivElement>();
-  const shouldShow = isVisible;
+  const reduceMotion = useReducedMotion();
+  const shouldShow = isVisible || reduceMotion;
 
   return (
     <motion.div
