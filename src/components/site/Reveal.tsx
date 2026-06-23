@@ -28,22 +28,18 @@ function useReliableReveal<T extends HTMLElement>() {
         },
         {
           root: null,
-          rootMargin: "0px 0px -5% 0px",
+          rootMargin: "0px 0px -8% 0px",
           threshold: [0, 0.05],
         },
       );
       observer.observe(element);
     } else {
-      // Fallback for environment without IntersectionObserver
+      // Fallback for older browsers
       reveal();
     }
 
-    // Safety fallback trigger after 2 seconds
-    const safetyTimeout = window.setTimeout(reveal, 2000);
-
     return () => {
       observer?.disconnect();
-      window.clearTimeout(safetyTimeout);
     };
   }, [isVisible]);
 
