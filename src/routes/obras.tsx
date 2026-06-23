@@ -33,7 +33,14 @@ function ObrasPage() {
   const [activeFilter, setActiveFilter] = useState<WorkCategory>("Todas");
 
   useEffect(() => {
+    const html = document.documentElement;
+    const originalStyle = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
     window.scrollTo(0, 0);
+    const r = requestAnimationFrame(() => {
+      html.style.scrollBehavior = originalStyle;
+    });
+    return () => cancelAnimationFrame(r);
   }, []);
 
   const filteredWorks = useMemo(() => {

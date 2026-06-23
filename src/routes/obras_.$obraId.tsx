@@ -43,7 +43,14 @@ function WorkDetailPage() {
   const work = getWorkById(obraId);
 
   useEffect(() => {
+    const html = document.documentElement;
+    const originalStyle = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
     window.scrollTo(0, 0);
+    const r = requestAnimationFrame(() => {
+      html.style.scrollBehavior = originalStyle;
+    });
+    return () => cancelAnimationFrame(r);
   }, [obraId]);
 
   if (!work) {
