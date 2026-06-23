@@ -238,6 +238,18 @@ function OfferStack() {
   ];
   return (
     <section className="relative overflow-hidden bg-white px-5 py-14 text-foreground md:px-8 md:py-20">
+      {/* Title placed above the card block - visible only on desktop */}
+      <div className="mx-auto max-w-7xl mb-8 md:mb-12 hidden md:block">
+        <Reveal>
+          <h2 className="font-display text-3xl font-medium leading-[1.08] md:text-5xl">
+            Piscina lista para disfrutar<span className="text-aqua">.</span>
+          </h2>
+          <p className="mt-4 max-w-2xl text-base text-muted-foreground">
+            Nuestra propuesta de valor principal: un proyecto claro de principio a fin, sin sorpresas ni compras a ciegas.
+          </p>
+        </Reveal>
+      </div>
+
       <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-border bg-card shadow-[var(--shadow-soft)]">
         <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
           <Reveal className="relative min-h-[440px] overflow-hidden lg:min-h-[620px] h-full">
@@ -248,13 +260,13 @@ function OfferStack() {
               className="absolute inset-0 h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/86 via-primary/18 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-10">
-              <h2 className="max-w-sm font-display text-2xl font-medium leading-[1.02] md:max-w-xl md:text-5xl">
-                Piscina lista para disfrutar.
+            <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-10 z-20">
+              {/* Title inside card - visible only on mobile */}
+              <h2 className="max-w-sm font-display text-2xl font-medium leading-[1.02] block md:hidden mb-3">
+                Piscina lista para disfrutar<span className="text-aqua">.</span>
               </h2>
-              <p className="mt-5 hidden max-w-xl text-base leading-relaxed text-white/84 md:block">
-                Una propuesta para elegir bien, coordinar flete, colocación, vereda perimetral,
-                caseta, bomba, filtro y llegar al primer uso con acompañamiento real.
+              <p className="max-w-xl text-base leading-relaxed text-white/90 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
+                Coordinamos flete, colocación, vereda perimetral, caseta de filtrado, bomba, filtro de arena y puesta en marcha con acompañamiento real en el primer uso.
               </p>
             </div>
           </Reveal>
